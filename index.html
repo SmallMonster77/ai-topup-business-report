@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="面向中国用户的海外 AI 工具代充业务调研、虚拟卡费率比较与动态利润模型。">
+  <title>海外 AI 代充商业可行性报告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17201d;
+      --ink-2: #46534f;
+      --ink-3: #72807b;
+      --line: #dfe6e3;
+      --line-strong: #c6d0cc;
+      --surface: #ffffff;
+      --surface-2: #f4f7f6;
+      --surface-3: #eaf2ef;
+      --green: #0f7b5d;
+      --green-dark: #075b45;
+      --green-soft: #dff2ea;
+      --cyan: #087c91;
+      --cyan-soft: #dff3f7;
+      --amber: #a35d06;
+      --amber-soft: #fff0d2;
+      --red: #aa3d36;
+      --red-soft: #fbe7e4;
+      --blue: #315fa8;
+      --blue-soft: #e7eefb;
+      --shadow: 0 12px 32px rgba(24, 45, 38, 0.08);
+      --radius: 6px;
+      --sidebar: 236px;
+      --topbar: 58px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 78px; }
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+    button, input { font: inherit; letter-spacing: 0; }
+    button, a, input { -webkit-tap-highlight-color: transparent; }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    img { display: block; max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.2; letter-spacing: 0; }
+    h1 { margin-bottom: 16px; font-size: 38px; font-weight: 760; }
+    h2 { margin-bottom: 10px; font-size: 26px; font-weight: 740; }
+    h3 { margin-bottom: 8px; font-size: 17px; font-weight: 720; }
+    small { color: var(--ink-3); }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      height: var(--topbar);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+    .topbar-inner {
+      width: min(1500px, 100%);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .report-mark { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .mark-square {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 5px;
+      color: white;
+      background: var(--ink);
+      font-weight: 780;
+      font-size: 12px;
+      flex: 0 0 auto;
+    }
+    .report-mark strong { display: block; font-size: 14px; line-height: 1.15; }
+    .report-mark span { display: block; color: var(--ink-3); font-size: 11px; line-height: 1.25; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .btn {
+      min-height: 36px;
+      border: 1px solid var(--line-strong);
+      border-radius: 5px;
+      padding: 7px 12px;
+      background: var(--surface);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 650;
+      font-size: 13px;
+    }
+    .btn:hover { border-color: var(--green); color: var(--green-dark); }
+    .btn-primary { border-color: var(--ink); background: var(--ink); color: white; }
+    .btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); color: white; }
+    .btn svg { width: 15px; height: 15px; }
+
+    .layout {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+      padding-top: var(--topbar);
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+    }
+    .sidebar {
+      position: sticky;
+      top: var(--topbar);
+      height: calc(100vh - var(--topbar));
+      padding: 28px 20px 24px;
+      border-right: 1px solid var(--line);
+      background: var(--surface-2);
+      overflow-y: auto;
+    }
+    .side-label {
+      margin: 0 10px 10px;
+      color: var(--ink-3);
+      font-size: 11px;
+      font-weight: 760;
+      text-transform: uppercase;
+    }
+    .side-nav { display: grid; gap: 3px; }
+    .side-nav a {
+      min-height: 38px;
+      padding: 8px 10px;
+      border-left: 3px solid transparent;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-weight: 620;
+      font-size: 13px;
+    }
+    .side-nav a:hover, .side-nav a.active {
+      border-left-color: var(--green);
+      color: var(--green-dark);
+      background: var(--green-soft);
+    }
+    .side-note {
+      margin-top: 28px;
+      padding: 14px 10px 0;
+      border-top: 1px solid var(--line-strong);
+      color: var(--ink-3);
+      font-size: 11px;
+    }
+    .side-note strong { color: var(--ink); }
+
+    main { min-width: 0; }
+    .band { padding: 54px clamp(26px, 5vw, 72px); border-bottom: 1px solid var(--line); }
+    .band-alt { background: var(--surface-2); }
+    .band-dark { background: #16221e; color: white; border-bottom: 0; }
+    .content { max-width: 1180px; margin: 0 auto; }
+    .eyebrow {
+      margin-bottom: 10px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 790;
+      text-transform: uppercase;
+    }
+    .band-dark .eyebrow { color: #89d5bc; }
+    .lead { max-width: 840px; color: var(--ink-2); font-size: 17px; }
+    .band-dark .lead { color: #bed0ca; }
+    .section-head {
+      margin-bottom: 26px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .section-head p { max-width: 650px; margin-bottom: 0; color: var(--ink-2); }
+    .band-dark .section-head p { color: #bed0ca; }
+
+    .overview {
+      min-height: 520px;
+      padding-top: 48px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(15,123,93,0.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(rgba(15,123,93,0.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        var(--surface);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, 0.65fr);
+      gap: 54px;
+      align-items: center;
+    }
+    .decision-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 6px 9px;
+      border: 1px solid #edc678;
+      border-radius: 4px;
+      background: var(--amber-soft);
+      color: #7c4707;
+      font-size: 12px;
+      font-weight: 730;
+    }
+    .decision-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+    .hero-actions { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .snapshot {
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .snapshot-title {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ink-2);
+      font-size: 12px;
+      font-weight: 720;
+    }
+    .snapshot-list { display: grid; grid-template-columns: 1fr 1fr; }
+    .snapshot-item { min-height: 112px; padding: 17px 16px; border-bottom: 1px solid var(--line); }
+    .snapshot-item:nth-child(odd) { border-right: 1px solid var(--line); }
+    .snapshot-item:nth-last-child(-n+2) { border-bottom: 0; }
+    .snapshot-item span { display: block; color: var(--ink-3); font-size: 11px; }
+    .snapshot-item strong { display: block; margin: 4px 0; font-size: 25px; line-height: 1.15; }
+    .snapshot-item small { display: block; font-size: 10px; }
+    .negative { color: var(--red) !important; }
+    .positive { color: var(--green-dark) !important; }
+
+    .brand-rail {
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      overflow: hidden;
+    }
+    .brand-rail > span { flex: 0 0 auto; color: var(--ink-3); font-size: 11px; font-weight: 700; }
+    .brand-icons { display: flex; align-items: center; gap: 18px; opacity: 0.72; }
+    .brand-icons img { width: 24px; height: 24px; object-fit: contain; }
+
+    .verdict-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
+    .verdict-copy { padding-right: 18px; }
+    .verdict-copy h2 { font-size: 31px; }
+    .verdict-copy p { color: #bed0ca; }
+    .scoreboard { border-top: 1px solid #42534d; }
+    .score-row {
+      padding: 14px 0;
+      border-bottom: 1px solid #42534d;
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+    .score-row span { color: #bed0ca; }
+    .score-track { height: 7px; background: #33433e; overflow: hidden; }
+    .score-fill { height: 100%; background: #78d1b4; }
+    .score-row strong { min-width: 36px; text-align: right; }
+
+    .callout {
+      padding: 18px 20px;
+      border-left: 4px solid var(--green);
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout-warning { border-left-color: var(--amber); background: var(--amber-soft); color: #744306; }
+    .callout-danger { border-left-color: var(--red); background: var(--red-soft); color: #7e302c; }
+
+    .fee-table, .product-table, .source-table { width: 100%; border-collapse: collapse; }
+    .fee-table th, .fee-table td,
+    .product-table th, .product-table td,
+    .source-table th, .source-table td {
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    .fee-table th, .product-table th, .source-table th {
+      color: var(--ink-3);
+      font-size: 11px;
+      font-weight: 780;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .fee-table tbody tr:hover, .product-table tbody tr:hover { background: rgba(223,242,234,0.52); }
+    .provider { min-width: 136px; display: flex; align-items: center; gap: 10px; }
+    .provider img, .product-name img {
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      object-fit: contain;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: white;
+      padding: 3px;
+    }
+    .provider strong, .product-name strong { display: block; font-size: 13px; }
+    .provider small, .product-name small { display: block; font-size: 10px; }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 7px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      color: var(--ink-2);
+      background: var(--surface);
+      font-size: 10px;
+      font-weight: 740;
+      white-space: nowrap;
+    }
+    .tag-good { border-color: #9bceb9; color: var(--green-dark); background: var(--green-soft); }
+    .tag-warn { border-color: #e7c681; color: #764506; background: var(--amber-soft); }
+    .tag-risk { border-color: #e2a6a0; color: #7c302b; background: var(--red-soft); }
+    .tag-info { border-color: #a9c5ea; color: #284f8c; background: var(--blue-soft); }
+    .fee-note { margin: 18px 0 0; color: var(--ink-3); font-size: 12px; }
+
+    .flow {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line-strong);
+    }
+    .flow-step { position: relative; padding: 24px 24px 0 0; }
+    .flow-step::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 9px;
+      height: 9px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 1px var(--green);
+    }
+    .flow-step span { color: var(--green); font-size: 11px; font-weight: 780; }
+    .flow-step p { margin-bottom: 0; color: var(--ink-2); font-size: 12px; }
+
+    .calculator-wrap {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .calculator-wrap > *, .scenario-grid > * { min-width: 0; }
+    .controls {
+      position: sticky;
+      top: 82px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: white;
+      overflow: hidden;
+    }
+    .controls-head {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .controls-head strong { font-size: 13px; }
+    .controls-body { padding: 15px 16px; display: grid; gap: 14px; }
+    .field { display: grid; gap: 5px; }
+    .field-line { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .field label { color: var(--ink-2); font-size: 11px; font-weight: 690; }
+    .field output { color: var(--green-dark); font-size: 11px; font-weight: 760; }
+    .field input[type="number"] {
+      width: 100%;
+      min-height: 37px;
+      padding: 7px 9px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      color: var(--ink);
+      background: white;
+    }
+    .field input:focus { outline: 2px solid rgba(15,123,93,0.18); border-color: var(--green); }
+    .field input[type="range"] { width: 100%; accent-color: var(--green); }
+    .assumption-note {
+      padding: 12px 16px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--ink-3);
+      font-size: 10px;
+    }
+    .formula {
+      margin-bottom: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: white;
+      color: var(--ink-2);
+      font-size: 12px;
+    }
+    .formula code { color: var(--green-dark); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .segmented { display: flex; flex-wrap: wrap; gap: 0; margin-bottom: 14px; }
+    .segment {
+      min-height: 34px;
+      padding: 6px 11px;
+      border: 1px solid var(--line-strong);
+      border-right-width: 0;
+      background: white;
+      color: var(--ink-2);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 680;
+    }
+    .segment:first-child { border-radius: 4px 0 0 4px; }
+    .segment:last-child { border-right-width: 1px; border-radius: 0 4px 4px 0; }
+    .segment.active { background: var(--ink); border-color: var(--ink); color: white; }
+    .table-scroll { overflow-x: auto; border-top: 1px solid var(--line); }
+    .product-table { min-width: 880px; }
+    .product-table td { font-size: 12px; }
+    .product-name { min-width: 190px; display: flex; align-items: center; gap: 10px; }
+    .price-input {
+      width: 76px;
+      min-height: 34px;
+      padding: 5px 7px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      color: var(--ink);
+      background: white;
+      font-weight: 700;
+    }
+    .money { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .profit-cell strong { display: block; font-size: 13px; }
+    .margin-track { width: 86px; height: 5px; margin-top: 5px; background: #e7ecea; }
+    .margin-fill { height: 100%; background: var(--green); }
+    .margin-fill.low { background: var(--amber); }
+    .margin-fill.negative { background: var(--red); }
+
+    .scenario-grid { display: grid; grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr); gap: 34px; }
+    .scenario-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+    .scenario-controls .field { padding-bottom: 11px; border-bottom: 1px solid var(--line); }
+    .scenario-output { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line-strong); }
+    .scenario-metric { min-height: 112px; padding: 16px; border-right: 1px solid var(--line); }
+    .scenario-metric:last-child { border-right: 0; }
+    .scenario-metric span { display: block; color: var(--ink-3); font-size: 10px; }
+    .scenario-metric strong { display: block; margin-top: 6px; font-size: 22px; line-height: 1.15; }
+    .chart-wrap { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .chart-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .chart-head strong { font-size: 12px; }
+    .chart-head span { color: var(--ink-3); font-size: 10px; }
+    canvas { display: block; width: 100%; height: 260px; }
+
+    .risk-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); border-top: 1px solid var(--line-strong); }
+    .risk-item {
+      padding: 20px 20px 20px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 14px;
+    }
+    .risk-item:nth-child(odd) { padding-right: 28px; border-right: 1px solid var(--line); }
+    .risk-item:nth-child(even) { padding-left: 28px; }
+    .risk-level {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 5px;
+      color: #7b2f2b;
+      background: var(--red-soft);
+      font-size: 11px;
+      font-weight: 790;
+    }
+    .risk-level.medium { color: #734304; background: var(--amber-soft); }
+    .risk-item p { margin-bottom: 0; color: var(--ink-2); font-size: 12px; }
+    .risk-item h3 { font-size: 14px; }
+
+    .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid #42534d; }
+    .phase { min-height: 310px; padding: 24px; border-right: 1px solid #42534d; }
+    .phase:last-child { border-right: 0; }
+    .phase-number { color: #89d5bc; font-size: 11px; font-weight: 790; }
+    .phase h3 { margin-top: 9px; color: white; font-size: 20px; }
+    .phase p { color: #bed0ca; font-size: 12px; }
+    .phase ul { margin: 18px 0 0; padding: 0; list-style: none; }
+    .phase li { position: relative; margin: 10px 0; padding-left: 17px; color: #e2ece8; font-size: 12px; }
+    .phase li::before { content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px; background: #78d1b4; }
+    .gate { margin-top: 18px; padding-top: 14px; border-top: 1px solid #42534d; color: #89d5bc; font-size: 11px; font-weight: 720; }
+
+    .source-table td { color: var(--ink-2); font-size: 12px; }
+    .source-table td:first-child { width: 130px; color: var(--ink); font-weight: 700; }
+    .source-table td:last-child { width: 105px; color: var(--ink-3); white-space: nowrap; }
+    .source-table a { overflow-wrap: anywhere; }
+    .method-note { margin-top: 20px; color: var(--ink-3); font-size: 11px; }
+    .footer {
+      padding: 25px clamp(26px, 5vw, 72px);
+      background: var(--surface-2);
+      color: var(--ink-3);
+      font-size: 11px;
+    }
+    .footer .content { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1080px) {
+      .overview-grid { grid-template-columns: 1fr; gap: 30px; }
+      .overview { min-height: 0; }
+      .snapshot { max-width: 680px; }
+      .calculator-wrap { grid-template-columns: 240px minmax(0, 1fr); }
+      .scenario-output { grid-template-columns: 1fr 1fr; }
+      .scenario-metric:nth-child(2) { border-right: 0; }
+      .scenario-metric:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    }
+
+    @media (max-width: 920px) {
+      :root { --topbar: 56px; }
+      .layout { display: block; }
+      .sidebar {
+        position: sticky;
+        top: var(--topbar);
+        z-index: 40;
+        height: auto;
+        padding: 0 16px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        overflow-x: auto;
+      }
+      .side-label, .side-note { display: none; }
+      .side-nav { display: flex; min-width: max-content; }
+      .side-nav a { border-left: 0; border-bottom: 3px solid transparent; padding: 10px 11px 8px; }
+      .side-nav a:hover, .side-nav a.active { border-left: 0; border-bottom-color: var(--green); }
+      html { scroll-padding-top: 108px; }
+      .verdict-grid, .scenario-grid { grid-template-columns: 1fr; }
+      .calculator-wrap { grid-template-columns: 1fr; }
+      .controls { position: static; }
+      .controls-body { grid-template-columns: repeat(3, 1fr); }
+      .assumption-note { grid-column: 1 / -1; }
+      .roadmap { grid-template-columns: 1fr; }
+      .phase { min-height: 0; border-right: 0; border-bottom: 1px solid #42534d; }
+      .phase:last-child { border-bottom: 0; }
+    }
+
+    @media (max-width: 700px) {
+      body { font-size: 14px; }
+      .topbar-inner { padding: 0 14px; }
+      .report-mark span { display: none; }
+      .top-actions .btn span { display: none; }
+      .top-actions .btn { width: 36px; padding: 7px; }
+      .band { padding: 40px 18px; }
+      h1 { font-size: 31px; }
+      h2 { font-size: 23px; }
+      .overview { padding-top: 38px; }
+      .overview-grid { gap: 26px; }
+      .snapshot-list { grid-template-columns: 1fr 1fr; }
+      .snapshot-item { min-height: 102px; padding: 14px 12px; }
+      .snapshot-item strong { font-size: 21px; }
+      .brand-rail { align-items: flex-start; }
+      .brand-icons { flex-wrap: wrap; gap: 14px; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+      .score-row { grid-template-columns: 90px 1fr 30px; gap: 10px; }
+      .flow { grid-template-columns: 1fr 1fr; }
+      .flow-step:nth-child(-n+2) { padding-bottom: 24px; }
+      .controls-body { grid-template-columns: 1fr 1fr; }
+      .risk-grid { grid-template-columns: 1fr; }
+      .risk-item, .risk-item:nth-child(odd), .risk-item:nth-child(even) { padding: 18px 0; border-right: 0; }
+      .scenario-controls { grid-template-columns: 1fr 1fr; }
+      .scenario-output { grid-template-columns: 1fr 1fr; }
+      canvas { height: 230px; }
+      .footer .content { display: block; }
+      .fee-table thead, .source-table thead { display: none; }
+      .fee-table, .fee-table tbody, .fee-table tr, .fee-table td,
+      .source-table, .source-table tbody, .source-table tr, .source-table td { display: block; width: 100%; }
+      .fee-table tr, .source-table tr { padding: 14px 0; border-bottom: 1px solid var(--line); }
+      .fee-table td, .source-table td { padding: 5px 0; border: 0; }
+      .fee-table td::before, .source-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 2px;
+        color: var(--ink-3);
+        font-size: 9px;
+        font-weight: 760;
+        text-transform: uppercase;
+      }
+      .source-table td:first-child, .source-table td:last-child { width: 100%; }
+    }
+
+    @media (max-width: 430px) {
+      h1 { font-size: 28px; }
+      .lead { font-size: 15px; }
+      .hero-actions { display: grid; }
+      .hero-actions .btn { width: 100%; }
+      .snapshot-list { grid-template-columns: 1fr; }
+      .snapshot-item, .snapshot-item:nth-child(odd), .snapshot-item:nth-last-child(-n+2) { border-right: 0; border-bottom: 1px solid var(--line); }
+      .snapshot-item:last-child { border-bottom: 0; }
+      .flow, .controls-body, .scenario-controls, .scenario-output { grid-template-columns: 1fr; }
+      .scenario-metric, .scenario-metric:nth-child(2) { border-right: 0; border-bottom: 1px solid var(--line); }
+      .scenario-metric:last-child { border-bottom: 0; }
+    }
+
+    @media print {
+      .topbar, .sidebar, .hero-actions, .controls-head .btn, .segmented { display: none !important; }
+      .layout { display: block; padding-top: 0; }
+      .band { padding: 28px 24px; break-inside: avoid; }
+      .overview { min-height: 0; background: white; }
+      .controls { position: static; }
+      .table-scroll { overflow: visible; }
+      .product-table { min-width: 0; font-size: 9px; }
+      .product-table th, .product-table td { padding: 7px 5px; }
+      .price-input { width: 52px; border: 0; padding: 0; }
+      a { color: inherit; text-decoration: none; }
+      body { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="report-mark">
+        <div class="mark-square">AI</div>
+        <div>
+          <strong>海外 AI 代充商业报告</strong>
+          <span>数据快照 2026-08-15 · 中国用户市场</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" type="button" id="resetAll" title="恢复报告默认假设"><i data-lucide="rotate-ccw"></i><span>恢复默认</span></button>
+        <button class="btn btn-primary" type="button" id="printReport" title="打印或导出 PDF"><i data-lucide="printer"></i><span>打印 / PDF</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="报告目录">
+      <p class="side-label">报告目录</p>
+      <nav class="side-nav">
+        <a href="#overview" class="active">结论摘要</a>
+        <a href="#cards">虚拟卡</a>
+        <a href="#pricing">AI 定价</a>
+        <a href="#scenario">利润情景</a>
+        <a href="#risks">风险边界</a>
+        <a href="#roadmap">落地路线</a>
+        <a href="#sources">来源</a>
+      </nav>
+      <div class="side-note">
+        <strong>口径</strong><br>
+        单笔贡献毛利已扣资金、卡费、收款、风险准备和人工，不含企业所得税与老板工资。
+      </div>
+    </aside>
+
+    <main>
+      <section class="band overview" id="overview">
+        <div class="content">
+          <div class="overview-grid">
+            <div>
+              <div class="decision-line"><span class="decision-dot"></span>结论：值得做小规模验证，不适合直接重仓</div>
+              <p class="eyebrow">Market feasibility / 2026 Q3</p>
+              <h1>海外 AI 代充，卖的不是汇率差，而是省心与确定性。</h1>
+              <p class="lead">按当前公开价和默认成本，成熟单笔贡献毛利约 18% 到 20%。但在每月约 327 单之前，获客和固定开支会吃掉大部分利润。最佳起点是 3 个高需求 SKU、客户自有账号、按单付款、小额验证。</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#pricing"><i data-lucide="calculator"></i>进入利润计算器</a>
+                <a class="btn" href="#roadmap"><i data-lucide="route"></i>查看 30 天验证计划</a>
+              </div>
+              <div class="brand-rail" aria-label="本报告覆盖的产品品牌">
+                <span>覆盖产品</span>
+                <div class="brand-icons">
+                  <img src="assets/openai.png" alt="OpenAI">
+                  <img src="assets/claude.png" alt="Claude">
+                  <img src="assets/google.png" alt="Google AI">
+                  <img src="assets/midjourney.png" alt="Midjourney">
+                  <img src="assets/cursor.png" alt="Cursor">
+                  <img src="assets/github.png" alt="GitHub">
+                  <img src="assets/perplexity.png" alt="Perplexity">
+                  <img src="assets/runway.png" alt="Runway">
+                  <img src="assets/elevenlabs.png" alt="ElevenLabs">
+                  <img src="assets/suno.png" alt="Suno">
+                </div>
+              </div>
+            </div>
+
+            <div class="snapshot" aria-label="基础情景摘要">
+              <div class="snapshot-title"><span>基础情景</span><span>参数可在下方调整</span></div>
+              <div class="snapshot-list">
+                <div class="snapshot-item">
+                  <span>平均客单价</span>
+                  <strong id="heroAov">¥177</strong>
+                  <small>按默认产品组合</small>
+                </div>
+                <div class="snapshot-item">
+                  <span>单笔贡献</span>
+                  <strong id="heroContribution">¥34</strong>
+                  <small>约 19.0%</small>
+                </div>
+                <div class="snapshot-item">
+                  <span>月度盈亏平衡</span>
+                  <strong id="heroBreakEven">327 单</strong>
+                  <small>默认 CAC ¥25</small>
+                </div>
+                <div class="snapshot-item">
+                  <span>500 单月净贡献</span>
+                  <strong id="heroNet" class="positive">¥3,439</strong>
+                  <small>扣获客与固定开支</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-dark" aria-labelledby="verdict-title">
+        <div class="content verdict-grid">
+          <div class="verdict-copy">
+            <p class="eyebrow">Executive verdict</p>
+            <h2 id="verdict-title">市场需求真实，支付链路脆弱。</h2>
+            <p>用户愿意为注册、付款、续费、售后和中文沟通付费；利润的决定因素却不是产品官网价，而是卡成功率、拒付与退款、客户复购、平台条款和资金合规。先把业务定义为“客户自有账号的付款协助”，再测试需求。</p>
+          </div>
+          <div class="scoreboard" aria-label="商业评分">
+            <div class="score-row"><span>需求强度</span><div class="score-track"><div class="score-fill" style="width:84%"></div></div><strong>8.4</strong></div>
+            <div class="score-row"><span>单位经济</span><div class="score-track"><div class="score-fill" style="width:68%"></div></div><strong>6.8</strong></div>
+            <div class="score-row"><span>可规模化</span><div class="score-track"><div class="score-fill" style="width:52%"></div></div><strong>5.2</strong></div>
+            <div class="score-row"><span>合规可控</span><div class="score-track"><div class="score-fill" style="width:38%; background:#e0a040"></div></div><strong>3.8</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="cards">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">01 / Funding rail</p>
+              <h2>支持 USDT 的虚拟卡候选</h2>
+            </div>
+            <p>搜索结果只用于发现候选，费率以打开的官方页面为准。关键费项只在 App 内显示的平台，不进入基础利润模型。</p>
+          </div>
+
+          <div class="callout callout-warning">
+            <strong>推荐顺序：RedotPay 小额试单 → KAST 备份验证 → 商务卡方案。</strong>
+            个人消费卡适合验证支付成功率；当月单量超过 100，应该向发卡方书面确认商业用途、第三方代付和多笔订阅场景，再决定是否扩量。
+          </div>
+
+          <div class="table-scroll" style="margin-top:22px">
+            <table class="fee-table">
+              <thead>
+                <tr><th>平台</th><th>USDT / 入金</th><th>开卡与固定费</th><th>消费与换汇</th><th>适用判断</th><th>证据质量</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="平台"><div class="provider"><img src="assets/redotpay.png" alt=""><div><strong>RedotPay</strong><small>优先试单</small></div></div></td>
+                  <td data-label="USDT / 入金">支持加密资产入金；官方说明平台入金费为 0</td>
+                  <td data-label="开卡与固定费">虚拟卡 $10；实体卡 $100</td>
+                  <td data-label="消费与换汇">常规同币种消费 0；特定商户 1.5%，最低 $0.50；异币种 1.2%</td>
+                  <td data-label="适用判断"><span class="tag tag-good">费率最透明</span><br><small>先测 AI 商户授权率与退款路径</small></td>
+                  <td data-label="证据质量"><span class="tag tag-good">官方帮助中心</span></td>
+                </tr>
+                <tr>
+                  <td data-label="平台"><div class="provider"><img src="assets/kast.png" alt=""><div><strong>KAST</strong><small>备份候选</small></div></div></td>
+                  <td data-label="USDT / 入金">稳定币网络含 Ethereum、Tron、Arbitrum；页面示例提及 SOL USDT</td>
+                  <td data-label="开卡与固定费">Standard 会员 $0；含 2 张卡</td>
+                  <td data-label="消费与换汇">转换价格在确认前展示；官网未给统一点差；Standard 宣称 1.5% cashback</td>
+                  <td data-label="适用判断"><span class="tag tag-warn">须实测点差</span><br><small>注册地区与卡产品可用性先核验</small></td>
+                  <td data-label="证据质量"><span class="tag tag-good">官方产品页</span></td>
+                </tr>
+                <tr>
+                  <td data-label="平台"><div class="provider"><img src="assets/pokepay.png" alt=""><div><strong>PokePay</strong><small>香港范围</small></div></div></td>
+                  <td data-label="USDT / 入金">官网列出 USDT、USDC、BTC、ETH 充值</td>
+                  <td data-label="开卡与固定费">宣称 0 月费、0 年费；开卡费与入金转换费未公开</td>
+                  <td data-label="消费与换汇">宣称 0 跨境费、0 小额交易费</td>
+                  <td data-label="适用判断"><span class="tag tag-warn">仅作询价</span><br><small>网页提示内容面向香港居民</small></td>
+                  <td data-label="证据质量"><span class="tag tag-warn">关键费项缺失</span></td>
+                </tr>
+                <tr>
+                  <td data-label="平台"><div class="provider"><img src="assets/bybit.png" alt=""><div><strong>Bybit Card</strong><small>地区型产品</small></div></div></td>
+                  <td data-label="USDT / 入金">交易账户资产可用于卡消费，支持 USDT 余额路径</td>
+                  <td data-label="开卡与固定费">按地区卡计划执行；需在账户内查看当前报价</td>
+                  <td data-label="消费与换汇">不同地区费表不同；官方现行入口为 Card Usage, Fees &amp; Limits</td>
+                  <td data-label="适用判断"><span class="tag tag-risk">大陆资格弱</span><br><small>不作为中国大陆主体的首选链路</small></td>
+                  <td data-label="证据质量"><span class="tag tag-warn">地区动态页</span></td>
+                </tr>
+                <tr>
+                  <td data-label="平台"><div class="provider"><img src="assets/upay.png" alt=""><div><strong>UPay</strong><small>商务询价</small></div></div></td>
+                  <td data-label="USDT / 入金">官网列出 BTC、ETH、USDT，消费时转换至法币</td>
+                  <td data-label="开卡与固定费">公开页未列完整价格表</td>
+                  <td data-label="消费与换汇">点差、拒付、退款与失败交易费需书面报价</td>
+                  <td data-label="适用判断"><span class="tag tag-warn">先拿费表</span><br><small>更适合询问 Business 发卡方案</small></td>
+                  <td data-label="证据质量"><span class="tag tag-warn">功能已证实</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="fee-note">基础模型采用“USDT 溢价 1.2% + 卡/转换综合费 1.0% + 每单固定网络摊销 $0.30”，比 RedotPay 常规同币种消费更保守。拒付、退款、失败授权和税费必须在 10 至 20 笔真实交易后用实测值替换。</p>
+
+          <div class="flow" aria-label="资金成本链路">
+            <div class="flow-step"><span>01 购入 USDT</span><h3>汇率 + 溢价</h3><p>境外合规资金来源优先；保留来源与链上记录。</p></div>
+            <div class="flow-step"><span>02 充值卡账户</span><h3>网络费 + 入金费</h3><p>批量补充运营余额，降低每单固定网络成本。</p></div>
+            <div class="flow-step"><span>03 支付订阅</span><h3>卡费 + 转换点差</h3><p>以实际入账金额核算，不只看营销页费率。</p></div>
+            <div class="flow-step"><span>04 收取人民币</span><h3>通道费 + 售后准备</h3><p>客户资金、经营收入和备付资金分账记录。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-alt" id="pricing">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">02 / Pricing &amp; unit economics</p>
+              <h2>AI 产品价格与单笔利润</h2>
+            </div>
+            <p>美元价均为官方月付公开价、未含地区税。建议售价是基础情景下的经营测试价，不代表第三方市场成交价。</p>
+          </div>
+
+          <div class="calculator-wrap">
+            <aside class="controls" aria-label="成本参数">
+              <div class="controls-head"><strong>成本参数</strong><button class="btn" type="button" id="resetAssumptions"><i data-lucide="refresh-cw"></i>重置</button></div>
+              <div class="controls-body">
+                <div class="field"><div class="field-line"><label for="fxRate">USD/CNY</label><output id="fxRateOut">6.76</output></div><input id="fxRate" type="number" min="5" max="10" step="0.01" value="6.76"></div>
+                <div class="field"><div class="field-line"><label for="usdtPremium">USDT 购入溢价</label><output id="usdtPremiumOut">1.2%</output></div><input id="usdtPremium" type="number" min="0" max="10" step="0.1" value="1.2"></div>
+                <div class="field"><div class="field-line"><label for="cardFee">卡与转换综合费</label><output id="cardFeeOut">1.0%</output></div><input id="cardFee" type="number" min="0" max="10" step="0.1" value="1.0"></div>
+                <div class="field"><div class="field-line"><label for="networkFee">网络费 / 单</label><output id="networkFeeOut">$0.30</output></div><input id="networkFee" type="number" min="0" max="10" step="0.05" value="0.30"></div>
+                <div class="field"><div class="field-line"><label for="collectFee">人民币收款费</label><output id="collectFeeOut">0.6%</output></div><input id="collectFee" type="number" min="0" max="5" step="0.1" value="0.6"></div>
+                <div class="field"><div class="field-line"><label for="riskReserve">退款与风险准备</label><output id="riskReserveOut">2.0%</output></div><input id="riskReserve" type="number" min="0" max="15" step="0.1" value="2.0"></div>
+                <div class="field"><div class="field-line"><label for="laborCost">人工 / 单</label><output id="laborCostOut">¥8</output></div><input id="laborCost" type="number" min="0" max="100" step="1" value="8"></div>
+              </div>
+              <div class="assumption-note">汇率快照：open.er-api 2026-08-15 为 6.755647；USDT/USD 同日为 0.999123。页面用 6.76 方便经营测算。</div>
+            </aside>
+
+            <div>
+              <div class="formula"><strong>单笔贡献毛利</strong> = 建议售价 - <code>[官网美元价 × (1 + USDT 溢价) × (1 + 卡费) + 固定网络费] × 汇率</code> - 收款费 - 风险准备 - 人工。</div>
+              <div class="segmented" role="group" aria-label="按产品类型筛选">
+                <button type="button" class="segment active" data-filter="all">全部</button>
+                <button type="button" class="segment" data-filter="assistant">通用助手</button>
+                <button type="button" class="segment" data-filter="code">编程</button>
+                <button type="button" class="segment" data-filter="creative">创意生成</button>
+                <button type="button" class="segment" data-filter="work">效率</button>
+              </div>
+              <div class="table-scroll">
+                <table class="product-table">
+                  <thead><tr><th>产品 / 档位</th><th>官网月价</th><th>测试售价</th><th>全成本</th><th>贡献毛利</th><th>需求</th><th>条款风险</th><th>来源</th></tr></thead>
+                  <tbody id="productRows"></tbody>
+                </table>
+              </div>
+              <p class="fee-note">低客单价产品受 ¥8 人工成本影响明显，适合做 3 个月或年付包；高价创意工具更容易覆盖售后成本。Cursor 官方价格页明确表示只直销且不授权第三方销售，应从公开菜单剔除，仅在客户明确自助购买时提供咨询。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="scenario">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">03 / Monthly scenario</p>
+              <h2>月度经营情景</h2>
+            </div>
+            <p>默认产品组合以 ChatGPT、Claude、Google AI 为主，营销费只计新客。净贡献仍未扣企业所得税、创始人工资和异常大额赔付。</p>
+          </div>
+
+          <div class="scenario-grid">
+            <div class="scenario-controls">
+              <div class="field"><div class="field-line"><label for="orders">月订单</label><output id="ordersOut">500 单</output></div><input id="orders" type="range" min="50" max="1500" step="25" value="500"></div>
+              <div class="field"><div class="field-line"><label for="newShare">新客占比</label><output id="newShareOut">55%</output></div><input id="newShare" type="range" min="10" max="100" step="5" value="55"></div>
+              <div class="field"><div class="field-line"><label for="cac">新客 CAC</label><output id="cacOut">¥25</output></div><input id="cac" type="range" min="0" max="100" step="1" value="25"></div>
+              <div class="field"><div class="field-line"><label for="fixedCost">月固定开支</label><output id="fixedCostOut">¥6,500</output></div><input id="fixedCost" type="range" min="0" max="30000" step="500" value="6500"></div>
+              <div class="callout callout-warning" style="grid-column:1/-1">
+                <strong id="scenarioVerdict">500 单开始转正，但利润仍薄。</strong>
+                <span id="scenarioHint">先提升复购，再扩大投放。</span>
+              </div>
+            </div>
+
+            <div>
+              <div class="scenario-output">
+                <div class="scenario-metric"><span>月销售额</span><strong id="monthlyRevenue">¥88,700</strong></div>
+                <div class="scenario-metric"><span>变动后贡献</span><strong id="monthlyContribution">¥16,814</strong></div>
+                <div class="scenario-metric"><span>获客投入</span><strong id="monthlyMarketing">¥6,875</strong></div>
+                <div class="scenario-metric"><span>月净贡献</span><strong id="monthlyNet" class="positive">¥3,439</strong></div>
+              </div>
+              <div class="chart-wrap">
+                <div class="chart-head"><strong>订单量与净贡献</strong><span>红线为盈亏平衡</span></div>
+                <canvas id="profitChart" aria-label="订单量与月净贡献图"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-alt" id="risks">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">04 / Risk boundary</p>
+              <h2>六个会让利润模型失真的风险</h2>
+            </div>
+            <p>这些不是附录，而是是否开业的前置条件。尤其是虚拟货币资金来源、发卡方商业用途和产品转售条款。</p>
+          </div>
+
+          <div class="risk-grid">
+            <div class="risk-item"><div class="risk-level">高</div><div><h3>境内虚拟货币业务边界</h3><p>中国监管将虚拟货币兑换、交易撮合、定价和相关中介服务列为高风险活动。不要面向境内客户收 USDT，也不要替客户买卖 USDT；资金侧应由具备资格的境外主体和服务商完成。</p></div></div>
+            <div class="risk-item"><div class="risk-level">高</div><div><h3>发卡方冻结与商业用途</h3><p>个人卡连续为大量第三方账号付款，可能触发 AML、关联商户或代付风控。放量前取得商业用途确认，准备资金来源、订单、客户与退款记录。</p></div></div>
+            <div class="risk-item"><div class="risk-level">高</div><div><h3>产品条款与地区资格</h3><p>部分产品限制转售、账号共享或支持国家。Cursor 已明确不授权第三方销售；Claude、Google 等还要核对客户所在地与账号资格。</p></div></div>
+            <div class="risk-item"><div class="risk-level medium">中</div><div><h3>账号与隐私</h3><p>不保存客户密码、恢复码和长期 Cookie。优先使用客户现场登录、官方邀请、礼品码或企业席位，付款后只保留必要订单凭证。</p></div></div>
+            <div class="risk-item"><div class="risk-level medium">中</div><div><h3>退款错配</h3><p>官网退款可能回原卡且耗时 3 至 30 天，人民币退款会产生汇率差。售前写明退款条件、到账路径和汇率口径，风险准备金不低于销售额 2%。</p></div></div>
+            <div class="risk-item"><div class="risk-level medium">中</div><div><h3>低价竞争与获客</h3><p>如果市场价低于本报告的保本价，竞争者可能在用共享号、地区套利或异常支付链路。不要跟价；转向企业席位、年付代办或中文售后。</p></div></div>
+          </div>
+
+          <div class="callout callout-danger" style="margin-top:24px">
+            <strong>经营结构建议</strong>
+            人民币只作为服务收入收取；USDT 只作为境外合规主体自有资金的内部资金路径；客户始终拥有账号；订单、授权、付款、退款四类记录至少一一对应。正式上线前让熟悉跨境支付与虚拟资产规则的律师、会计师审核主体与税务口径。
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-dark" id="roadmap">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">05 / 30-day validation</p>
+              <h2>从 0 到第一批 50 个付费客户</h2>
+            </div>
+            <p>把每一步都设成可停止的验证门槛。没有卡成功率、退款和复购数据之前，不做库存账号，也不做大额余额沉淀。</p>
+          </div>
+
+          <div class="roadmap">
+            <div class="phase">
+              <span class="phase-number">PHASE 01 · DAY 1-7</span>
+              <h3>把链路跑通</h3>
+              <p>只选 ChatGPT Plus、Claude Pro、Midjourney Standard。</p>
+              <ul><li>注册主体与商户收款，完成 KYC</li><li>两张不同发卡链路的小额虚拟卡</li><li>每个产品完成 3 至 5 笔真实支付</li><li>记录授权、结算、退款、到账耗时</li></ul>
+              <div class="gate">通过线：支付成功率 ≥ 90%，全成本偏差 ≤ 3%</div>
+            </div>
+            <div class="phase">
+              <span class="phase-number">PHASE 02 · DAY 8-21</span>
+              <h3>卖给 50 位用户</h3>
+              <p>订单页只展示测试通过的 SKU，定价从 ¥189 起。</p>
+              <ul><li>客户自有账号，不提供共享账号</li><li>30 分钟响应，24 小时内完成</li><li>每单自动生成授权与交付记录</li><li>收集未成交原因和第二月续费意愿</li></ul>
+              <div class="gate">通过线：退款率 &lt; 3%，单笔贡献 ≥ 15%，CAC ≤ ¥25</div>
+            </div>
+            <div class="phase">
+              <span class="phase-number">PHASE 03 · DAY 22-30</span>
+              <h3>决定扩量或停止</h3>
+              <p>用真实数据替换本报告全部黄色假设项。</p>
+              <ul><li>向发卡方申请商业用途书面确认</li><li>上线复购提醒和客户自助订单状态</li><li>测试 3 个月包与企业席位服务</li><li>建立双卡路由和 30 天现金缓冲</li></ul>
+              <div class="gate">扩量线：复购意愿 ≥ 45%，预测盈亏平衡 &lt; 350 单/月</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="sources">
+        <div class="content">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">06 / Sources &amp; method</p>
+              <h2>来源与数据边界</h2>
+            </div>
+            <p>检索日期为 2026-08-15。动态、地区化和登录后价格在成交前必须再次核验。</p>
+          </div>
+
+          <table class="source-table">
+            <thead><tr><th>类别</th><th>来源</th><th>用途</th><th>核验日</th></tr></thead>
+            <tbody>
+              <tr><td data-label="类别">检索入口</td><td data-label="来源"><a href="https://www.bing.com/search?q=USDT+virtual+card+fees+AI+subscription" target="_blank" rel="noopener">Bing: USDT virtual card fees / AI subscription</a><br><a href="https://www.google.com/search?q=USDT+virtual+card+fees+AI+subscription" target="_blank" rel="noopener">Google: USDT virtual card fees / AI subscription</a></td><td data-label="用途">发现候选与交叉检查</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">虚拟卡</td><td data-label="来源"><a href="https://helpcenter.redotpay.com/en/articles/10566200-are-there-any-fees-for-getting-a-card" target="_blank" rel="noopener">RedotPay 开卡费</a> · <a href="https://helpcenter.redotpay.com/en/articles/11990992-what-s-the-deposit-fee-policy" target="_blank" rel="noopener">入金费</a> · <a href="https://helpcenter.redotpay.com/en/articles/10339275-which-purchases-have-a-transaction-fee" target="_blank" rel="noopener">交易费</a></td><td data-label="用途">$10 虚拟卡、0 入金费、特定商户费</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">虚拟卡</td><td data-label="来源"><a href="https://www.kast.xyz/crypto-cards" target="_blank" rel="noopener">KAST Crypto Cards</a> · <a href="https://www.kast.xyz/membership" target="_blank" rel="noopener">KAST Memberships</a> · <a href="https://pokepay.cc/" target="_blank" rel="noopener">PokePay 官网</a> · <a href="https://upay.com/" target="_blank" rel="noopener">UPay 官网</a></td><td data-label="用途">稳定币、卡费、地区和公开费率完整度</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">AI 定价</td><td data-label="来源"><a href="https://developers.openai.com/codex/pricing" target="_blank" rel="noopener">OpenAI Docs: Pricing</a> · <a href="https://claude.com/pricing" target="_blank" rel="noopener">Claude Pricing</a> · <a href="https://one.google.com/about/google-ai-plans/" target="_blank" rel="noopener">Google AI Plans</a></td><td data-label="用途">ChatGPT、Claude、Google AI 月价</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">AI 定价</td><td data-label="来源"><a href="https://docs.midjourney.com/hc/en-us/articles/27870484040333-Comparing-Midjourney-Plans" target="_blank" rel="noopener">Midjourney Plans</a> · <a href="https://cursor.com/pricing" target="_blank" rel="noopener">Cursor Pricing</a> · <a href="https://github.com/features/copilot/plans" target="_blank" rel="noopener">GitHub Copilot Plans</a></td><td data-label="用途">图像与编程工具月价、转售条款</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">AI 定价</td><td data-label="来源"><a href="https://www.perplexity.ai/pro" target="_blank" rel="noopener">Perplexity Pro</a> · <a href="https://runway.com/pricing" target="_blank" rel="noopener">Runway Pricing</a> · <a href="https://elevenlabs.io/pricing" target="_blank" rel="noopener">ElevenLabs Pricing</a> · <a href="https://suno.com/pricing" target="_blank" rel="noopener">Suno Pricing</a> · <a href="https://www.notion.com/pricing" target="_blank" rel="noopener">Notion Pricing</a></td><td data-label="用途">搜索、视频、语音、音乐、效率产品月价</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">市场数据</td><td data-label="来源"><a href="https://open.er-api.com/v6/latest/USD" target="_blank" rel="noopener">ExchangeRate-API USD 快照</a> · <a href="https://api.coingecko.com/api/v3/simple/price?ids=tether&amp;vs_currencies=usd" target="_blank" rel="noopener">CoinGecko USDT/USD</a></td><td data-label="用途">USD/CNY 6.755647；USDT/USD 0.999123</td><td data-label="核验日">2026-08-15</td></tr>
+              <tr><td data-label="类别">监管基线</td><td data-label="来源">中国人民银行等十部门《关于进一步防范和处置虚拟货币交易炒作风险的通知》（银发〔2021〕237号）</td><td data-label="用途">境内虚拟货币业务边界提示</td><td data-label="核验日">持续适用</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note">方法：Bing 与 Google 用于关键词扩展和候选发现；最终数字只采用已打开的官方定价、帮助中心或公开 API。未公开、仅登录可见、按地区变化的费率统一标为“须实测”，不拿搜索摘要填数。销售价格、产品组合、CAC、风险准备和人工均是经营假设，不是市场调查成交价。</p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="content"><span>海外 AI 代充商业可行性报告 · HTML 交互版</span><span>数据会变化，成交前复核官方价格、地区资格与条款</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const defaults = {
+      fxRate: 6.76,
+      usdtPremium: 1.2,
+      cardFee: 1.0,
+      networkFee: 0.30,
+      collectFee: 0.6,
+      riskReserve: 2.0,
+      laborCost: 8,
+      orders: 500,
+      newShare: 55,
+      cac: 25,
+      fixedCost: 6500
+    };
+
+    const products = [
+      { id: "chatgpt", brand: "openai", name: "ChatGPT Plus", tier: "个人高频", category: "assistant", usd: 20, sale: 189, demand: "很高", risk: "中", riskClass: "tag-warn", weight: 35, source: "https://developers.openai.com/codex/pricing", sourceLabel: "OpenAI Docs" },
+      { id: "claude", brand: "claude", name: "Claude Pro", tier: "月付；年付等效 $17", category: "assistant", usd: 20, sale: 189, demand: "高", risk: "高", riskClass: "tag-risk", weight: 15, source: "https://claude.com/pricing", sourceLabel: "官方" },
+      { id: "google", brand: "google", name: "Google AI Pro", tier: "地区价格以结账为准", category: "assistant", usd: 19.99, sale: 189, demand: "高", risk: "高", riskClass: "tag-risk", weight: 10, source: "https://one.google.com/about/google-ai-plans/", sourceLabel: "官方" },
+      { id: "mid-basic", brand: "midjourney", name: "Midjourney Basic", tier: "3.3h Fast GPU", category: "creative", usd: 10, sale: 99, demand: "高", risk: "中", riskClass: "tag-warn", weight: 8, source: "https://docs.midjourney.com/hc/en-us/articles/27870484040333-Comparing-Midjourney-Plans", sourceLabel: "官方" },
+      { id: "mid-standard", brand: "midjourney", name: "Midjourney Standard", tier: "15h Fast + Relax", category: "creative", usd: 30, sale: 279, demand: "高", risk: "中", riskClass: "tag-warn", weight: 5, source: "https://docs.midjourney.com/hc/en-us/articles/27870484040333-Comparing-Midjourney-Plans", sourceLabel: "官方" },
+      { id: "cursor", brand: "cursor", name: "Cursor Pro", tier: "官方明确仅直销", category: "code", usd: 20, sale: 189, demand: "高", risk: "很高", riskClass: "tag-risk", weight: 8, source: "https://cursor.com/pricing", sourceLabel: "官方" },
+      { id: "copilot", brand: "github", name: "GitHub Copilot Pro", tier: "个人开发者", category: "code", usd: 10, sale: 99, demand: "中", risk: "中", riskClass: "tag-warn", weight: 5, source: "https://github.com/features/copilot/plans", sourceLabel: "官方" },
+      { id: "perplexity", brand: "perplexity", name: "Perplexity Pro", tier: "高级搜索", category: "assistant", usd: 20, sale: 189, demand: "中高", risk: "中", riskClass: "tag-warn", weight: 5, source: "https://www.perplexity.ai/pro", sourceLabel: "官方" },
+      { id: "runway", brand: "runway", name: "Runway Standard", tier: "月付 $15", category: "creative", usd: 15, sale: 149, demand: "中", risk: "中", riskClass: "tag-warn", weight: 3, source: "https://runway.com/pricing", sourceLabel: "官方" },
+      { id: "elevenlabs", brand: "elevenlabs", name: "ElevenLabs Creator", tier: "121k credits", category: "creative", usd: 22, sale: 209, demand: "中", risk: "中", riskClass: "tag-warn", weight: 2, source: "https://elevenlabs.io/pricing", sourceLabel: "官方" },
+      { id: "suno", brand: "suno", name: "Suno Pro", tier: "月付 $10；年付等效 $8", category: "creative", usd: 10, sale: 99, demand: "中高", risk: "中", riskClass: "tag-warn", weight: 3, source: "https://suno.com/pricing", sourceLabel: "官方" },
+      { id: "notion", brand: "notion", name: "Notion Business", tier: "含 AI；按席位", category: "work", usd: 24, sale: 229, demand: "中", risk: "中", riskClass: "tag-warn", weight: 1, source: "https://www.notion.com/pricing", sourceLabel: "官方" }
+    ];
+
+    const money = new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", maximumFractionDigits: 0 });
+    const decimalMoney = new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    let activeFilter = "all";
+
+    function value(id) { return Number(document.getElementById(id).value); }
+    function assumptions() {
+      return {
+        fx: value("fxRate"),
+        premium: value("usdtPremium") / 100,
+        card: value("cardFee") / 100,
+        network: value("networkFee"),
+        collect: value("collectFee") / 100,
+        risk: value("riskReserve") / 100,
+        labor: value("laborCost")
+      };
+    }
+
+    function economics(product, a = assumptions()) {
+      const funding = (product.usd * (1 + a.premium) * (1 + a.card) + a.network) * a.fx;
+      const revenueCosts = product.sale * (a.collect + a.risk);
+      const total = funding + revenueCosts + a.labor;
+      const profit = product.sale - total;
+      const margin = product.sale ? profit / product.sale : 0;
+      return { funding, revenueCosts, total, profit, margin };
+    }
+
+    function renderProducts() {
+      const body = document.getElementById("productRows");
+      body.innerHTML = products
+        .filter(p => activeFilter === "all" || p.category === activeFilter)
+        .map(p => {
+          const e = economics(p);
+          const marginPct = e.margin * 100;
+          const fillClass = marginPct < 0 ? "negative" : marginPct < 12 ? "low" : "";
+          const fillWidth = Math.max(0, Math.min(100, marginPct * 3.2));
+          return `<tr data-product="${p.id}">
+            <td><div class="product-name"><img src="assets/${p.brand}.png" alt=""><div><strong>${p.name}</strong><small>${p.tier}</small></div></div></td>
+            <td class="money">$${p.usd.toFixed(p.usd % 1 ? 2 : 0)}</td>
+            <td><input class="price-input" type="number" min="0" step="1" value="${p.sale}" data-price="${p.id}" aria-label="${p.name} 测试售价"></td>
+            <td class="money">${decimalMoney.format(e.total)}</td>
+            <td class="profit-cell"><strong class="${e.profit < 0 ? "negative" : "positive"}">${decimalMoney.format(e.profit)}</strong><small>${marginPct.toFixed(1)}%</small><div class="margin-track"><div class="margin-fill ${fillClass}" style="width:${fillWidth}%"></div></div></td>
+            <td><span class="tag tag-info">${p.demand}</span></td>
+            <td><span class="tag ${p.riskClass}">${p.risk}</span></td>
+            <td><a href="${p.source}" target="_blank" rel="noopener">${p.sourceLabel}</a></td>
+          </tr>`;
+        }).join("");
+
+      body.querySelectorAll("[data-price]").forEach(input => {
+        input.addEventListener("input", event => {
+          const product = products.find(p => p.id === event.target.dataset.price);
+          product.sale = Math.max(0, Number(event.target.value));
+          updateAll(false);
+        });
+      });
+    }
+
+    function weightedEconomics() {
+      const totalWeight = products.reduce((sum, p) => sum + p.weight, 0);
+      return products.reduce((acc, p) => {
+        const ratio = p.weight / totalWeight;
+        const e = economics(p);
+        acc.revenue += p.sale * ratio;
+        acc.contribution += e.profit * ratio;
+        return acc;
+      }, { revenue: 0, contribution: 0 });
+    }
+
+    function updateOutputs() {
+      const display = [
+        ["fxRateOut", value("fxRate").toFixed(2)],
+        ["usdtPremiumOut", value("usdtPremium").toFixed(1) + "%"],
+        ["cardFeeOut", value("cardFee").toFixed(1) + "%"],
+        ["networkFeeOut", "$" + value("networkFee").toFixed(2)],
+        ["collectFeeOut", value("collectFee").toFixed(1) + "%"],
+        ["riskReserveOut", value("riskReserve").toFixed(1) + "%"],
+        ["laborCostOut", money.format(value("laborCost"))],
+        ["ordersOut", value("orders") + " 单"],
+        ["newShareOut", value("newShare") + "%"],
+        ["cacOut", money.format(value("cac"))],
+        ["fixedCostOut", money.format(value("fixedCost"))]
+      ];
+      display.forEach(([id, text]) => document.getElementById(id).textContent = text);
+    }
+
+    function monthlyModel(orderCount = value("orders")) {
+      const weighted = weightedEconomics();
+      const marketing = orderCount * (value("newShare") / 100) * value("cac");
+      const revenue = orderCount * weighted.revenue;
+      const contribution = orderCount * weighted.contribution;
+      const net = contribution - marketing - value("fixedCost");
+      const marginal = weighted.contribution - (value("newShare") / 100) * value("cac");
+      const breakEven = marginal > 0 ? Math.ceil(value("fixedCost") / marginal) : Infinity;
+      return { ...weighted, marketing, revenue, contribution, net, breakEven, marginal };
+    }
+
+    function updateScenario() {
+      const model = monthlyModel();
+      document.getElementById("monthlyRevenue").textContent = money.format(model.revenue);
+      document.getElementById("monthlyContribution").textContent = money.format(model.contribution);
+      document.getElementById("monthlyMarketing").textContent = money.format(model.marketing);
+      const net = document.getElementById("monthlyNet");
+      net.textContent = money.format(model.net);
+      net.className = model.net >= 0 ? "positive" : "negative";
+
+      document.getElementById("heroAov").textContent = money.format(model.revenue / Math.max(value("orders"), 1));
+      document.getElementById("heroContribution").textContent = money.format(model.contribution / Math.max(value("orders"), 1));
+      document.getElementById("heroBreakEven").textContent = Number.isFinite(model.breakEven) ? model.breakEven + " 单" : "不成立";
+      const model500 = monthlyModel(500);
+      const heroNet = document.getElementById("heroNet");
+      heroNet.textContent = money.format(model500.net);
+      heroNet.className = model500.net >= 0 ? "positive" : "negative";
+
+      const verdict = document.getElementById("scenarioVerdict");
+      const hint = document.getElementById("scenarioHint");
+      if (model.net >= 10000) {
+        verdict.textContent = "当前情景达到可持续经营区间。";
+        hint.textContent = "优先增加复购和企业席位，不急着扩 SKU。";
+      } else if (model.net >= 0) {
+        verdict.textContent = value("orders") + " 单已转正，但利润缓冲仍薄。";
+        hint.textContent = "先降低 CAC、提高复购，再扩大投放。";
+      } else {
+        verdict.textContent = "当前情景每月仍亏 " + money.format(Math.abs(model.net)) + "。";
+        hint.textContent = Number.isFinite(model.breakEven) ? "预计约 " + model.breakEven + " 单/月达到盈亏平衡。" : "单笔边际贡献不足，需要先提价或降本。";
+      }
+      drawChart();
+    }
+
+    function drawChart() {
+      const canvas = document.getElementById("profitChart");
+      const ratio = Math.max(1, window.devicePixelRatio || 1);
+      const width = Math.max(320, canvas.clientWidth);
+      const height = Math.max(220, canvas.clientHeight);
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      ctx.clearRect(0, 0, width, height);
+
+      const maxOrders = 1500;
+      const samples = Array.from({ length: 31 }, (_, i) => i * 50);
+      const values = samples.map(count => monthlyModel(count).net);
+      const minY = Math.min(-value("fixedCost"), ...values);
+      const maxY = Math.max(1000, ...values);
+      const left = 50, right = 16, top = 16, bottom = 32;
+      const plotW = width - left - right;
+      const plotH = height - top - bottom;
+      const x = n => left + (n / maxOrders) * plotW;
+      const y = n => top + (maxY - n) / (maxY - minY) * plotH;
+
+      ctx.strokeStyle = "#dfe6e3";
+      ctx.lineWidth = 1;
+      ctx.fillStyle = "#72807b";
+      ctx.font = "10px system-ui";
+      ctx.textAlign = "right";
+      for (let i = 0; i <= 4; i++) {
+        const val = minY + (maxY - minY) * i / 4;
+        const py = y(val);
+        ctx.beginPath(); ctx.moveTo(left, py); ctx.lineTo(width - right, py); ctx.stroke();
+        ctx.fillText(Math.round(val / 1000) + "k", left - 7, py + 3);
+      }
+      ctx.textAlign = "center";
+      [0, 500, 1000, 1500].forEach(n => ctx.fillText(String(n), x(n), height - 10));
+
+      const zeroY = y(0);
+      ctx.strokeStyle = "#aa3d36";
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath(); ctx.moveTo(left, zeroY); ctx.lineTo(width - right, zeroY); ctx.stroke();
+      ctx.setLineDash([]);
+
+      const gradient = ctx.createLinearGradient(0, top, 0, height - bottom);
+      gradient.addColorStop(0, "rgba(15,123,93,0.22)");
+      gradient.addColorStop(1, "rgba(15,123,93,0.02)");
+      ctx.beginPath();
+      samples.forEach((n, i) => { const px = x(n), py = y(values[i]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+      ctx.lineTo(x(maxOrders), height - bottom); ctx.lineTo(x(0), height - bottom); ctx.closePath();
+      ctx.fillStyle = gradient; ctx.fill();
+
+      ctx.beginPath();
+      samples.forEach((n, i) => { const px = x(n), py = y(values[i]); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); });
+      ctx.strokeStyle = "#0f7b5d"; ctx.lineWidth = 2.5; ctx.stroke();
+
+      const currentOrders = value("orders");
+      const currentNet = monthlyModel(currentOrders).net;
+      ctx.beginPath(); ctx.arc(x(currentOrders), y(currentNet), 5, 0, Math.PI * 2);
+      ctx.fillStyle = currentNet >= 0 ? "#0f7b5d" : "#aa3d36"; ctx.fill();
+      ctx.strokeStyle = "white"; ctx.lineWidth = 2; ctx.stroke();
+    }
+
+    function updateAll(render = true) {
+      updateOutputs();
+      if (render) renderProducts();
+      else {
+        const focused = document.activeElement;
+        const productId = focused && focused.dataset ? focused.dataset.price : null;
+        renderProducts();
+        if (productId) {
+          const next = document.querySelector(`[data-price="${productId}"]`);
+          if (next) { next.focus(); next.setSelectionRange?.(String(next.value).length, String(next.value).length); }
+        }
+      }
+      updateScenario();
+    }
+
+    function resetAssumptions(includeScenario = false) {
+      ["fxRate", "usdtPremium", "cardFee", "networkFee", "collectFee", "riskReserve", "laborCost"].forEach(id => document.getElementById(id).value = defaults[id]);
+      if (includeScenario) {
+        ["orders", "newShare", "cac", "fixedCost"].forEach(id => document.getElementById(id).value = defaults[id]);
+        const sales = { chatgpt:189, claude:189, google:189, "mid-basic":99, "mid-standard":279, cursor:189, copilot:99, perplexity:189, runway:149, elevenlabs:209, suno:99, notion:229 };
+        products.forEach(p => p.sale = sales[p.id]);
+      }
+      updateAll();
+    }
+
+    document.querySelectorAll(".segment").forEach(button => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        document.querySelectorAll(".segment").forEach(item => item.classList.toggle("active", item === button));
+        renderProducts();
+      });
+    });
+
+    ["fxRate", "usdtPremium", "cardFee", "networkFee", "collectFee", "riskReserve", "laborCost", "orders", "newShare", "cac", "fixedCost"].forEach(id => {
+      document.getElementById(id).addEventListener("input", () => updateAll());
+    });
+    document.getElementById("resetAssumptions").addEventListener("click", () => resetAssumptions(false));
+    document.getElementById("resetAll").addEventListener("click", () => resetAssumptions(true));
+    document.getElementById("printReport").addEventListener("click", () => window.print());
+
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const navLinks = [...document.querySelectorAll(".side-nav a")];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+    }, { rootMargin: "-20% 0px -65% 0px", threshold: [0, 0.1, 0.4] });
+    sections.forEach(section => observer.observe(section));
+
+    window.addEventListener("resize", drawChart);
+    window.addEventListener("load", () => {
+      if (window.lucide) window.lucide.createIcons();
+      updateAll();
+    });
+  </script>
+</body>
+</html>
