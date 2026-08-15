@@ -1,0 +1,915 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="国内礼品卡工作室商业模式、供应链、利润模型、平台条款与30天验证方案。">
+  <title>国内礼品卡工作室商业模式报告</title>
+  <style>
+    :root {
+      --ink: #17211d;
+      --muted: #66706a;
+      --paper: #f3f5f3;
+      --surface: #ffffff;
+      --line: #d9dfda;
+      --green: #176b52;
+      --green-soft: #e5f2ec;
+      --orange: #c65d22;
+      --orange-soft: #fff0e6;
+      --red: #a33f36;
+      --red-soft: #fbeae8;
+      --yellow: #a97912;
+      --yellow-soft: #fff7dd;
+      --blue: #356d8b;
+      --blue-soft: #e8f2f7;
+      --shadow: 0 10px 28px rgba(21, 42, 32, .08);
+      --radius: 8px;
+      --sidebar: 228px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    button, input { font: inherit; }
+    a { color: var(--green); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: var(--orange); }
+    img { display: block; max-width: 100%; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.24; letter-spacing: 0; }
+    h1 { margin-bottom: 16px; font-size: 40px; }
+    h2 { margin-bottom: 9px; font-size: 27px; }
+    h3 { margin-bottom: 8px; font-size: 17px; }
+    small { color: var(--muted); }
+
+    .skip-link {
+      position: fixed;
+      left: 12px;
+      top: -50px;
+      z-index: 100;
+      padding: 8px 12px;
+      color: white;
+      background: var(--ink);
+    }
+    .skip-link:focus { top: 12px; }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 20;
+      width: var(--sidebar);
+      padding: 25px 18px;
+      color: #eef5f1;
+      background: #17251f;
+      border-right: 1px solid rgba(255,255,255,.08);
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      gap: 11px;
+      align-items: center;
+      margin-bottom: 28px;
+      color: white;
+      text-decoration: none;
+    }
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      background: #e9b44c;
+      color: #17251f;
+      border-radius: 7px;
+      font-weight: 800;
+    }
+    .brand-copy strong, .brand-copy span { display: block; }
+    .brand-copy span { color: #aebdb5; font-size: 12px; }
+    .nav-label {
+      margin: 20px 10px 7px;
+      color: #7f9288;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .nav-list { display: grid; gap: 4px; }
+    .nav-list a {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 10px;
+      color: #cad7d0;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .nav-list a:hover, .nav-list a.active { color: white; background: rgba(255,255,255,.09); }
+    .nav-list svg { width: 17px; height: 17px; flex: 0 0 17px; }
+    .back-link {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    .page { margin-left: var(--sidebar); }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 56px;
+      padding: 9px 34px;
+      background: rgba(255,255,255,.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+    .topbar strong { font-size: 14px; }
+    .topbar-meta { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: 13px; }
+    .status-dot { width: 8px; height: 8px; background: #38a169; border-radius: 50%; }
+
+    .hero {
+      padding: 58px 34px 42px;
+      color: white;
+      background: #203b31;
+      border-bottom: 5px solid #e9b44c;
+    }
+    .hero-inner, .section-inner { width: min(1180px, 100%); margin: 0 auto; }
+    .eyebrow {
+      margin-bottom: 12px;
+      color: #e9c66f;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .8fr); gap: 52px; align-items: end; }
+    .hero p { max-width: 760px; margin-bottom: 22px; color: #c9d8d0; font-size: 17px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 14px;
+      color: var(--ink);
+      background: white;
+      border: 1px solid rgba(255,255,255,.65);
+      border-radius: 6px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn:hover { color: var(--ink); background: #f1f5f2; }
+    .btn-primary { background: #e9b44c; border-color: #e9b44c; }
+    .btn svg { width: 17px; height: 17px; }
+    .brand-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 46px);
+      gap: 10px;
+      margin-bottom: 17px;
+    }
+    .brand-strip img {
+      width: 46px;
+      height: 46px;
+      padding: 7px;
+      background: white;
+      border-radius: 7px;
+      object-fit: contain;
+    }
+    .hero-note { color: #dbe7e1; font-size: 14px; }
+
+    section { padding: 54px 34px; scroll-margin-top: 24px; }
+    section:nth-of-type(even) { background: var(--surface); }
+    .section-head { display: flex; justify-content: space-between; gap: 30px; align-items: end; margin-bottom: 25px; }
+    .section-head p { max-width: 700px; margin-bottom: 0; color: var(--muted); }
+    .method-chip {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      color: var(--blue);
+      background: var(--blue-soft);
+      border: 1px solid #c7dce7;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .verdict-band {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(150px, .6fr));
+      border: 1px solid var(--line);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+    .verdict-main { padding: 24px; border-right: 1px solid var(--line); }
+    .verdict-main .signal { display: inline-block; margin-bottom: 11px; padding: 4px 8px; color: var(--green); background: var(--green-soft); font-size: 12px; font-weight: 800; }
+    .verdict-main h3 { font-size: 22px; }
+    .verdict-main p { margin-bottom: 0; color: var(--muted); }
+    .metric { padding: 23px 19px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; margin-bottom: 3px; color: var(--green); font-size: 26px; }
+    .metric span { color: var(--muted); font-size: 13px; }
+    .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .decision {
+      padding: 18px;
+      background: white;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--green);
+      border-radius: var(--radius);
+    }
+    .decision.warn { border-top-color: var(--yellow); }
+    .decision.stop { border-top-color: var(--red); }
+    .decision p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .model-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .model-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 270px;
+      padding: 19px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+    .model-card .model-top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .model-number { color: var(--orange); font-size: 12px; font-weight: 800; }
+    .tag { padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 800; }
+    .tag.good { color: var(--green); background: var(--green-soft); }
+    .tag.watch { color: var(--yellow); background: var(--yellow-soft); }
+    .tag.risk { color: var(--red); background: var(--red-soft); }
+    .model-card h3 { margin-top: 14px; }
+    .model-card p { color: var(--muted); font-size: 14px; }
+    .model-facts { display: grid; gap: 7px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); }
+    .model-facts div { display: flex; justify-content: space-between; gap: 15px; font-size: 13px; }
+    .model-facts span { color: var(--muted); }
+    .model-facts strong { text-align: right; }
+    .assumption-note { margin-top: 13px; color: var(--muted); font-size: 12px; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      margin-top: 4px;
+      border: 1px solid var(--line);
+      background: white;
+      overflow-x: auto;
+    }
+    .flow-step { position: relative; min-width: 130px; padding: 20px 15px; border-right: 1px solid var(--line); }
+    .flow-step:last-child { border-right: 0; }
+    .flow-step::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 31px;
+      right: -5px;
+      width: 8px;
+      height: 8px;
+      background: var(--orange);
+      transform: rotate(45deg);
+    }
+    .flow-step:last-child::after { display: none; }
+    .flow-step i { display: grid; width: 34px; height: 34px; margin-bottom: 12px; place-items: center; color: var(--green); background: var(--green-soft); border-radius: 6px; }
+    .flow-step svg { width: 18px; height: 18px; }
+    .flow-step strong, .flow-step span { display: block; }
+    .flow-step span { color: var(--muted); font-size: 12px; }
+    .money-layers { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; margin-top: 18px; }
+    .layer { padding: 19px; background: white; border: 1px solid var(--line); }
+    .layer ul { margin: 10px 0 0; padding-left: 20px; color: var(--muted); }
+
+    .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .preset {
+      min-height: 36px;
+      padding: 7px 11px;
+      color: var(--muted);
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .preset:hover, .preset.active { color: white; background: var(--green); border-color: var(--green); }
+    .calculator { display: grid; grid-template-columns: minmax(320px, .9fr) minmax(0, 1.35fr); border: 1px solid var(--line); background: white; box-shadow: var(--shadow); }
+    .controls { padding: 22px; border-right: 1px solid var(--line); }
+    .control-group + .control-group { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+    .control-group h3 { font-size: 14px; }
+    .inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: grid; gap: 5px; }
+    .field label { color: var(--muted); font-size: 12px; font-weight: 700; }
+    .input-wrap { position: relative; }
+    .input-wrap input {
+      width: 100%;
+      min-height: 39px;
+      padding: 7px 36px 7px 9px;
+      color: var(--ink);
+      background: #fbfcfb;
+      border: 1px solid #cdd5d0;
+      border-radius: 5px;
+      outline: none;
+    }
+    .input-wrap input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(23,107,82,.12); }
+    .unit { position: absolute; right: 10px; top: 8px; color: var(--muted); font-size: 13px; }
+    .reset-row { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-top: 17px; }
+    .reset-row small { max-width: 250px; }
+    .icon-btn { width: 38px; height: 38px; padding: 0; flex: 0 0 38px; }
+    .results { padding: 23px; min-width: 0; }
+    .result-hero { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); }
+    .result-box { padding: 17px; border-right: 1px solid var(--line); }
+    .result-box:last-child { border-right: 0; }
+    .result-box span, .result-box strong { display: block; }
+    .result-box span { color: var(--muted); font-size: 12px; }
+    .result-box strong { margin-top: 3px; font-size: 24px; }
+    .result-box strong.positive { color: var(--green); }
+    .result-box strong.negative { color: var(--red); }
+    .waterfall { margin-top: 18px; }
+    .waterfall-row { display: grid; grid-template-columns: 128px minmax(100px, 1fr) 90px; gap: 10px; align-items: center; margin: 8px 0; font-size: 13px; }
+    .bar-track { height: 9px; background: #edf0ee; border-radius: 2px; overflow: hidden; }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.cost { background: var(--orange); }
+    .bar-fill.risk { background: var(--red); }
+    .waterfall-row strong { text-align: right; }
+    .chart-wrap { margin-top: 19px; padding-top: 18px; border-top: 1px solid var(--line); }
+    #scenarioChart { display: block; width: 100%; height: 220px; }
+    .formula { margin: 15px 0 0; padding: 12px; color: var(--muted); background: #f5f7f5; border-left: 3px solid var(--green); font-size: 12px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); background: white; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: #4c5751; background: #edf1ee; font-size: 12px; }
+    td { font-size: 13px; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .score { display: inline-flex; min-width: 62px; justify-content: center; padding: 3px 7px; border-radius: 4px; font-weight: 800; }
+    .score.high { color: var(--green); background: var(--green-soft); }
+    .score.mid { color: var(--yellow); background: var(--yellow-soft); }
+    .score.low { color: var(--red); background: var(--red-soft); }
+    .product-name { display: flex; gap: 10px; align-items: center; }
+    .product-name img { width: 30px; height: 30px; padding: 4px; object-fit: contain; background: #f2f4f2; border-radius: 5px; }
+    .product-name span { display: block; color: var(--muted); font-size: 11px; }
+
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .risk-panel { padding: 20px; background: white; border: 1px solid var(--line); }
+    .risk-panel h3 { display: flex; gap: 9px; align-items: center; }
+    .risk-panel h3 svg { width: 18px; height: 18px; color: var(--red); }
+    .checklist { display: grid; gap: 9px; margin-top: 13px; }
+    .check {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 8px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .check i { display: grid; width: 19px; height: 19px; place-items: center; color: var(--green); background: var(--green-soft); border-radius: 3px; }
+    .check i svg { width: 13px; height: 13px; }
+    .red-flags { display: grid; gap: 7px; margin: 12px 0 0; padding: 0; list-style: none; }
+    .red-flags li { padding: 8px 10px; color: #6f2a25; background: var(--red-soft); border-left: 3px solid var(--red); font-size: 13px; }
+    .boundary { margin-top: 17px; padding: 17px 19px; background: #1e2b25; color: white; }
+    .boundary strong { color: #e9c66f; }
+    .boundary p { margin: 6px 0 0; color: #c6d2cc; }
+
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: white; }
+    .week { padding: 20px; border-right: 1px solid var(--line); }
+    .week:last-child { border-right: 0; }
+    .week-no { color: var(--orange); font-size: 12px; font-weight: 800; }
+    .week ul { margin: 11px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px; }
+    .gate-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 16px; }
+    .gate { padding: 14px; background: white; border: 1px solid var(--line); border-bottom: 3px solid var(--green); }
+    .gate strong, .gate span { display: block; }
+    .gate strong { color: var(--green); font-size: 19px; }
+    .gate span { color: var(--muted); font-size: 12px; }
+
+    .source-list { display: grid; gap: 0; border: 1px solid var(--line); background: white; }
+    .source-row { display: grid; grid-template-columns: 145px 1fr 150px; gap: 15px; padding: 14px; border-bottom: 1px solid var(--line); }
+    .source-row:last-child { border-bottom: 0; }
+    .source-row strong { font-size: 13px; }
+    .source-row p { margin: 0; color: var(--muted); font-size: 12px; }
+    .source-row time { color: var(--muted); font-size: 12px; text-align: right; }
+    .disclaimer { margin-top: 16px; color: var(--muted); font-size: 12px; }
+    footer { padding: 24px 34px 34px; color: var(--muted); background: white; border-top: 1px solid var(--line); font-size: 12px; }
+    footer .section-inner { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1080px) {
+      :root { --sidebar: 204px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 25px; }
+      .verdict-band { grid-template-columns: 1fr 1fr; }
+      .verdict-main { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:nth-child(3) { border-right: 0; }
+      .metric:last-child { border-top: 1px solid var(--line); }
+      .model-grid { grid-template-columns: 1fr 1fr; }
+      .calculator { grid-template-columns: 1fr; }
+      .controls { border-right: 0; border-bottom: 1px solid var(--line); }
+      .timeline { grid-template-columns: 1fr 1fr; }
+      .week:nth-child(2) { border-right: 0; }
+      .week:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .gate-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 760px) {
+      body { font-size: 14px; }
+      h1 { font-size: 31px; }
+      h2 { font-size: 23px; }
+      .sidebar {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        height: auto;
+        padding: 9px 13px;
+        overflow-x: auto;
+      }
+      .brand, .nav-label { display: none; }
+      .nav-list { display: flex; width: max-content; gap: 4px; }
+      .back-link { display: none !important; }
+      .nav-list a { min-height: 37px; padding: 7px 10px; white-space: nowrap; }
+      .nav-list svg { display: none; }
+      .page { margin-left: 0; }
+      .topbar { padding: 8px 16px; }
+      .topbar-meta span:last-child { display: none; }
+      .hero { padding: 40px 18px 31px; }
+      section { padding: 39px 18px; }
+      .section-head { display: block; }
+      .method-chip { display: inline-block; margin-top: 10px; }
+      .verdict-band { grid-template-columns: 1fr; }
+      .verdict-main { grid-column: auto; }
+      .metric { border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:last-child { border-top: 0; border-bottom: 0; }
+      .decision-grid, .model-grid, .money-layers, .risk-grid { grid-template-columns: 1fr; }
+      .model-card { min-height: 0; }
+      .inputs { grid-template-columns: 1fr 1fr; }
+      .result-hero { grid-template-columns: 1fr; }
+      .result-box { border-right: 0; border-bottom: 1px solid var(--line); }
+      .result-box:last-child { border-bottom: 0; }
+      .waterfall-row { grid-template-columns: 100px minmax(70px, 1fr) 75px; }
+      .timeline { grid-template-columns: 1fr; }
+      .week { border-right: 0; border-bottom: 1px solid var(--line); }
+      .week:last-child { border-bottom: 0; }
+      .gate-grid { grid-template-columns: 1fr 1fr; }
+      .source-row { grid-template-columns: 1fr; gap: 5px; }
+      .source-row time { text-align: left; }
+      footer .section-inner { display: block; }
+    }
+
+    @media (max-width: 420px) {
+      .inputs, .gate-grid { grid-template-columns: 1fr; }
+      .hero-actions { display: grid; }
+      .btn { width: 100%; }
+      .waterfall-row { grid-template-columns: 88px minmax(55px, 1fr) 68px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+
+  <aside class="sidebar" aria-label="报告导航">
+    <a class="brand" href="#top">
+      <span class="brand-mark">GC</span>
+      <span class="brand-copy"><strong>Gift Card Desk</strong><span>工作室经营研究</span></span>
+    </a>
+    <div class="nav-label">报告目录</div>
+    <nav class="nav-list">
+      <a href="#verdict" class="active"><i data-lucide="badge-check"></i>结论</a>
+      <a href="#models"><i data-lucide="layers-3"></i>玩法地图</a>
+      <a href="#chain"><i data-lucide="git-branch"></i>供应链</a>
+      <a href="#economics"><i data-lucide="calculator"></i>利润模型</a>
+      <a href="#platforms"><i data-lucide="layout-grid"></i>平台适配</a>
+      <a href="#risks"><i data-lucide="shield-alert"></i>风险边界</a>
+      <a href="#roadmap"><i data-lucide="route"></i>30 天试单</a>
+      <a href="#sources"><i data-lucide="book-open"></i>来源</a>
+    </nav>
+    <div class="back-link nav-list">
+      <a href="index.html"><i data-lucide="arrow-left"></i>返回 AI 代充报告</a>
+    </div>
+  </aside>
+
+  <div class="page" id="top">
+    <header class="topbar">
+      <strong>国内礼品卡工作室商业模式报告</strong>
+      <div class="topbar-meta"><span class="status-dot"></span><span>数据快照：2026-08-15</span></div>
+    </header>
+
+    <main id="main">
+      <div class="hero">
+        <div class="hero-inner hero-grid">
+          <div>
+            <div class="eyebrow">Business Model / China Operator View</div>
+            <h1>礼品卡不是高毛利商品，<br>而是一种受限制的数字库存。</h1>
+            <p>工作室真正赚的是供货折扣、地区稀缺、交付效率和售后服务的组合价差。单纯囤码倒卖容易被无效卡、拒付、账户冻结和平台条款吃掉利润。</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#economics"><i data-lucide="calculator"></i>测算单笔利润</a>
+              <a class="btn" href="#roadmap"><i data-lucide="clipboard-check"></i>查看 50 单验证</a>
+            </div>
+          </div>
+          <div>
+            <div class="brand-strip" aria-label="典型数字产品品牌">
+              <img src="assets/google.png" alt="Google">
+              <img src="assets/openai.png" alt="OpenAI">
+              <img src="assets/midjourney.png" alt="Midjourney">
+              <img src="assets/suno.png" alt="Suno">
+            </div>
+            <div class="hero-note"><strong>和 AI 代充的关系：</strong>礼品卡适合 App Store / Google Play 内购类订阅；网页直付产品仍需要虚拟卡、企业席位或官方账单渠道。</div>
+          </div>
+        </div>
+      </div>
+
+      <section id="verdict">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Executive Verdict</div><h2>先做交付服务，不做无来源的卡密盘</h2><p>这门生意有需求，但基础卡差很薄。只有当供货可追溯、净贡献率达到门槛、复购由订阅服务驱动时，才值得扩量。</p></div>
+            <span class="method-chip">事实与假设分层</span>
+          </div>
+
+          <div class="verdict-band">
+            <div class="verdict-main">
+              <span class="signal">建议：小成本验证</span>
+              <h3>可做，但应定位成“海外数字商品交付商”</h3>
+              <p>礼品卡只是付款和库存载体。面向中国用户的价值是人民币报价、选区校验、卡密交付、订阅落地和问题处理，而不是承诺全网最低价。</p>
+            </div>
+            <div class="metric"><strong>≥ 8%</strong><span>建议的单笔净贡献率门槛</span></div>
+            <div class="metric"><strong>50 单</strong><span>首轮真实付费验证量</span></div>
+            <div class="metric"><strong>≤ 72h</strong><span>建议的平均库存周转时间</span></div>
+          </div>
+
+          <div class="decision-grid">
+            <div class="decision"><h3>值得做</h3><p>授权 API / 可核验发票供货；面向明确订阅场景；能收取 8% 以上综合服务价差；客户持续续费。</p></div>
+            <div class="decision warn"><h3>只能试</h3><p>依赖零售促销、临时折扣或跨区价差；货源真实但容量不稳定；毛利 5% 左右且售后较多。</p></div>
+            <div class="decision stop"><h3>不应扩量</h3><p>来源解释不清的深折卡、先收客户资金再找货、多人共享账户、承诺无条件退款或依赖地区伪装。</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="models">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Playbook Map</div><h2>国内工作室常见的 6 种玩法</h2><p>从稳定性看，企业礼赠和授权分销最适合长期经营；促销套利、个人回收和跨区卡差都有容量或风控上限。</p></div>
+            <span class="method-chip">利润区间为经营模型</span>
+          </div>
+
+          <div class="model-grid">
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">01 / DISTRIBUTION</span><span class="tag good">优先</span></div>
+              <h3>授权分销 / API 出码</h3>
+              <p>接 Reloadly、Zendit 或品牌授权渠道，按目录价获得折扣或佣金，工作室负责人民币销售、选区和售后。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>批发折扣 + 服务费</strong></div><div><span>模型贡献</span><strong>2%–8%</strong></div><div><span>瓶颈</span><strong>开户、额度、品牌规则</strong></div></div>
+            </article>
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">02 / PROMOTION</span><span class="tag watch">限量</span></div>
+              <h3>零售促销叠加</h3>
+              <p>利用正规零售商的限时折扣、会员返利或买卡赠券，短期获取较大折扣，再按接近面值出售。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>活动补贴</strong></div><div><span>模型贡献</span><strong>6%–12%</strong></div><div><span>瓶颈</span><strong>限购、活动终止、不可规模化</strong></div></div>
+            </article>
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">03 / REGIONAL</span><span class="tag watch">谨慎</span></div>
+              <h3>海外地区卡稀缺溢价</h3>
+              <p>向中国用户提供美区、日区等卡面和选区服务。需求真实，但平台国家、币种和账户规则决定成功率。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>地区可得性 + 中文交付</strong></div><div><span>模型贡献</span><strong>3%–10%</strong></div><div><span>瓶颈</span><strong>地区匹配、税费、账户冻结</strong></div></div>
+            </article>
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">04 / EXCHANGE</span><span class="tag risk">高风控</span></div>
+              <h3>闲置卡回收再销售</h3>
+              <p>从个人或企业回收不需要的卡，验证余额后折价收、折价卖。纸面价差大，真实成本集中在来源和追索。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>回收折价</strong></div><div><span>模型贡献</span><strong>0%–10%</strong></div><div><span>瓶颈</span><strong>盗刷、撤销、余额抢兑</strong></div></div>
+            </article>
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">05 / B2B</span><span class="tag good">推荐</span></div>
+              <h3>企业礼赠与员工激励</h3>
+              <p>为企业采购数字卡券、员工福利、客户激励和活动奖品，按项目收服务费，强调合同、发票和批量交付。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>项目费 + 批量折扣</strong></div><div><span>模型贡献</span><strong>5%–12%</strong></div><div><span>瓶颈</span><strong>账期、开票、采购合规</strong></div></div>
+            </article>
+            <article class="model-card">
+              <div class="model-top"><span class="model-number">06 / MANAGED SERVICE</span><span class="tag good">最匹配 AI</span></div>
+              <h3>订阅代办与续费管理</h3>
+              <p>不只卖卡，而是帮客户判断渠道、核算所需余额、完成订阅并提醒续费；卡、虚拟卡和企业席位按产品组合。</p>
+              <div class="model-facts"><div><span>价差来源</span><strong>交付费 + 续费复购</strong></div><div><span>模型贡献</span><strong>8%–20%</strong></div><div><span>瓶颈</span><strong>售后标准化、账号隐私</strong></div></div>
+            </article>
+          </div>
+          <p class="assumption-note">注：贡献区间不是平台承诺费率，而是用于筛选项目的模型带宽；实际结果取决于品牌、面额、地区、供货协议、支付方式和损失率。</p>
+        </div>
+      </section>
+
+      <section id="chain">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Supply Chain</div><h2>钱从哪里来，风险就从哪里进来</h2><p>每多一层中间商，通常会增加价差和追索难度。工作室应保存从供货订单、原始收据到最终兑换结果的映射。</p></div>
+            <span class="method-chip">卡密即库存</span>
+          </div>
+          <div class="flow" aria-label="礼品卡供应链">
+            <div class="flow-step"><i><span data-lucide="landmark"></span></i><strong>品牌发行方</strong><span>创建面额、地区与规则</span></div>
+            <div class="flow-step"><i><span data-lucide="badge-dollar-sign"></span></i><strong>授权分销商</strong><span>获得目录和批量折扣</span></div>
+            <div class="flow-step"><i><span data-lucide="code-xml"></span></i><strong>API / 批发商</strong><span>实时库存和卡密交付</span></div>
+            <div class="flow-step"><i><span data-lucide="briefcase-business"></span></i><strong>国内工作室</strong><span>定价、收款、选区、售后</span></div>
+            <div class="flow-step"><i><span data-lucide="store"></span></i><strong>渠道 / 私域</strong><span>获客与成交</span></div>
+            <div class="flow-step"><i><span data-lucide="circle-user-round"></span></i><strong>最终用户</strong><span>兑换并购买数字服务</span></div>
+          </div>
+          <div class="money-layers">
+            <div class="layer"><h3>可持续供货</h3><ul><li>合同或后台能识别授权主体和品牌目录</li><li>每个卡密可对应采购订单、付款记录和原始凭证</li><li>无效卡、已兑换卡、地区错误有明确 SLA 和赔付规则</li><li>价格不一定最低，但可连续补货并可追责</li></ul></div>
+            <div class="layer"><h3>高损耗供货</h3><ul><li>只在聊天工具发码，无法提供企业主体和票据</li><li>折扣明显偏离同品牌公开市场且催促快速结算</li><li>拒绝解释上游、频繁更换收款人或退款到第三方</li><li>售后窗口很短，兑换失败归咎于客户操作</li></ul></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="economics">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Unit Economics</div><h2>看净贡献，不看“拿卡几折”</h2><p>模型把 USDT 购入溢价、币值、出码费、人民币收款、无效卡准备和库存损耗全部纳入；默认值基于 2026-08-15 汇率快照。</p></div>
+            <span class="method-chip">USD/CNY 6.755647 · USDT/USD 0.999158</span>
+          </div>
+
+          <div class="preset-row" role="group" aria-label="经营模式预设">
+            <button class="preset" type="button" data-preset="authorized">授权 API</button>
+            <button class="preset active" type="button" data-preset="scarcity">海外稀缺卡</button>
+            <button class="preset" type="button" data-preset="recovery">回收再销售</button>
+            <button class="preset" type="button" data-preset="b2b">企业礼赠</button>
+          </div>
+
+          <div class="calculator">
+            <div class="controls">
+              <div class="control-group">
+                <h3>商品与售价</h3>
+                <div class="inputs">
+                  <div class="field"><label for="faceValue">卡面</label><div class="input-wrap"><input id="faceValue" type="number" min="5" max="2000" step="5" value="100"><span class="unit">USD</span></div></div>
+                  <div class="field"><label for="fxRate">USD/CNY</label><div class="input-wrap"><input id="fxRate" type="number" min="5" max="10" step="0.000001" value="6.755647"><span class="unit">汇率</span></div></div>
+                  <div class="field"><label for="sourceDiscount">采购折扣</label><div class="input-wrap"><input id="sourceDiscount" type="number" min="0" max="40" step="0.1" value="1"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="salePremium">销售溢价</label><div class="input-wrap"><input id="salePremium" type="number" min="-20" max="40" step="0.1" value="10"><span class="unit">%</span></div></div>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <h3>资金与交付</h3>
+                <div class="inputs">
+                  <div class="field"><label for="usdtUsd">USDT/USD</label><div class="input-wrap"><input id="usdtUsd" type="number" min="0.9" max="1.1" step="0.000001" value="0.999158"><span class="unit">币值</span></div></div>
+                  <div class="field"><label for="usdtPremium">USDT 购入溢价</label><div class="input-wrap"><input id="usdtPremium" type="number" min="0" max="10" step="0.1" value="1.2"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="conversionFee">出码 / 转换费</label><div class="input-wrap"><input id="conversionFee" type="number" min="0" max="10" step="0.1" value="1"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="collectionFee">人民币收款费</label><div class="input-wrap"><input id="collectionFee" type="number" min="0" max="10" step="0.1" value="0.6"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="laborCost">人工售后</label><div class="input-wrap"><input id="laborCost" type="number" min="0" max="100" step="1" value="6"><span class="unit">¥</span></div></div>
+                  <div class="field"><label for="networkCost">网络 / 固定摊销</label><div class="input-wrap"><input id="networkCost" type="number" min="0" max="100" step="1" value="2"><span class="unit">¥</span></div></div>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <h3>风险与规模</h3>
+                <div class="inputs">
+                  <div class="field"><label for="riskReserve">无效 / 冻结准备</label><div class="input-wrap"><input id="riskReserve" type="number" min="0" max="20" step="0.1" value="2"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="inventoryLoss">库存损耗</label><div class="input-wrap"><input id="inventoryLoss" type="number" min="0" max="10" step="0.1" value="0.5"><span class="unit">%</span></div></div>
+                  <div class="field"><label for="monthlyFixed">月固定成本</label><div class="input-wrap"><input id="monthlyFixed" type="number" min="0" max="200000" step="500" value="10000"><span class="unit">¥</span></div></div>
+                  <div class="field"><label for="monthlyOrders">月订单数</label><div class="input-wrap"><input id="monthlyOrders" type="number" min="1" max="100000" step="10" value="500"><span class="unit">单</span></div></div>
+                </div>
+              </div>
+              <div class="reset-row"><small>USDT 仅作为向上游结算的成本参数；面向国内客户的收款、开票和资金路径应单独核验。</small><button class="btn icon-btn" type="button" id="resetCalc" title="恢复海外稀缺卡预设" aria-label="恢复海外稀缺卡预设"><i data-lucide="rotate-ccw"></i></button></div>
+            </div>
+
+            <div class="results">
+              <div class="result-hero">
+                <div class="result-box"><span>单笔销售收入</span><strong id="salesRevenue">¥0.00</strong></div>
+                <div class="result-box"><span>单笔净贡献</span><strong id="contribution">¥0.00</strong></div>
+                <div class="result-box"><span>月度经营结果</span><strong id="monthlyProfit">¥0</strong></div>
+              </div>
+              <div class="waterfall" aria-label="单笔成本拆解">
+                <div class="waterfall-row"><span>采购成本</span><span class="bar-track"><span class="bar-fill cost" id="barPurchase"></span></span><strong id="purchaseCost">¥0.00</strong></div>
+                <div class="waterfall-row"><span>出码 / 转换</span><span class="bar-track"><span class="bar-fill cost" id="barConversion"></span></span><strong id="conversionCost">¥0.00</strong></div>
+                <div class="waterfall-row"><span>收款成本</span><span class="bar-track"><span class="bar-fill cost" id="barCollection"></span></span><strong id="collectionCost">¥0.00</strong></div>
+                <div class="waterfall-row"><span>风险准备</span><span class="bar-track"><span class="bar-fill risk" id="barRisk"></span></span><strong id="riskCost">¥0.00</strong></div>
+                <div class="waterfall-row"><span>库存损耗</span><span class="bar-track"><span class="bar-fill risk" id="barInventory"></span></span><strong id="inventoryCost">¥0.00</strong></div>
+                <div class="waterfall-row"><span>人工与摊销</span><span class="bar-track"><span class="bar-fill" id="barOps"></span></span><strong id="opsCost">¥0.00</strong></div>
+              </div>
+              <div class="chart-wrap">
+                <h3>四种模式的单笔贡献对比</h3>
+                <canvas id="scenarioChart" width="760" height="220" aria-label="授权API、海外稀缺卡、回收再销售和企业礼赠的单笔贡献对比图"></canvas>
+              </div>
+              <p class="formula">净贡献 = 销售收入 − 折后采购 − USDT 溢价 − 出码/转换 − 收款费 − 风险准备 − 库存损耗 − 人工摊销。当前净贡献率 <strong id="contributionRate">0%</strong>，盈亏平衡约 <strong id="breakEven">0 单/月</strong>。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="platforms">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Platform Fit</div><h2>不同卡不是同一种商品</h2><p>地区、币种、账户类型、退款和转售条款差异很大。工作室必须把“卡面能否兑换”与“能否用来购买目标订阅”分开验证。</p></div>
+            <span class="method-chip">官方条款优先</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>卡 / 场景</th><th>规则事实</th><th>中国用户需求</th><th>经营判断</th><th>与 AI 代充关系</th></tr></thead>
+              <tbody>
+                <tr><td><div class="product-name"><img src="assets/openai.png" alt=""><div><strong>Apple 美区卡</strong><span>App Store 内购路径</span></div></div></td><td>美国购买的卡只可关联美国账户并用于美国交易；普通条款写明不得转售，异常来源可被作废且不退款。</td><td><span class="score high">高</span></td><td><span class="score low">高条款风险</span><br><small>只有授权分销或明确商业协议才适合长期做。</small></td><td>可覆盖提供 iOS 内购的订阅；实际内购价格、税费和退款由 Apple 体系决定。</td></tr>
+                <tr><td><div class="product-name"><img src="assets/google.png" alt=""><div><strong>Google Play 卡</strong><span>Android 内购路径</span></div></div></td><td>只能在购买时对应的国家和币种使用，Google Play 账户国家/地区也必须匹配；余额切区不会转移。</td><td><span class="score mid">中</span></td><td><span class="score low">失败率敏感</span><br><small>售前必须验证账户区、卡区和目标产品。</small></td><td>只适合提供 Google Play 结算的产品，不能替代网页信用卡支付。</td></tr>
+                <tr><td><div class="product-name"><img src="assets/github.png" alt=""><div><strong>Steam 钱包卡</strong><span>游戏数字余额</span></div></div></td><td>Steam 协议禁止通过代理等方式伪装居住地以绕过内容限制或获取非本地区价格；钱包余额通常不可退款、不可转让。</td><td><span class="score high">高</span></td><td><span class="score mid">可做垂直品类</span><br><small>需求大但与 AI 主业务协同较弱。</small></td><td>不是 AI 订阅渠道，可作为独立游戏卡品类测试。</td></tr>
+                <tr><td><div class="product-name"><img src="assets/notion.png" alt=""><div><strong>Netflix 礼品卡</strong><span>订阅余额</span></div></div></td><td>不设到期、不可退款；跨国购买的卡可以使用，但必须与 Netflix 账单币种相同。</td><td><span class="score mid">中</span></td><td><span class="score high">规则较清晰</span><br><small>币种验证比地区伪装更重要。</small></td><td>适合验证“订阅余额管理”服务流程，但不是 AI 产品。</td></tr>
+                <tr><td><div class="product-name"><img src="assets/cursor.png" alt=""><div><strong>网页直付 AI</strong><span>Claude / Cursor / Midjourney 等</span></div></div></td><td>多数没有面向消费者的官方礼品卡；能否订阅取决于官网支持的卡组织、账单地区、税费和账户风控。</td><td><span class="score high">高</span></td><td><span class="score high">保留虚拟卡方案</span><br><small>礼品卡库存无法覆盖全部产品。</small></td><td>应继续使用虚拟卡、企业席位或官方经销渠道，与礼品卡并行。</td></tr>
+                <tr><td><div class="product-name"><img src="assets/redotpay.png" alt=""><div><strong>国内卡券回收</strong><span>京东 E 卡 / 商超券等</span></div></div></td><td>属于不同的国内单用途卡和二级回收市场；发卡、售卡、实名、限额、资金存管等规则需按具体角色判断。</td><td><span class="score high">高</span></td><td><span class="score mid">另建业务线</span><br><small>回收风控和海外订阅交付完全不同。</small></td><td>与海外 AI 的协同主要在获客和客服，不在供应链。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="risks">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Risk &amp; Compliance</div><h2>最大的成本通常不是汇率，而是不可追索</h2><p>卡密一旦发出或兑换，追回空间很小。供货来源、客户付款和兑换证据必须形成闭环。</p></div>
+            <span class="method-chip">经营边界审查</span>
+          </div>
+          <div class="risk-grid">
+            <div class="risk-panel">
+              <h3><i data-lucide="file-check-2"></i>上线前必须具备</h3>
+              <div class="checklist">
+                <div class="check"><i><span data-lucide="check"></span></i><span>供货商企业主体、授权链或 API 合同可核验；保留采购订单和支付凭证。</span></div>
+                <div class="check"><i><span data-lucide="check"></span></i><span>每张卡记录品牌、国家、币种、面额、订单、交付时间和兑换争议证据。</span></div>
+                <div class="check"><i><span data-lucide="check"></span></i><span>商品页明确适用地区、支持场景、退款条件和客户自行操作责任。</span></div>
+                <div class="check"><i><span data-lucide="check"></span></i><span>建立卡密加密、遮罩、最小权限和员工查看审计，避免内部泄露。</span></div>
+                <div class="check"><i><span data-lucide="check"></span></i><span>按电子商务法处理主体登记、纳税、票据、信息公示和消费者知情权。</span></div>
+              </div>
+            </div>
+            <div class="risk-panel">
+              <h3><i data-lucide="octagon-alert"></i>收到这些信号就停单</h3>
+              <ul class="red-flags">
+                <li>深折幅度远高于品牌促销常态，却无法说明活动、授权或回收来源。</li>
+                <li>付款人、供货人、退款接收人不是同一主体，并要求频繁拆单。</li>
+                <li>批量卡在交付后短时间跨多个国家兑换，或客户持续更换新账户。</li>
+                <li>上游只保证“发码成功”，不保证未兑换、地区正确或争议追索。</li>
+                <li>要求代收与礼品卡订单无关的资金，或用卡密向陌生人结算债务。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="boundary"><strong>业务结构边界：</strong><p>转售既有品牌卡，与自己发行可跨多个商户使用的余额不是同一件事。后者可能接近储值账户或支付业务；《非银行支付机构监督管理条例》要求取得支付业务许可，同时明确单用途预付卡不属于该条例所称支付业务。实际适用取决于发卡主体、可用范围、是否沉淀客户资金和结算方式，应在上线自有余额、回收钱包或多商户通兑前完成专项审查。</p></div>
+        </div>
+      </section>
+
+      <section id="roadmap">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">30-Day Validation</div><h2>用 50 单验证，不用囤货证明信心</h2><p>试单阶段只选 3 个 SKU、2 个供货渠道和 1 个明确客群。所有卡按订单采购，先测成功率和真实贡献，再谈自动化。</p></div>
+            <span class="method-chip">Go / No-Go</span>
+          </div>
+          <div class="timeline">
+            <div class="week"><span class="week-no">WEEK 01</span><h3>供货尽调</h3><ul><li>拿到两家书面报价和售后 SLA</li><li>核验主体、授权、票据、付款账户</li><li>逐品牌整理地区和退款条款</li></ul></div>
+            <div class="week"><span class="week-no">WEEK 02</span><h3>影子报价</h3><ul><li>连续 7 天记录采购价和可售面额</li><li>模拟 USDT、汇率和收款成本</li><li>确定 3 个 SKU 与最高库存</li></ul></div>
+            <div class="week"><span class="week-no">WEEK 03</span><h3>真实 50 单</h3><ul><li>逐单采购，库存不超过 72 小时</li><li>记录交付时长、兑换成功和工单</li><li>问题卡暂停同批次继续销售</li></ul></div>
+            <div class="week"><span class="week-no">WEEK 04</span><h3>复盘决策</h3><ul><li>以净贡献而不是销售额排序</li><li>砍掉失败率高和售后重的 SKU</li><li>达到门槛后再接 API 与自动发码</li></ul></div>
+          </div>
+          <div class="gate-grid">
+            <div class="gate"><strong>≥ 99%</strong><span>兑换成功率</span></div>
+            <div class="gate"><strong>≥ 8%</strong><span>净贡献率</span></div>
+            <div class="gate"><strong>≤ 0.5%</strong><span>无效 / 冻结率</span></div>
+            <div class="gate"><strong>≤ 72h</strong><span>平均库存周转</span></div>
+            <div class="gate"><strong>≥ 25%</strong><span>30 天复购率</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sources">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Sources &amp; Method</div><h2>搜索负责发现，条款负责定论</h2><p>平台规则和法规均链接到一手页面；搜索结果中的折扣宣传仅作为渠道发现，不直接当作可实现利润。</p></div>
+            <span class="method-chip">核验日 2026-08-15</span>
+          </div>
+          <div class="source-list">
+            <div class="source-row"><strong>搜索入口</strong><p><a href="https://www.bing.com/search?q=gift+card+reseller+business+China+discount+API" target="_blank" rel="noopener">Bing</a> · <a href="https://www.google.com/search?q=gift+card+reseller+business+China+discount+API" target="_blank" rel="noopener">Google</a>：用于发现回收平台、分销 API、卡密商城和公开讨论。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Apple 官方条款</strong><p><a href="https://www.apple.com/legal/internet-services/itunes/giftcards/us/terms.html" target="_blank" rel="noopener">U.S. Gift Card Terms</a>：美国账户/交易限制、不得转售、风险转移和异常卡作废。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Google Play 帮助</strong><p><a href="https://support.google.com/googleplay/answer/3422734?hl=en" target="_blank" rel="noopener">Gift cards, gift codes &amp; promotional codes</a>：国家、币种和账户地区必须匹配。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Steam 协议</strong><p><a href="https://store.steampowered.com/subscriber_agreement/" target="_blank" rel="noopener">Steam Subscriber Agreement</a>：代理伪装居住地、地区价格和钱包余额限制。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Netflix 帮助</strong><p><a href="https://help.netflix.com/en/node/32950" target="_blank" rel="noopener">Netflix Gift Cards</a>：不设到期、不可退款、跨国卡需与账单币种相同。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>分销 API</strong><p><a href="https://www.reloadly.com/products/gift-card-api/" target="_blank" rel="noopener">Reloadly Gift Card API</a> · <a href="https://zendit.io/gift-card-reseller-api/" target="_blank" rel="noopener">Zendit Reseller API</a>：品牌目录、实时交付、定价控制和企业激励场景。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>USDT 购卡渠道</strong><p><a href="https://www.bitrefill.com/us/en/gift-cards/apple-usa/" target="_blank" rel="noopener">Bitrefill Apple USA</a>：公开支持 BTC、ETH、USDT、USDC 等加密资产付款；最终费率需下单实测。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>二级市场样本</strong><p><a href="https://www.cardcash.com/" target="_blank" rel="noopener">CardCash</a>：闲置卡折价买卖模式；品牌折扣是动态报价，不作为本报告固定费率。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>中国预付卡规则</strong><p><a href="https://www.mofcom.gov.cn/zfxxgk/zc/gz/art/2021/art_82805c1937a64a4186ea15c23fc675c5.html" target="_blank" rel="noopener">单用途商业预付卡管理办法（试行）</a>：实名、非现金支付、面额、期限、预收资金和存管。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>支付业务边界</strong><p><a href="https://www.samr.gov.cn:3030/zw/zfxxgk/fdzdgknr/bgt/art/2024/art_770e9bc7aba246f78c8f2cf1d614a364.html" target="_blank" rel="noopener">非银行支付机构监督管理条例</a>：支付业务许可、储值账户与单用途卡边界。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>电商经营义务</strong><p><a href="https://www.cac.gov.cn/2018-09/01/c_1123362506.htm" target="_blank" rel="noopener">中华人民共和国电子商务法</a>：市场主体登记、纳税、票据、公示和真实披露。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>诈骗风险</strong><p><a href="https://consumer.ftc.gov/articles/gift-card-scams" target="_blank" rel="noopener">FTC Gift Card Scams</a>：卡号/PIN 的不可逆风险、陌生支付指令和保留收据建议。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>市场快照</strong><p><a href="https://open.er-api.com/v6/latest/USD" target="_blank" rel="noopener">ExchangeRate-API</a> USD/CNY 6.755647 · <a href="https://api.coingecko.com/api/v3/simple/price?ids=tether&amp;vs_currencies=usd" target="_blank" rel="noopener">CoinGecko</a> USDT/USD 0.999158。</p><time>2026-08-15</time></div>
+          </div>
+          <p class="disclaimer">本报告用于商业验证与成本测算，不替代针对具体公司、发卡结构、税务处理、跨境结算或支付业务的专业意见。动态价格、品牌政策和地区可用性应在每批采购前重新核验。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="section-inner"><span>Gift Card Studio Feasibility Report</span><span>公开资料快照 · 2026-08-15</span></div></footer>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const presets = {
+      authorized: { sourceDiscount: 2, salePremium: 5, usdtPremium: .6, conversionFee: .5, collectionFee: .6, laborCost: 4, networkCost: 2, riskReserve: .8, inventoryLoss: .2, monthlyFixed: 10000, monthlyOrders: 800 },
+      scarcity: { sourceDiscount: 1, salePremium: 10, usdtPremium: 1.2, conversionFee: 1, collectionFee: .6, laborCost: 6, networkCost: 2, riskReserve: 2, inventoryLoss: .5, monthlyFixed: 10000, monthlyOrders: 500 },
+      recovery: { sourceDiscount: 18, salePremium: -5, usdtPremium: 0, conversionFee: 0, collectionFee: .6, laborCost: 12, networkCost: 1, riskReserve: 6, inventoryLoss: 1, monthlyFixed: 15000, monthlyOrders: 600 },
+      b2b: { sourceDiscount: 3, salePremium: 8, usdtPremium: .3, conversionFee: .4, collectionFee: .3, laborCost: 3, networkCost: 1, riskReserve: .5, inventoryLoss: .2, monthlyFixed: 20000, monthlyOrders: 500 }
+    };
+
+    const inputIds = ["faceValue", "fxRate", "sourceDiscount", "salePremium", "usdtUsd", "usdtPremium", "conversionFee", "collectionFee", "laborCost", "networkCost", "riskReserve", "inventoryLoss", "monthlyFixed", "monthlyOrders"];
+    const inputs = Object.fromEntries(inputIds.map(id => [id, document.getElementById(id)]));
+    const yuan = value => new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    const wholeYuan = value => new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", maximumFractionDigits: 0 }).format(value);
+    const valueOf = id => Number(inputs[id].value) || 0;
+
+    function compute(overrides = {}) {
+      const v = Object.fromEntries(inputIds.map(id => [id, overrides[id] ?? valueOf(id)]));
+      const baseUsd = v.faceValue * (1 - v.sourceDiscount / 100);
+      const purchase = baseUsd / Math.max(v.usdtUsd, .0001) * v.fxRate * (1 + v.usdtPremium / 100);
+      const revenue = v.faceValue * v.fxRate * (1 + v.salePremium / 100);
+      const conversion = purchase * v.conversionFee / 100;
+      const collection = revenue * v.collectionFee / 100;
+      const risk = revenue * v.riskReserve / 100;
+      const inventory = purchase * v.inventoryLoss / 100;
+      const ops = v.laborCost + v.networkCost;
+      const contribution = revenue - purchase - conversion - collection - risk - inventory - ops;
+      const rate = revenue ? contribution / revenue : 0;
+      const breakEven = contribution > 0 ? Math.ceil(v.monthlyFixed / contribution) : Infinity;
+      const monthly = contribution * v.monthlyOrders - v.monthlyFixed;
+      return { ...v, purchase, revenue, conversion, collection, risk, inventory, ops, contribution, rate, breakEven, monthly };
+    }
+
+    function setText(id, text) { document.getElementById(id).textContent = text; }
+    function setBar(id, value, revenue) { document.getElementById(id).style.width = Math.min(100, Math.max(0, value / Math.max(revenue, 1) * 100)) + "%"; }
+
+    function updateCalculator() {
+      const r = compute();
+      setText("salesRevenue", yuan(r.revenue));
+      setText("contribution", yuan(r.contribution));
+      setText("monthlyProfit", wholeYuan(r.monthly));
+      setText("purchaseCost", yuan(r.purchase));
+      setText("conversionCost", yuan(r.conversion));
+      setText("collectionCost", yuan(r.collection));
+      setText("riskCost", yuan(r.risk));
+      setText("inventoryCost", yuan(r.inventory));
+      setText("opsCost", yuan(r.ops));
+      setText("contributionRate", (r.rate * 100).toFixed(1) + "%");
+      setText("breakEven", Number.isFinite(r.breakEven) ? r.breakEven.toLocaleString("zh-CN") + " 单/月" : "无正向贡献");
+      setBar("barPurchase", r.purchase, r.revenue);
+      setBar("barConversion", r.conversion, r.revenue);
+      setBar("barCollection", r.collection, r.revenue);
+      setBar("barRisk", r.risk, r.revenue);
+      setBar("barInventory", r.inventory, r.revenue);
+      setBar("barOps", r.ops, r.revenue);
+      ["contribution", "monthlyProfit"].forEach(id => {
+        const el = document.getElementById(id);
+        const value = id === "contribution" ? r.contribution : r.monthly;
+        el.classList.toggle("positive", value >= 0);
+        el.classList.toggle("negative", value < 0);
+      });
+      drawScenarioChart();
+    }
+
+    function applyPreset(name) {
+      const values = presets[name];
+      Object.entries(values).forEach(([id, value]) => { inputs[id].value = value; });
+      document.querySelectorAll(".preset").forEach(button => button.classList.toggle("active", button.dataset.preset === name));
+      updateCalculator();
+    }
+
+    function drawScenarioChart() {
+      const canvas = document.getElementById("scenarioChart");
+      const ratio = Math.max(1, window.devicePixelRatio || 1);
+      const cssWidth = Math.max(320, canvas.clientWidth || 760);
+      const cssHeight = 220;
+      canvas.width = cssWidth * ratio;
+      canvas.height = cssHeight * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      const styles = getComputedStyle(document.documentElement);
+      const scenarios = [
+        ["授权 API", compute(presets.authorized).contribution, styles.getPropertyValue("--blue").trim()],
+        ["海外稀缺卡", compute(presets.scarcity).contribution, styles.getPropertyValue("--orange").trim()],
+        ["回收再销售", compute(presets.recovery).contribution, styles.getPropertyValue("--red").trim()],
+        ["企业礼赠", compute(presets.b2b).contribution, styles.getPropertyValue("--green").trim()]
+      ];
+      const left = 96, right = 56, top = 16, row = 47, barHeight = 18;
+      const max = Math.max(...scenarios.map(item => Math.max(0, item[1])), 1);
+      ctx.clearRect(0, 0, cssWidth, cssHeight);
+      ctx.font = "12px system-ui";
+      ctx.textBaseline = "middle";
+      scenarios.forEach((item, index) => {
+        const y = top + index * row + 16;
+        ctx.fillStyle = "#66706a";
+        ctx.fillText(item[0], 0, y + barHeight / 2);
+        ctx.fillStyle = "#edf0ee";
+        ctx.fillRect(left, y, Math.max(20, cssWidth - left - right), barHeight);
+        const width = Math.max(2, Math.max(0, item[1]) / max * (cssWidth - left - right));
+        ctx.fillStyle = item[2];
+        ctx.fillRect(left, y, width, barHeight);
+        ctx.fillStyle = item[1] >= 0 ? "#17211d" : "#a33f36";
+        ctx.textAlign = "right";
+        ctx.fillText(yuan(item[1]), cssWidth - 2, y + barHeight / 2);
+        ctx.textAlign = "left";
+      });
+    }
+
+    inputIds.forEach(id => inputs[id].addEventListener("input", updateCalculator));
+    document.querySelectorAll(".preset").forEach(button => button.addEventListener("click", () => applyPreset(button.dataset.preset)));
+    document.getElementById("resetCalc").addEventListener("click", () => applyPreset("scarcity"));
+    window.addEventListener("resize", drawScenarioChart);
+
+    const navLinks = [...document.querySelectorAll(".nav-list a[href^='#']")];
+    const observed = [...document.querySelectorAll("main section[id]")];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+    }, { rootMargin: "-15% 0px -65% 0px", threshold: [0, .1, .25] });
+    observed.forEach(section => observer.observe(section));
+
+    window.__giftReportErrors = [];
+    window.addEventListener("error", event => window.__giftReportErrors.push(event.message));
+    if (window.lucide) lucide.createIcons();
+    updateCalculator();
+  </script>
+</body>
+</html>
