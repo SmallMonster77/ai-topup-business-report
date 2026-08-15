@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="X Premium、Spotify、YouTube Premium、Apple Music 与 Microsoft 365 在美国、英国、日本、印度、土耳其、巴西、尼日利亚和香港的实时价格、美元及人民币换算。">
+  <title>海外会员跨区价格对比报告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17201d;
+      --ink-2: #4c5752;
+      --ink-3: #74807b;
+      --paper: #f3f6f4;
+      --surface: #fff;
+      --line: #dbe2de;
+      --line-strong: #c3cec9;
+      --green: #13765a;
+      --green-dark: #0b5a44;
+      --green-soft: #e2f2ec;
+      --blue: #286b8b;
+      --blue-soft: #e5f0f5;
+      --amber: #a46308;
+      --amber-soft: #fff1d6;
+      --red: #a24239;
+      --red-soft: #f9e8e6;
+      --violet: #65558c;
+      --violet-soft: #eeeaf5;
+      --sidebar: 238px;
+      --radius: 7px;
+      --shadow: 0 12px 28px rgba(25, 47, 39, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.62;
+      letter-spacing: 0;
+    }
+    button, input, select { font: inherit; letter-spacing: 0; }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    a:hover { color: var(--amber); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.22; letter-spacing: 0; }
+    h1 { margin-bottom: 15px; font-size: 40px; }
+    h2 { margin-bottom: 9px; font-size: 27px; }
+    h3 { margin-bottom: 8px; font-size: 17px; }
+    small { color: var(--ink-3); }
+
+    .skip-link { position: fixed; top: -60px; left: 12px; z-index: 99; padding: 8px 12px; color: #fff; background: var(--ink); }
+    .skip-link:focus { top: 12px; }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 20;
+      width: var(--sidebar);
+      padding: 24px 18px;
+      overflow-y: auto;
+      color: #e9f2ee;
+      background: #17241f;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 25px; color: #fff; text-decoration: none; }
+    .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; flex: 0 0 38px; color: #17241f; background: #e9b84c; border-radius: 7px; font-weight: 850; }
+    .brand-copy strong, .brand-copy span { display: block; }
+    .brand-copy span { color: #a9bab2; font-size: 11px; }
+    .nav-label { margin: 18px 10px 7px; color: #82968c; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .nav-list { display: grid; gap: 3px; }
+    .nav-list a { display: flex; align-items: center; gap: 9px; min-height: 37px; padding: 7px 10px; color: #c7d5ce; border-radius: 5px; text-decoration: none; font-size: 13px; }
+    .nav-list a:hover, .nav-list a.active { color: #fff; background: rgba(255,255,255,.09); }
+    .nav-list svg { width: 16px; height: 16px; flex: 0 0 16px; }
+    .report-links { margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+
+    .page { margin-left: var(--sidebar); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 9px 34px; background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); }
+    .topbar strong { font-size: 14px; }
+    .topbar-meta { display: flex; align-items: center; gap: 9px; color: var(--ink-3); font-size: 12px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #3aa276; }
+
+    .hero { padding: 58px 34px 43px; color: #fff; background: #20382f; border-bottom: 5px solid #e9b84c; }
+    .hero-inner, .section-inner { width: min(1190px, 100%); margin: 0 auto; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(310px, .75fr); align-items: end; gap: 48px; }
+    .eyebrow { margin-bottom: 11px; color: var(--green); font-size: 11px; font-weight: 850; text-transform: uppercase; }
+    .hero .eyebrow { color: #e9c66c; }
+    .hero p { max-width: 790px; margin-bottom: 21px; color: #c6d7cf; font-size: 17px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 39px; padding: 8px 13px; color: var(--ink); background: #fff; border: 1px solid var(--line-strong); border-radius: 5px; font-weight: 720; text-decoration: none; cursor: pointer; }
+    .btn:hover { color: var(--ink); background: #f2f5f3; }
+    .btn-primary { background: #e9b84c; border-color: #e9b84c; }
+    .btn svg { width: 16px; height: 16px; }
+    .hero-side { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.16); }
+    .hero-stat { min-height: 92px; padding: 14px; border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); }
+    .hero-stat:nth-child(2n) { border-right: 0; }
+    .hero-stat:nth-last-child(-n+2) { border-bottom: 0; }
+    .hero-stat strong { display: block; color: #fff; font-size: 23px; line-height: 1.2; }
+    .hero-stat span { display: block; margin-top: 4px; color: #afc2b9; font-size: 11px; }
+
+    section { padding: 54px 34px; scroll-margin-top: 20px; }
+    section:nth-of-type(even) { background: var(--surface); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 24px; }
+    .section-head p { max-width: 760px; margin-bottom: 0; color: var(--ink-2); }
+    .method-chip { flex: 0 0 auto; padding: 5px 8px; color: var(--blue); background: var(--blue-soft); border: 1px solid #c8dce7; border-radius: 4px; font-size: 11px; font-weight: 800; }
+    .note { margin: 16px 0 0; padding: 13px 15px; color: var(--ink-2); background: var(--amber-soft); border-left: 4px solid var(--amber); font-size: 13px; }
+
+    .verdict { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(145px, .55fr)); background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .verdict-main { padding: 24px; border-right: 1px solid var(--line); }
+    .signal { display: inline-block; margin-bottom: 10px; padding: 4px 8px; color: var(--green-dark); background: var(--green-soft); font-size: 11px; font-weight: 850; }
+    .verdict-main h3 { font-size: 22px; }
+    .verdict-main p { margin: 0; color: var(--ink-2); }
+    .metric { padding: 22px 17px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; margin-bottom: 4px; color: var(--green); font-size: 25px; }
+    .metric span { color: var(--ink-3); font-size: 12px; }
+    .insight-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; margin-top: 16px; }
+    .insight { min-height: 178px; padding: 17px; background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--green); border-radius: var(--radius); }
+    .insight.warn { border-top-color: var(--amber); }
+    .insight.blue { border-top-color: var(--blue); }
+    .insight.red { border-top-color: var(--red); }
+    .insight p { margin: 0; color: var(--ink-2); font-size: 13px; }
+
+    .method-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .method-card { min-height: 188px; padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+    .method-card i { display: grid; width: 34px; height: 34px; place-items: center; color: var(--blue); background: var(--blue-soft); border-radius: 6px; }
+    .method-card i svg { width: 18px; height: 18px; }
+    .method-card h3 { margin-top: 13px; }
+    .method-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
+    .formula { margin-top: 15px; padding: 15px 16px; color: var(--ink-2); background: #edf2ef; border: 1px solid var(--line); font: 13px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .explorer { background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .filters { display: grid; grid-template-columns: 1.1fr 1.1fr .8fr auto; align-items: end; gap: 12px; padding: 18px; border-bottom: 1px solid var(--line); }
+    label { display: grid; gap: 5px; color: var(--ink-2); font-size: 11px; font-weight: 750; }
+    select, input[type="number"] { width: 100%; min-width: 0; height: 39px; padding: 7px 9px; color: var(--ink); background: #fff; border: 1px solid var(--line-strong); border-radius: 4px; outline: none; }
+    select:focus, input[type="number"]:focus { border-color: var(--green); box-shadow: 0 0 0 2px rgba(19,118,90,.12); }
+    .check { display: flex; align-items: center; gap: 8px; min-height: 39px; padding: 7px 10px; color: var(--ink-2); background: #f5f7f6; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; font-weight: 700; }
+    .check input { width: 16px; height: 16px; margin: 0; accent-color: var(--green); }
+    .explorer-summary { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+    .summary-box { min-height: 82px; padding: 14px 18px; border-right: 1px solid var(--line); }
+    .summary-box:last-child { border-right: 0; }
+    .summary-box span { display: block; color: var(--ink-3); font-size: 11px; }
+    .summary-box strong { display: block; margin-top: 3px; font-size: 21px; overflow-wrap: anywhere; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 1050px; border-collapse: collapse; }
+    th, td { padding: 12px 13px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+    th { color: var(--ink-3); background: #f6f8f7; font-size: 11px; text-transform: uppercase; }
+    td { color: var(--ink-2); font-size: 13px; }
+    tbody tr:last-child td { border-bottom: 0; }
+    td strong { color: var(--ink); }
+    .nowrap { white-space: nowrap; }
+    .platform-cell { min-width: 170px; }
+    .platform-cell strong, .platform-cell span { display: block; }
+    .platform-cell span { color: var(--ink-3); font-size: 11px; }
+    .tag { display: inline-block; padding: 3px 7px; border-radius: 4px; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .tag.web { color: var(--blue); background: var(--blue-soft); }
+    .tag.ios { color: var(--violet); background: var(--violet-soft); }
+    .tag.a { color: var(--green-dark); background: var(--green-soft); }
+    .delta-cheap { color: var(--green); font-weight: 800; }
+    .delta-high { color: var(--red); font-weight: 800; }
+    .empty-row { padding: 28px; text-align: center; color: var(--ink-3); }
+
+    .chart-shell { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .55fr); gap: 0; background: #fff; border: 1px solid var(--line); }
+    .chart-main { min-width: 0; padding: 20px; border-right: 1px solid var(--line); }
+    .chart-title { display: flex; align-items: start; justify-content: space-between; gap: 20px; margin-bottom: 12px; }
+    .chart-title p { margin: 0; color: var(--ink-3); font-size: 12px; }
+    canvas { display: block; width: 100%; height: 340px; }
+    .chart-notes { padding: 20px; }
+    .chart-notes h3 { font-size: 15px; }
+    .rank-list { display: grid; gap: 9px; margin-top: 14px; }
+    .rank-row { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 8px; padding-top: 9px; border-top: 1px solid var(--line); font-size: 12px; }
+    .rank-row i { display: grid; width: 28px; height: 28px; place-items: center; color: var(--green); background: var(--green-soft); border-radius: 4px; font-style: normal; font-weight: 850; }
+    .rank-row strong { color: var(--ink); }
+
+    .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .channel-panel { padding: 20px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+    .channel-panel h3 { display: flex; align-items: center; gap: 8px; font-size: 19px; }
+    .channel-panel h3 svg { width: 19px; height: 19px; }
+    .channel-table { display: grid; margin-top: 15px; border-top: 1px solid var(--line); }
+    .channel-row { display: grid; grid-template-columns: 1fr 88px 88px 82px; gap: 8px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+    .channel-row strong { color: var(--ink); }
+    .channel-row span:not(:first-child) { text-align: right; white-space: nowrap; }
+    .rule-list { display: grid; gap: 10px; margin-top: 14px; }
+    .rule { display: grid; grid-template-columns: 94px 1fr; gap: 12px; padding-top: 9px; border-top: 1px solid var(--line); }
+    .rule strong { color: var(--amber); font-size: 12px; }
+    .rule span { color: var(--ink-2); font-size: 13px; }
+
+    .anchor-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .anchor-card { min-height: 185px; padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+    .anchor-card span { display: block; color: var(--ink-3); font-size: 11px; }
+    .anchor-card strong { display: block; margin: 5px 0 10px; color: var(--green); font-size: 23px; }
+    .anchor-card p { margin: 0; color: var(--ink-2); font-size: 12px; }
+
+    .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .action-card { min-height: 250px; padding: 19px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); }
+    .action-card.go { border-top: 4px solid var(--green); }
+    .action-card.watch { border-top: 4px solid var(--amber); }
+    .action-card.stop { border-top: 4px solid var(--red); }
+    .action-card p { color: var(--ink-2); font-size: 13px; }
+    .action-card ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 12px; }
+    .profit-formula { margin-top: 15px; padding: 16px; color: #cad8d1; background: #17241f; font: 12px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .source-list { background: #fff; border: 1px solid var(--line); }
+    .source-row { display: grid; grid-template-columns: 165px minmax(0, 1fr) 90px; gap: 15px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .source-row:last-child { border-bottom: 0; }
+    .source-row strong { font-size: 12px; }
+    .source-row p { margin: 0; color: var(--ink-2); font-size: 12px; overflow-wrap: anywhere; }
+    .source-row time { color: var(--ink-3); font-size: 11px; text-align: right; }
+    .disclaimer { margin: 15px 0 0; color: var(--ink-3); font-size: 11px; }
+    footer { padding: 22px 34px; color: #a8bab1; background: #17241f; }
+    footer .section-inner { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1080px) {
+      .sidebar { display: none; }
+      .page { margin-left: 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side { max-width: 560px; }
+      .verdict { grid-template-columns: 1.2fr repeat(3, .55fr); }
+      .insight-grid, .method-grid, .anchor-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 31px; }
+      h2 { font-size: 23px; }
+      .topbar { padding: 9px 16px; }
+      .topbar-meta span:last-child { display: none; }
+      .hero { padding: 43px 18px 32px; }
+      section { padding: 42px 18px; }
+      .section-head { display: block; }
+      .method-chip { display: inline-block; margin-top: 11px; }
+      .verdict { grid-template-columns: 1fr 1fr; }
+      .verdict-main { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:nth-child(3) { border-right: 0; }
+      .filters { grid-template-columns: 1fr; }
+      .explorer-summary { grid-template-columns: 1fr 1fr; }
+      .summary-box:nth-child(2) { border-right: 0; }
+      .summary-box:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .chart-shell { grid-template-columns: 1fr; }
+      .chart-main { border-right: 0; border-bottom: 1px solid var(--line); }
+      canvas { height: 300px; }
+      .channel-grid, .action-grid { grid-template-columns: 1fr; }
+      .source-row { grid-template-columns: 1fr; gap: 4px; }
+      .source-row time { text-align: left; }
+      footer .section-inner { display: grid; }
+    }
+
+    @media (max-width: 520px) {
+      .hero-side, .insight-grid, .method-grid, .anchor-grid { grid-template-columns: 1fr; }
+      .hero-stat { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.13) !important; }
+      .hero-stat:last-child { border-bottom: 0 !important; }
+      .verdict { grid-template-columns: 1fr; }
+      .verdict-main, .metric { border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:last-child { border-bottom: 0; }
+      .channel-row { grid-template-columns: 1fr auto; }
+      .channel-row span:nth-child(2), .channel-row span:nth-child(3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <aside class="sidebar" aria-label="报告导航">
+    <a class="brand" href="#top"><span class="brand-mark">FX</span><span class="brand-copy"><strong>地区会员价格</strong><span>53 个官方报价点</span></span></a>
+    <div class="nav-label">研究章节</div>
+    <nav class="nav-list">
+      <a href="#verdict"><i data-lucide="gauge"></i>核心结论</a>
+      <a href="#method"><i data-lucide="shield-check"></i>口径与证据</a>
+      <a href="#prices"><i data-lucide="table-2"></i>价格筛选器</a>
+      <a href="#chart"><i data-lucide="bar-chart-3"></i>地区价差图</a>
+      <a href="#channels"><i data-lucide="smartphone"></i>渠道差价</a>
+      <a href="#anchors"><i data-lucide="bot"></i>AI 与流媒体锚点</a>
+      <a href="#business"><i data-lucide="briefcase-business"></i>生意判断</a>
+      <a href="#sources"><i data-lucide="library"></i>来源</a>
+    </nav>
+    <div class="report-links nav-list">
+      <a href="index.html"><i data-lucide="cpu"></i>AI 代充报告</a>
+      <a href="gift-card-report.html"><i data-lucide="gift"></i>国内礼品卡报告</a>
+      <a href="nigeria-gift-card-report.html"><i data-lucide="globe-2"></i>尼日利亚报告</a>
+    </div>
+  </aside>
+
+  <div class="page" id="top">
+    <header class="topbar">
+      <strong>海外会员跨区价格对比报告</strong>
+      <div class="topbar-meta"><span class="status-dot"></span><span>汇率与价格核验：2026-08-15</span></div>
+    </header>
+
+    <main id="main">
+      <div class="hero">
+        <div class="hero-inner hero-grid">
+          <div>
+            <div class="eyebrow">Regional Subscription Pricing</div>
+            <h1>同一会员，八个地区，价格不是同一道题</h1>
+            <p>X、Spotify、YouTube Premium、Apple Music 与 Microsoft 365 的官方价格快照。所有当地币先按同一时点汇率折算美元，再换算人民币；Web 与 iOS 渠道分开比较。</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#prices"><i data-lucide="sliders-horizontal"></i>打开价格筛选器</a>
+              <a class="btn" href="#sources"><i data-lucide="external-link"></i>查看来源口径</a>
+            </div>
+          </div>
+          <div class="hero-side" aria-label="报告摘要">
+            <div class="hero-stat"><strong>8</strong><span>国家与地区</span></div>
+            <div class="hero-stat"><strong>53</strong><span>官方报价点</span></div>
+            <div class="hero-stat"><strong>6.755647</strong><span>USD/CNY 快照</span></div>
+            <div class="hero-stat"><strong>最高 92.3%</strong><span>相对美国名义低价</span></div>
+          </div>
+        </div>
+      </div>
+
+      <section id="verdict">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Executive Readout</div><h2>有价差，但只有部分价差能变成利润</h2><p>地区价格是需求信号，不等于无条件采购权。账号区、付款区、商店区、税务与续费能力必须同时成立。</p></div>
+            <span class="method-chip">主表只用正常续费价</span>
+          </div>
+          <div class="verdict">
+            <div class="verdict-main"><span class="signal">结论：值得做价格情报，不宜裸做跨区套利</span><h3>最有价值的产品不是“最便宜区”，而是可稳定交付的正确渠道</h3><p>印度、土耳其、尼日利亚在音乐和视频订阅上名义折扣很深；X Premium+ 的地区差价却被明显压平。iOS 内购通常又比 Web 贵 25%–38%，渠道选择本身就可能吃掉毛利。</p></div>
+            <div class="metric"><strong>-92.3%</strong><span>YouTube iOS 尼日利亚相对美国</span></div>
+            <div class="metric"><strong>-62.0%</strong><span>X Premium 土耳其相对美国</span></div>
+            <div class="metric"><strong>+33.9%</strong><span>M365 日本相对美国</span></div>
+          </div>
+          <div class="insight-grid">
+            <article class="insight"><h3>音乐价差最深</h3><p>Spotify 尼日利亚约合 ¥7.96/月、印度约 ¥9.83/月；Apple Music 印度同样约 ¥9.83/月。家庭地址、付款国家与续费稳定性仍是门槛。</p></article>
+            <article class="insight blue"><h3>X 不能只看一个层级</h3><p>X Premium 土耳其 iOS 约便宜 62%，但 Premium+ 只便宜约 10%。把 Premium 的折扣率套到 Premium+ 会直接算错成本。</p></article>
+            <article class="insight warn"><h3>英国常常不是低价区</h3><p>按本次汇率，英国 Spotify、Apple Music 比美国贵约 35%；X Premium iOS 也贵约 35%。英镑标价小，不代表美元成本低。</p></article>
+            <article class="insight red"><h3>App 内购有渠道税</h3><p>美国 X 三档 iOS 比 Web 高 25%–37.5%；YouTube Premium iOS 比 Web 高约 31.3%。代充报价必须先锁定付款入口。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="method">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Method &amp; Evidence</div><h2>先统一商品、周期、渠道，再谈哪个国家便宜</h2><p>主表比较个人月付正常续费价。免费试用、首年优惠、预付年包和家庭计划不混入主排名。</p></div>
+            <span class="method-chip">证据等级 A：官方页面</span>
+          </div>
+          <div class="method-grid">
+            <article class="method-card"><i><svg data-lucide="badge-dollar-sign"></svg></i><h3>正常续费价</h3><p>Spotify、Apple 当前存在限时活动；报告用活动结束后的月费。印度 Spotify 的 ₹799 首年等活动只写在注释，不改变基准。</p></article>
+            <article class="method-card"><i><svg data-lucide="panels-top-left"></svg></i><h3>渠道不混算</h3><p>X 与 YouTube 使用官方 App Store iOS 内购价；Spotify、Apple Music、Microsoft 365 使用本地官网 Web 价。</p></article>
+            <article class="method-card"><i><svg data-lucide="landmark"></svg></i><h3>同一汇率时点</h3><p>汇率来自 ExchangeRate-API 的 USD 基准快照，时间为 2026-08-15 00:02:31 UTC。人民币列可在筛选器内重算。</p></article>
+            <article class="method-card"><i><svg data-lucide="receipt-text"></svg></i><h3>税费保守处理</h3><p>页面展示价按消费者看到的金额记录；平台未拆分 VAT/GST 时标记“页面未拆分”，不自行假设含税或未含税。</p></article>
+          </div>
+          <div class="formula">美元价 = 当地币月价 ÷ 当地币/USD　｜　人民币价 = 美元价 × USD/CNY　｜　相对美国差异 = 当地美元价 ÷ 美国美元价 - 1</div>
+        </div>
+      </section>
+
+      <section id="prices">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Price Explorer</div><h2>跨区价格筛选器</h2><p>选择平台和方案后，表格、排名与图表同步更新。负差异表示比美国便宜，正差异表示更贵。</p></div>
+            <span class="method-chip">53 个有效价格点</span>
+          </div>
+          <div class="explorer">
+            <div class="filters">
+              <label>平台<select id="platformFilter" aria-label="选择平台"></select></label>
+              <label>方案<select id="planFilter" aria-label="选择方案"></select></label>
+              <label>USD/CNY<input id="fxInput" type="number" min="1" max="20" step="0.000001" value="6.755647"></label>
+              <label class="check"><input id="cheapOnly" type="checkbox">只看低于美国</label>
+            </div>
+            <div class="explorer-summary">
+              <div class="summary-box"><span>当前最低地区</span><strong id="summaryCheapest">-</strong></div>
+              <div class="summary-box"><span>折合人民币</span><strong id="summaryCny">-</strong></div>
+              <div class="summary-box"><span>相对美国</span><strong id="summaryDelta">-</strong></div>
+              <div class="summary-box"><span>价格覆盖</span><strong id="summaryCoverage">-</strong></div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>平台 / 方案</th><th>地区</th><th>渠道</th><th>当地月价</th><th>美元</th><th>人民币</th><th>相对美国</th><th>税费口径</th><th>证据</th></tr></thead>
+                <tbody id="priceRows"></tbody>
+              </table>
+            </div>
+          </div>
+          <p class="note">X 和 YouTube 的主表是 iOS App Store 渠道价，不能与 Web 价直接当成同一 SKU。表内“官方 A”表示原始来源是平台官网或官方 App Store 页面，不表示该地区一定能用异区付款工具成功续费。</p>
+        </div>
+      </section>
+
+      <section id="chart">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Normalized View</div><h2>折算美元后的地区价差</h2><p>图中横轴统一为月费美元值；同一个方案的美国价格用虚线作为基准。</p></div>
+            <span class="method-chip">Canvas 实时绘制</span>
+          </div>
+          <div class="chart-shell">
+            <div class="chart-main"><div class="chart-title"><div><h3 id="chartHeading">-</h3><p>按当前汇率换算，未叠加代付费、拒付准备和售后成本</p></div></div><canvas id="priceChart" aria-label="各地区折算美元价格柱状图"></canvas></div>
+            <aside class="chart-notes"><h3>从低到高</h3><div class="rank-list" id="rankList"></div></aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="channels">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Channel Economics</div><h2>同一国家，付款入口也会制造 25%–38% 差价</h2><p>App Store 内购价包含平台渠道成本与本地价格档位；Web 价通常更低，但对卡、账单地址、账号地区与税务校验更敏感。</p></div>
+            <span class="method-chip">美国渠道对照</span>
+          </div>
+          <div class="channel-grid">
+            <article class="channel-panel">
+              <h3><i data-lucide="badge-dollar-sign"></i>X 与 YouTube 的渠道差</h3>
+              <div class="channel-table">
+                <div class="channel-row"><strong>方案</strong><span>Web</span><span>iOS</span><span>iOS 溢价</span></div>
+                <div class="channel-row"><strong>X Basic</strong><span>$3.00</span><span>$4.00</span><span class="delta-high">+33.3%</span></div>
+                <div class="channel-row"><strong>X Premium</strong><span>$8.00</span><span>$11.00</span><span class="delta-high">+37.5%</span></div>
+                <div class="channel-row"><strong>X Premium+</strong><span>$40.00</span><span>$50.00</span><span class="delta-high">+25.0%</span></div>
+                <div class="channel-row"><strong>YouTube Premium</strong><span>$15.99</span><span>$20.99</span><span class="delta-high">+31.3%</span></div>
+              </div>
+              <p class="disclaimer">Web 价来自 X 官方帮助页起价与 YouTube 官方 Premium 页；iOS 来自美国 App Store 内购列表。税费或促销可能在最终结账变化。</p>
+            </article>
+            <article class="channel-panel">
+              <h3><i data-lucide="list-checks"></i>报价前必须锁定的四件事</h3>
+              <div class="rule-list">
+                <div class="rule"><strong>商品</strong><span>个人、家庭、学生、Basic、Premium、Premium+ 不是可互换方案。</span></div>
+                <div class="rule"><strong>渠道</strong><span>Web、iOS、Google Play 价格不同，退款和订阅管理主体也不同。</span></div>
+                <div class="rule"><strong>税态</strong><span>标价不一定等于结账价；美国州税、VAT/GST 和账单地址会改变实付。</span></div>
+                <div class="rule"><strong>续费</strong><span>一次开通成功不等于下月可续；要记录商店区、卡段、账单地与失败码。</span></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="anchors">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Global Anchors</div><h2>AI 工具与 Netflix：先作为美元锚点，不伪造地区矩阵</h2><p>这些产品的消费者地区价经常在登录结账、税区或 App 商店内才确定。缺少同一时点的公开国家表时，只列官方可验证锚点。</p></div>
+            <span class="method-chip">结账页确认型</span>
+          </div>
+          <div class="anchor-grid">
+            <article class="anchor-card"><span>ChatGPT Plus / Pro</span><strong>$20 / $200</strong><p>OpenAI 官方消费者价格锚点。OpenAI Docs 没有公开、可审计的 Plus 国家价表；实际当地币与税费以账号结账页为准。</p></article>
+            <article class="anchor-card"><span>Claude Pro</span><strong>$20/月</strong><p>Claude 官方月付锚点；年付折合价和税费另算。不同 App 渠道可能出现当地币价格档。</p></article>
+            <article class="anchor-card"><span>Midjourney</span><strong>$10 起/月</strong><p>Basic 美元锚点；Standard、Pro、Mega 需求不同，不应只按生成次数简单替换。</p></article>
+            <article class="anchor-card"><span>Netflix Standard</span><strong>$19.99/月</strong><p>Netflix 美国帮助中心当前公开价。其他地区需在当地账号或官方结账环境复核，因此未进入主排名。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="business">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Commercial Use</div><h2>把价格表变成可卖的服务，而不是一张套利幻觉</h2><p>名义折扣最大的产品通常也是地区绑定、支付复核和家庭规则最重的产品。先卖交付确定性，再卖低价。</p></div>
+            <span class="method-chip">面向代充业务</span>
+          </div>
+          <div class="action-grid">
+            <article class="action-card go"><h3>优先做：渠道优化</h3><p>客户本来准备在 iOS 付款时，协助其走平台允许的 Web 订阅入口，单靠渠道差就可能节省 25%–38%。</p><ul><li>不改变账号国家</li><li>不依赖家庭拼车</li><li>交付和续费解释最清楚</li></ul></article>
+            <article class="action-card watch"><h3>小规模验证：地区交付</h3><p>印度、土耳其、尼日利亚的音乐和视频订阅价差足以覆盖服务费，但必须先做真实续费队列。</p><ul><li>每国每产品先做 10–20 单</li><li>跟踪 30/60/90 天续费</li><li>按失败率设置准备金</li></ul></article>
+            <article class="action-card stop"><h3>避免：只按汇率倒卖</h3><p>看到便宜 90% 就直接承诺长期价，通常遗漏税、商店区、账号迁移、支付验证和售后。</p><ul><li>不承诺永久低价</li><li>不把首购价当续费价</li><li>不混用 Web 与 App 价格</li></ul></article>
+          </div>
+          <div class="profit-formula">建议零售价 = 官方实付 × (1 + 支付成本 + 汇率缓冲 + 失败准备) + 人工交付费 + 售后费<br>最低毛利门槛 = max(人民币 15 元/单, 实付成本的 12%)；高复核产品另加 5%–10% 风险缓冲。</div>
+        </div>
+      </section>
+
+      <section id="sources">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Sources</div><h2>原始页面、快照时间与缺口都写清楚</h2><p>官方页面是价格事实来源；Bing 与 Google 用于发现和交叉检索，不用搜索摘要替代正式报价。</p></div>
+            <span class="method-chip">核验日 2026-08-15</span>
+          </div>
+          <div class="source-list">
+            <div class="source-row"><strong>搜索发现</strong><p><a href="https://www.bing.com/search?q=X+Premium+country+pricing+Spotify+regional+prices" target="_blank" rel="noopener">Bing</a> · <a href="https://www.google.com/search?q=subscription+prices+by+country+X+Spotify+YouTube+Premium" target="_blank" rel="noopener">Google</a>：用于发现本地官方页面与调价线索；搜索摘要未作为主表定价依据。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>实时汇率</strong><p><a href="https://open.er-api.com/v6/latest/USD" target="_blank" rel="noopener">ExchangeRate-API USD 快照</a>：USD/CNY 6.755647；GBP 0.738821、JPY 159.237179、INR 95.531266、TRY 47.878001、BRL 5.184431、NGN 1358.643574、HKD 7.847535。</p><time>00:02 UTC</time></div>
+            <div class="source-row"><strong>X iOS 内购</strong><p><a href="https://apps.apple.com/us/app/x/id333903271" target="_blank" rel="noopener">美国</a> · <a href="https://apps.apple.com/gb/app/x/id333903271" target="_blank" rel="noopener">英国</a> · <a href="https://apps.apple.com/jp/app/x/id333903271" target="_blank" rel="noopener">日本</a> · <a href="https://apps.apple.com/in/app/x/id333903271" target="_blank" rel="noopener">印度</a> · <a href="https://apps.apple.com/tr/app/x/id333903271" target="_blank" rel="noopener">土耳其</a> · <a href="https://apps.apple.com/br/app/x/id333903271" target="_blank" rel="noopener">巴西</a> · <a href="https://apps.apple.com/ng/app/x/id333903271" target="_blank" rel="noopener">尼日利亚</a> · <a href="https://apps.apple.com/hk/app/x/id333903271" target="_blank" rel="noopener">香港</a>。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>YouTube iOS 内购</strong><p><a href="https://apps.apple.com/us/app/youtube-watch-listen-stream/id544007664" target="_blank" rel="noopener">美国</a>及相同 App ID 的 GB/JP/IN/TR/BR/NG/HK 官方 App Store 页面；个人 YouTube Premium 月价。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Spotify 官网</strong><p><a href="https://www.spotify.com/us/premium/" target="_blank" rel="noopener">美国</a> · <a href="https://www.spotify.com/uk/premium/" target="_blank" rel="noopener">英国</a> · <a href="https://www.spotify.com/jp/premium/" target="_blank" rel="noopener">日本</a> · <a href="https://www.spotify.com/in-en/premium/" target="_blank" rel="noopener">印度</a> · <a href="https://www.spotify.com/tr-en/premium/" target="_blank" rel="noopener">土耳其</a> · <a href="https://www.spotify.com/br-en/premium/" target="_blank" rel="noopener">巴西</a> · <a href="https://www.spotify.com/ng/premium/" target="_blank" rel="noopener">尼日利亚</a> · <a href="https://www.spotify.com/hk-en/premium/" target="_blank" rel="noopener">香港</a>。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Apple Music 官网</strong><p><a href="https://www.apple.com/apple-music/" target="_blank" rel="noopener">美国</a>及 UK/JP/IN/TR/BR/HK 本地官网。当前美国 $11.99、日本 ¥1,180；限时三个月优惠未写入正常价。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Microsoft 365 官网</strong><p><a href="https://www.microsoft.com/en-us/microsoft-365/buy/compare-all-microsoft-365-products" target="_blank" rel="noopener">Microsoft 365 Personal</a>及 GB/JP/IN/BR/HK 本地比较页；使用月付价，年付优惠另算。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Web 渠道锚点</strong><p><a href="https://help.x.com/en/using-x/x-premium" target="_blank" rel="noopener">X Premium 官方帮助</a> · <a href="https://www.youtube.com/premium?gl=US" target="_blank" rel="noopener">YouTube Premium 美国</a> · <a href="https://help.netflix.com/en/node/24926" target="_blank" rel="noopener">Netflix 美国价格</a>。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>AI 官方价格</strong><p><a href="https://chatgpt.com/pricing/" target="_blank" rel="noopener">ChatGPT</a> · <a href="https://www.anthropic.com/pricing" target="_blank" rel="noopener">Claude</a> · <a href="https://docs.midjourney.com/docs/plans" target="_blank" rel="noopener">Midjourney</a>。OpenAI 官方文档未提供 ChatGPT 消费者国家价格表。</p><time>2026-08-15</time></div>
+          </div>
+          <p class="disclaimer">这是价格与商业验证快照，不是对异区订阅成功率的承诺。平台可随时调整价格、地区资格、家庭同住规则、付款工具要求、税费和续费策略；成交前应重新打开对应官方页面并走到最终结账页确认。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="section-inner"><span>Regional Subscription Pricing Report</span><span>官方价格与实时汇率快照 · 2026-08-15</span></div></footer>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const fxRates = { US: 1, GB: 0.738821, JP: 159.237179, IN: 95.531266, TR: 47.878001, BR: 5.184431, NG: 1358.643574, HK: 7.847535 };
+    const countries = {
+      US: { name: "美国", currency: "USD", locale: "en-US" },
+      GB: { name: "英国", currency: "GBP", locale: "en-GB" },
+      JP: { name: "日本", currency: "JPY", locale: "ja-JP" },
+      IN: { name: "印度", currency: "INR", locale: "en-IN" },
+      TR: { name: "土耳其", currency: "TRY", locale: "tr-TR" },
+      BR: { name: "巴西", currency: "BRL", locale: "pt-BR" },
+      NG: { name: "尼日利亚", currency: "NGN", locale: "en-NG" },
+      HK: { name: "香港", currency: "HKD", locale: "zh-HK" }
+    };
+
+    const products = [
+      { platform: "X Premium", plan: "Basic", channel: "iOS App Store", channelType: "ios", prices: { US: 4, GB: 4, JP: 450, IN: 170, TR: 79.99, BR: 12, NG: 3050, HK: 27 } },
+      { platform: "X Premium", plan: "Premium", channel: "iOS App Store", channelType: "ios", prices: { US: 11, GB: 11, JP: 1270, IN: 470, TR: 199.99, BR: 32, NG: 7600, HK: 74 } },
+      { platform: "X Premium", plan: "Premium+", channel: "iOS App Store", channelType: "ios", prices: { US: 50, GB: 47, JP: 8000, IN: 4999, TR: 2149.99, BR: 199, NG: 79900, HK: 388 } },
+      { platform: "Spotify", plan: "Premium Individual", channel: "官网 Web", channelType: "web", prices: { US: 12.99, GB: 12.99, JP: 1080, IN: 139, TR: 99, BR: 23.9, NG: 1600, HK: 78 } },
+      { platform: "YouTube", plan: "Premium Individual", channel: "iOS App Store", channelType: "ios", prices: { US: 20.99, GB: 16.99, JP: 1680, IN: 195, TR: 159.99, BR: 34.9, NG: 2200, HK: 113 } },
+      { platform: "Apple Music", plan: "Individual", channel: "官网 Web", channelType: "web", prices: { US: 11.99, GB: 11.99, JP: 1180, IN: 139, TR: 89.99, BR: 23.9, HK: 68 } },
+      { platform: "Microsoft 365", plan: "Personal", channel: "官网 Web", channelType: "web", prices: { US: 9.99, GB: 8.49, JP: 2130, IN: 689, BR: 51, HK: 78 } }
+    ];
+
+    const platformFilter = document.getElementById("platformFilter");
+    const planFilter = document.getElementById("planFilter");
+    const fxInput = document.getElementById("fxInput");
+    const cheapOnly = document.getElementById("cheapOnly");
+    const priceRows = document.getElementById("priceRows");
+    const usd = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    const cny = value => new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+
+    function localPrice(code, value) {
+      const country = countries[code];
+      return new Intl.NumberFormat(country.locale, { style: "currency", currency: country.currency, minimumFractionDigits: Number.isInteger(value) ? 0 : 2, maximumFractionDigits: 2 }).format(value);
+    }
+
+    function setOptions() {
+      [...new Set(products.map(item => item.platform))].forEach(platform => platformFilter.add(new Option(platform, platform)));
+      platformFilter.value = "X Premium";
+      updatePlans();
+      planFilter.value = "Premium";
+    }
+
+    function updatePlans() {
+      const current = planFilter.value;
+      planFilter.innerHTML = "";
+      products.filter(item => item.platform === platformFilter.value).forEach(item => planFilter.add(new Option(item.plan, item.plan)));
+      if ([...planFilter.options].some(option => option.value === current)) planFilter.value = current;
+    }
+
+    function selectedProduct() {
+      return products.find(item => item.platform === platformFilter.value && item.plan === planFilter.value) || products[0];
+    }
+
+    function normalizedRows(product) {
+      const baseline = product.prices.US;
+      return Object.entries(product.prices).map(([code, local]) => {
+        const dollar = local / fxRates[code];
+        return { code, local, dollar, yuan: dollar * (Number(fxInput.value) || 6.755647), delta: dollar / baseline - 1 };
+      });
+    }
+
+    function deltaLabel(value) {
+      if (Math.abs(value) < .0005) return "美国基准";
+      return value < 0 ? `便宜 ${Math.abs(value * 100).toFixed(1)}%` : `贵 ${(value * 100).toFixed(1)}%`;
+    }
+
+    function renderTable(product, rows) {
+      const visible = cheapOnly.checked ? rows.filter(row => row.delta < 0) : rows;
+      priceRows.innerHTML = visible.length ? visible.map(row => `
+        <tr>
+          <td class="platform-cell"><strong>${product.platform}</strong><span>${product.plan}</span></td>
+          <td class="nowrap"><strong>${countries[row.code].name}</strong><br><small>${countries[row.code].currency}</small></td>
+          <td><span class="tag ${product.channelType}">${product.channel}</span></td>
+          <td class="nowrap"><strong>${localPrice(row.code, row.local)}</strong></td>
+          <td class="nowrap">${usd(row.dollar)}</td>
+          <td class="nowrap">${cny(row.yuan)}</td>
+          <td class="nowrap ${row.delta < 0 ? "delta-cheap" : row.delta > 0 ? "delta-high" : ""}">${deltaLabel(row.delta)}</td>
+          <td><small>页面未拆分</small></td>
+          <td><span class="tag a">官方 A</span></td>
+        </tr>`).join("") : `<tr><td class="empty-row" colspan="9">当前筛选没有低于美国的地区</td></tr>`;
+    }
+
+    function renderSummary(rows) {
+      const cheapest = [...rows].sort((a, b) => a.dollar - b.dollar)[0];
+      document.getElementById("summaryCheapest").textContent = countries[cheapest.code].name;
+      document.getElementById("summaryCny").textContent = cny(cheapest.yuan) + "/月";
+      document.getElementById("summaryDelta").textContent = deltaLabel(cheapest.delta);
+      document.getElementById("summaryCoverage").textContent = rows.length + " / 8 地区";
+    }
+
+    function drawChart(product, rows) {
+      const canvas = document.getElementById("priceChart");
+      const ratio = Math.max(1, window.devicePixelRatio || 1);
+      const width = Math.max(320, canvas.clientWidth || 760);
+      const height = canvas.clientHeight || 340;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      ctx.clearRect(0, 0, width, height);
+      const sorted = [...rows].sort((a, b) => a.dollar - b.dollar);
+      const max = Math.max(...sorted.map(row => row.dollar), 1);
+      const left = width < 500 ? 76 : 92;
+      const right = 54;
+      const top = 12;
+      const rowHeight = (height - 28) / sorted.length;
+      const baselineX = left + (product.prices.US / max) * (width - left - right);
+      ctx.strokeStyle = "#a46308";
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(baselineX, 3); ctx.lineTo(baselineX, height - 8); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.font = "12px system-ui";
+      ctx.textBaseline = "middle";
+      sorted.forEach((row, index) => {
+        const y = top + index * rowHeight;
+        const barWidth = row.dollar / max * (width - left - right);
+        ctx.fillStyle = "#60706a";
+        ctx.textAlign = "left";
+        ctx.fillText(countries[row.code].name, 0, y + 11);
+        ctx.fillStyle = row.code === "US" ? "#a46308" : row.delta < 0 ? "#13765a" : "#a24239";
+        ctx.fillRect(left, y + 3, Math.max(2, barWidth), Math.min(17, rowHeight - 7));
+        ctx.fillStyle = "#17201d";
+        ctx.textAlign = "right";
+        ctx.fillText(usd(row.dollar), width - 2, y + 11);
+      });
+      document.getElementById("chartHeading").textContent = `${product.platform} · ${product.plan}`;
+      document.getElementById("rankList").innerHTML = sorted.map((row, index) => `<div class="rank-row"><i>${index + 1}</i><span><strong>${countries[row.code].name}</strong><br><small>${deltaLabel(row.delta)}</small></span><strong>${usd(row.dollar)}</strong></div>`).join("");
+    }
+
+    function update() {
+      const product = selectedProduct();
+      const rows = normalizedRows(product);
+      renderTable(product, rows);
+      renderSummary(rows);
+      drawChart(product, rows);
+    }
+
+    platformFilter.addEventListener("change", () => { updatePlans(); update(); });
+    planFilter.addEventListener("change", update);
+    fxInput.addEventListener("input", update);
+    cheapOnly.addEventListener("change", update);
+    window.addEventListener("resize", update);
+
+    const navLinks = [...document.querySelectorAll(".nav-list a[href^='#']")];
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+    }, { rootMargin: "-15% 0px -68% 0px", threshold: [0, .1, .25] });
+    sections.forEach(section => observer.observe(section));
+
+    window.__regionalReportErrors = [];
+    window.addEventListener("error", event => window.__regionalReportErrors.push(event.message));
+    setOptions();
+    if (window.lucide) lucide.createIcons();
+    update();
+  </script>
+</body>
+</html>
