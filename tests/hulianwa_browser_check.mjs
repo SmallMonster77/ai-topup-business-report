@@ -1,6 +1,9 @@
 const endpoint = process.env.CHROME_ENDPOINT || "http://127.0.0.1:9339";
 const pageUrl = "http://127.0.0.1:8015/hulianwa-competitor-analysis.html";
-const { writeFile } = await import("node:fs/promises");
+const { readFile, writeFile } = await import("node:fs/promises");
+const skuData = JSON.parse(await readFile(new URL("../data/hulianwa-sku-details.json", import.meta.url), "utf8"));
+const expectedSkuRows = skuData.skuCount;
+const expectedDetailCount = skuData.detailCount;
 
 const targets = await fetch(`${endpoint}/json/list`).then(response => response.json());
 const target = targets.find(item => item.type === "page");
@@ -71,6 +74,8 @@ async function inspect(label, width, height) {
       profitRows: document.querySelectorAll("#profitRows tr").length,
       skuRows: document.querySelectorAll("#skuRows tr").length,
       skuCount: document.getElementById("skuCount").textContent,
+      detailMetric: document.getElementById("metricDetails").textContent,
+      skuMetric: document.getElementById("metricSkus").textContent,
       initialCatalogCount: document.getElementById("catalogCount").textContent,
       cursorRows,
       fxChanged: beforeProfit !== afterProfit,
@@ -90,9 +95,11 @@ const failed = [desktop, mobile].some(result =>
   result.topCards !== 12 ||
   result.loadedImages < 8 ||
   result.officialRows !== 44 ||
-  result.profitRows !== 12 ||
-  result.skuRows !== 50 ||
-  !result.skuCount.startsWith("50 条") ||
+  result.profitRows !== 20 ||
+  result.skuRows !== expectedSkuRows ||
+  !result.skuCount.startsWith(`${expectedSkuRows} 条`) ||
+  result.detailMetric !== `${expectedDetailCount}/211` ||
+  result.skuMetric !== expectedSkuRows.toLocaleString("zh-CN") ||
   !result.initialCatalogCount.includes("全店 211") ||
   result.cursorRows < 2 ||
   !result.fxChanged ||

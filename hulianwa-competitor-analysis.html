@@ -319,6 +319,7 @@
       </div>
       <div class="top-actions">
         <a class="btn" href="index.html" title="返回海外 AI 代充商业报告"><i data-lucide="arrow-left"></i><span>主报告</span></a>
+        <a class="btn" href="data/hulianwa-sku-details.json" download title="下载完整 SKU 原始数据"><i data-lucide="download"></i><span>SKU 数据</span></a>
         <button class="btn" id="resetModel" type="button" title="恢复利润模型默认参数"><i data-lucide="rotate-ccw"></i><span>恢复</span></button>
         <button class="btn btn-primary" id="printReport" type="button" title="打印或导出 PDF"><i data-lucide="printer"></i><span>打印 / PDF</span></button>
       </div>
@@ -352,7 +353,7 @@
               <div class="decision"><span class="decision-dot"></span>结论：市场真实，但不能照抄低价账号模式</div>
               <p class="eyebrow">Competitive intelligence / 2026 Q3</p>
               <h1>互联蛙旗舰店<br>商品、官网价与利润拆解</h1>
-              <p class="lead">头部需求集中在 Cursor、Suno、Perplexity，前三个商品的近 365 天模糊销量下限已达 1.6 万。按官网采购的代充 SKU 通常只有约 8%–18% 单笔经营利润；明显低于官网成本的“成品号、共享、短租、额度拆分”属于另一套供给逻辑，售后与封控风险更高。</p>
+              <p class="lead">头部需求集中在 Cursor、Suno、Perplexity，前三个商品的近 365 天模糊销量下限已达 1.6 万。20 个官网同规格情景按默认成本计算，15 个为正、5 个为负，利润率中位数约 11.9%；明显低于官网成本的 SKU 依赖不同供给逻辑，不能按普通官网采购复制。</p>
               <div class="hero-actions">
                 <a class="btn btn-primary" href="#profit"><i data-lucide="calculator"></i>核算利润</a>
                 <a class="btn" href="#catalog"><i data-lucide="list-filter"></i>查看全部商品</a>
@@ -365,6 +366,8 @@
                 <div class="metric"><span>粉丝</span><strong>3,972</strong><small>店铺首页公开值</small></div>
                 <div class="metric"><span>综合体验</span><strong>4.9</strong><small>宝贝 4.8 · 服务 4.9</small></div>
                 <div class="metric"><span>前三销量下限</span><strong>16,000+</strong><small>近 365 天模糊口径</small></div>
+                <div class="metric"><span>详情覆盖</span><strong id="metricDetails">载入中</strong><small>登录详情页精确采集</small></div>
+                <div class="metric"><span>SKU 实价</span><strong id="metricSkus">载入中</strong><small>规格与价格逐条归档</small></div>
               </div>
             </div>
           </div>
@@ -397,7 +400,7 @@
         <div class="content">
           <div class="section-head">
             <div><p class="eyebrow">Sales structure</p><h2>高销量商品</h2></div>
-            <p>按店铺页近 365 天模糊销量排序。卡片价格取已采详情页的最低 SKU；未采详情价时不使用误导性的估算值。</p>
+            <p>按店铺页近 365 天模糊销量排序。卡片价格取详情页最低在售 SKU，已售罄的低价规格不参与；未采详情价时不使用估算值。</p>
           </div>
           <div class="product-grid" id="topProducts"><div class="loading">正在载入商品目录…</div></div>
         </div>
@@ -407,7 +410,7 @@
         <div class="content">
           <div class="section-head">
             <div><p class="eyebrow">Official pricing</p><h2>官网公开定价</h2></div>
-            <p>美元计划按当前 USD/CNY 换算；Colab 展示当前访问区域返回的港币价。税费、地区价和结账页汇率可能使实际扣款变化。</p>
+            <p>美元计划按当前 USD/CNY 换算；Colab 展示当前访问区域返回的港币价。标为历史快照或动态价的行只作线索，采购前需在结账页复核。</p>
           </div>
           <div class="table-wrap">
             <table>
@@ -445,7 +448,7 @@
         <div class="content">
           <div class="section-head">
             <div><p class="eyebrow">Observed SKU prices</p><h2>店铺 SKU 实价</h2></div>
-            <p>价格来自已登录的天猫商品详情页逐项点击采集，保留具体规格名称。数据会随着采集批次持续增加。</p>
+            <p>价格来自已登录的天猫商品详情页服务端渲染数据，保留规格名称、价格、库存状态和 SKU ID；无需模拟选择规格。</p>
           </div>
           <div class="filterbar">
             <input id="skuSearch" type="search" placeholder="搜索平台、商品或 SKU">
@@ -454,8 +457,8 @@
           </div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>商品</th><th>SKU 规格</th><th>交付分类</th><th class="num">售价</th><th>商品页</th></tr></thead>
-              <tbody id="skuRows"><tr><td colspan="5" class="loading">正在载入 SKU 数据…</td></tr></tbody>
+              <thead><tr><th>商品</th><th>SKU 规格</th><th>交付分类</th><th>状态</th><th class="num">售价</th><th>商品页</th></tr></thead>
+              <tbody id="skuRows"><tr><td colspan="6" class="loading">正在载入 SKU 数据…</td></tr></tbody>
             </table>
           </div>
           <div class="pager"><span id="skuCount">0 条</span><span>详情价为采集时快照，结账促销与会员券未计。</span></div>
@@ -508,8 +511,9 @@
             <div>
               <h3>采集与计算口径</h3>
               <ul>
-                <li>店铺目录：React 页面公开数据，2026-08-15，共 211 个商品。</li>
-                <li>SKU 价：天猫详情页逐项选择规格后的显示价，不含券、88VIP 与结账优惠。</li>
+                <li>店铺目录：React 页面公开数据，2026-08-15，共 211 个商品；shopId 238142208，sellerId 2217847799936。</li>
+                <li>SKU 价：读取已登录天猫详情页的服务端渲染规格数据，不含券、88VIP 与结账优惠。</li>
+                <li id="methodSkuCoverage">详情覆盖与 SKU 数正在载入。</li>
                 <li>销量：“近 365 天模糊销量”，如 1 万+、4,000+，只作为排序与需求信号。</li>
                 <li>汇率：1 USD = 6.76 CNY；1 USD = 7.85 HKD，2026-08-15 快照。</li>
                 <li>利润：贡献利润口径，不等于会计净利润；所有经营费率均可在页面调整。</li>
@@ -577,32 +581,40 @@
       { platform: "Manus", plan: "4,000 积分", cycle: "月", currency: "USD", amount: 20, source: "https://manus.im/pricing", status: "页面可见价" },
       { platform: "Manus", plan: "8,000 积分", cycle: "月", currency: "USD", amount: 40, source: "https://manus.im/pricing", status: "页面可见价" },
       { platform: "Manus", plan: "40,000 积分", cycle: "月", currency: "USD", amount: 200, source: "https://manus.im/pricing", status: "页面可见价" },
-      { platform: "Lovart", plan: "Starter", cycle: "月", currency: "USD", amount: 19, source: "https://lovart.ai/pricing", status: "官网公开" },
-      { platform: "Lovart", plan: "Basic", cycle: "月", currency: "USD", amount: 32, source: "https://lovart.ai/pricing", status: "官网公开" },
-      { platform: "Lovart", plan: "Pro", cycle: "月", currency: "USD", amount: 90, source: "https://lovart.ai/pricing", status: "官网公开" },
-      { platform: "Lovart", plan: "Ultimate", cycle: "月", currency: "USD", amount: 199, source: "https://lovart.ai/pricing", status: "官网公开" },
-      { platform: "Lovart", plan: "Starter 促销", cycle: "年", currency: "USD", amount: 192, source: "https://lovart.ai/pricing", status: "当前促销" },
-      { platform: "Lovart", plan: "Basic 促销", cycle: "年", currency: "USD", amount: 324, source: "https://lovart.ai/pricing", status: "当前促销" },
-      { platform: "Lovart", plan: "Pro 首年", cycle: "年", currency: "USD", amount: 540, source: "https://lovart.ai/pricing", status: "当前促销" },
-      { platform: "Lovart", plan: "Ultimate 首年", cycle: "年", currency: "USD", amount: 1308, source: "https://lovart.ai/pricing", status: "当前促销" },
+      { platform: "Lovart", plan: "Starter", cycle: "月", currency: "USD", amount: 19, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Basic", cycle: "月", currency: "USD", amount: 32, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Pro", cycle: "月", currency: "USD", amount: 90, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Ultimate", cycle: "月", currency: "USD", amount: 199, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Starter 促销", cycle: "年", currency: "USD", amount: 192, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Basic 促销", cycle: "年", currency: "USD", amount: 324, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Pro 首年", cycle: "年", currency: "USD", amount: 540, source: "https://lovart.ai/pricing", status: "历史页快照" },
+      { platform: "Lovart", plan: "Ultimate 首年", cycle: "年", currency: "USD", amount: 1308, source: "https://lovart.ai/pricing", status: "历史页快照" },
       { platform: "Windsurf / Devin", plan: "Pro", cycle: "月", currency: "USD", amount: 20, source: "https://windsurf.com/pricing", status: "官网重定向" },
       { platform: "Windsurf / Devin", plan: "Max", cycle: "月", currency: "USD", amount: 200, source: "https://windsurf.com/pricing", status: "官网重定向" },
       { platform: "Genspark", plan: "个人计划", cycle: "月", currency: "USD", amount: null, source: "https://www.genspark.ai/pricing", status: "登录后动态价" }
     ];
 
     const profitScenarios = [
-      { item: "Cursor Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 179, usd: 20 },
-      { item: "Cursor Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 115, usd: 20 },
-      { item: "Cursor Pro+ 60 美元", sku: "月卡代充", mode: "官方代充", sale: 520, usd: 60 },
-      { item: "Cursor Ultra 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1720, usd: 200 },
-      { item: "Suno Pro 10 美元", sku: "月卡代充", mode: "官方代充", sale: 94, usd: 10 },
-      { item: "Suno Pro 10 美元", sku: "独享成品号", mode: "独享成品号", sale: 80, usd: 10 },
-      { item: "Suno Premier 30 美元", sku: "月卡代充", mode: "官方代充", sale: 260, usd: 30 },
-      { item: "Suno Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 750, usd: 96 },
-      { item: "Perplexity Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 180, usd: 20 },
-      { item: "Perplexity Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 84, usd: 20 },
-      { item: "Perplexity Max 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1890, usd: 200 },
-      { item: "Perplexity Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 1800, usd: 200 }
+      { item: "Cursor Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 179, usd: 20, itemId: "794810230053", skuIncludes: "20刀pro版月卡代充" },
+      { item: "Cursor Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 115, usd: 20, itemId: "794810230053", skuIncludes: "20刀pro版月卡独享" },
+      { item: "Cursor Pro+ 60 美元", sku: "月卡代充", mode: "官方代充", sale: 520, usd: 60, itemId: "794810230053", skuIncludes: "60刀pro月卡【代充】" },
+      { item: "Cursor Ultra 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1720, usd: 200, itemId: "794810230053", skuIncludes: "【代充值】200刀/月Ultra" },
+      { item: "Suno Pro 10 美元", sku: "月卡代充", mode: "官方代充", sale: 94, usd: 10, itemId: "807435804815", skuIncludes: "专业版10刀月卡2500积分】代充" },
+      { item: "Suno Pro 10 美元", sku: "独享成品号", mode: "独享成品号", sale: 80, usd: 10, itemId: "807435804815", skuIncludes: "专业版10刀月卡2500积分】独享号" },
+      { item: "Suno Premier 30 美元", sku: "月卡代充", mode: "官方代充", sale: 260, usd: 30, itemId: "807435804815", skuIncludes: "尊享30刀月卡10000积分.能用studio】代充" },
+      { item: "Suno Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 750, usd: 96, itemId: "807435804815", skuIncludes: "专业版10刀卡2500积分】独享号/代充" },
+      { item: "Perplexity Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 180, usd: 20, itemId: "794499023963", skuIncludes: "20刀pro版月卡代充" },
+      { item: "Perplexity Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 84, usd: 20, itemId: "794499023963", skuIncludes: "20刀pro版月卡独享成品号" },
+      { item: "Perplexity Max 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1890, usd: 200, itemId: "794499023963", skuIncludes: "1月Max独享会员200刀{代充}" },
+      { item: "Perplexity Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 1800, usd: 200, itemId: "794499023963", skuIncludes: "200刀pro年卡独享号代充" },
+      { item: "ElevenLabs Starter 6 美元", sku: "月卡代充", mode: "官方代充", sale: 59, usd: 6, itemId: "920475478622", skuIncludes: "6刀启动版月卡代充" },
+      { item: "ElevenLabs Creator 22 美元", sku: "老号续费代充", mode: "官方代充", sale: 205, usd: 22, itemId: "920475478622", skuIncludes: "22刀/月创作版会员老号续费代充" },
+      { item: "ElevenLabs Pro 99 美元", sku: "月卡代充", mode: "官方代充", sale: 870, usd: 99, itemId: "920475478622", skuIncludes: "99刀职业选手版月卡代充" },
+      { item: "Gamma Plus 12 美元", sku: "月卡代充", mode: "官方代充", sale: 38, usd: 12, itemId: "981649547633", skuIncludes: "12刀plus月卡代充" },
+      { item: "Gamma Pro 25 美元", sku: "月卡代充", mode: "官方代充", sale: 78, usd: 25, itemId: "981649547633", skuIncludes: "25刀pro月卡代充" },
+      { item: "HeyGen Creator 29 美元", sku: "月卡代充", mode: "官方代充", sale: 270, usd: 29, itemId: "792043093456", skuIncludes: "[代充】29刀/月Creator创建者版会员" },
+      { item: "HeyGen Pro 49 美元", sku: "月卡代充", mode: "官方代充", sale: 470, usd: 49, itemId: "792043093456", skuIncludes: "【代充】49刀/月1000积分Pro专业版" },
+      { item: "HeyGen Business 149 美元", sku: "单席位月卡代充", mode: "官方代充", sale: 1345, usd: 149, itemId: "792043093456", skuIncludes: "149刀商业版代充《1个席位》" }
     ];
 
     let catalog = [];
@@ -650,12 +662,15 @@
       const reserve = (Number(byId("reserveFee").value) || 0) / 100;
       const labor = Number(byId("labor").value) || 0;
       byId("profitRows").innerHTML = profitScenarios.map(row => {
+        const detail = skuDetails.find(item => String(item.itemId) === row.itemId);
+        const observed = detail?.rows?.find(sku => sku.label.includes(row.skuIncludes));
+        const sale = Number.isFinite(observed?.price) ? observed.price : row.sale;
         const cost = row.usd * fx * (1 + payment);
-        const profit = row.sale * (1 - platform - reserve) - cost - labor;
-        const margin = profit / row.sale * 100;
+        const profit = sale * (1 - platform - reserve) - cost - labor;
+        const margin = profit / sale * 100;
         const judgment = profit < 0 ? "官网采购不成立" : margin < 8 ? "利润过薄" : margin < 16 ? "可做但需控售后" : "利润空间较好";
         const tone = profit < 0 ? "tag-red" : margin < 8 ? "tag-amber" : "tag-green";
-        return `<tr><td class="table-title"><strong>${row.item}</strong><br><span class="muted">${row.sku}</span></td><td><span class="tag ${tagClass(row.mode)}">${row.mode}</span></td><td class="num">${money(row.sale)}</td><td class="num">${money(cost)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${profit >= 0 ? "+" : ""}${money(profit)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${margin.toFixed(1)}%</td><td><span class="tag ${tone}">${judgment}</span></td></tr>`;
+        return `<tr><td class="table-title"><strong>${row.item}</strong><br><span class="muted">${row.sku}</span></td><td><span class="tag ${tagClass(row.mode)}">${row.mode}</span></td><td class="num">${money(sale)}</td><td class="num">${money(cost)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${profit >= 0 ? "+" : ""}${money(profit)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${margin.toFixed(1)}%</td><td><span class="tag ${tone}">${judgment}</span></td></tr>`;
       }).join("");
       renderOfficial();
     }
@@ -664,7 +679,7 @@
       const details = new Map(skuDetails.map(item => [String(item.itemId), item]));
       byId("topProducts").innerHTML = catalog.slice(0, 12).map((product, index) => {
         const detail = details.get(String(product.itemId));
-        return `<article class="product-card"><div class="product-image"><img src="${product.image}" alt="${product.title}" loading="lazy"></div><div class="product-body"><span class="rank">销量排名 #${index + 1}</span><div class="product-title">${product.title}</div><div class="product-meta"><div><span>近 365 天</span><strong>${product.vagueSold365}</strong></div><div><span>详情最低价</span><strong>${detail && !detail.error ? money(detail.minPrice) : "待采"}</strong></div></div></div></article>`;
+        return `<article class="product-card"><div class="product-image"><img src="${product.image}" alt="${product.title}" loading="lazy"></div><div class="product-body"><span class="rank">销量排名 #${index + 1}</span><div class="product-title">${product.title}</div><div class="product-meta"><div><span>近 365 天</span><strong>${product.vagueSold365}</strong></div><div><span>最低在售价</span><strong>${detail && !detail.error ? money(detail.minPrice) : "待采"}</strong></div></div></div></article>`;
       }).join("");
     }
 
@@ -685,9 +700,10 @@
       });
       byId("skuRows").innerHTML = rows.length ? rows.map(entry => {
         const mode = modeOf(entry.label);
-        return `<tr><td class="table-title"><strong>${entry.item.catalogTitle}</strong><br><span class="muted">${entry.item.vagueSold365}</span></td><td class="sku-label">${entry.label}</td><td><span class="tag ${tagClass(mode)}">${mode}</span></td><td class="num"><strong>${money(entry.price)}</strong></td><td><a class="source-link" href="${entry.item.catalogUrl}" target="_blank" rel="noopener">天猫 ↗</a></td></tr>`;
-      }).join("") : `<tr><td colspan="5" class="loading">没有符合条件的 SKU</td></tr>`;
-      byId("skuCount").textContent = `${rows.length} 条 SKU · ${skuDetails.filter(item => !item.error).length} 个商品`;
+        const availability = entry.disabled ? `<span class="tag tag-red">售罄</span>` : `<span class="tag tag-green">在售</span>`;
+        return `<tr><td class="table-title"><strong>${entry.item.catalogTitle}</strong><br><span class="muted">${entry.item.vagueSold365}</span></td><td class="sku-label">${entry.label}</td><td><span class="tag ${tagClass(mode)}">${mode}</span></td><td>${availability}</td><td class="num"><strong>${money(entry.price)}</strong></td><td><a class="source-link" href="${entry.item.catalogUrl}" target="_blank" rel="noopener">天猫 ↗</a></td></tr>`;
+      }).join("") : `<tr><td colspan="6" class="loading">没有符合条件的 SKU</td></tr>`;
+      byId("skuCount").textContent = `${rows.length} 条 SKU · ${skuDetails.filter(item => !item.error).length} 个商品 · ${rows.filter(row => row.disabled).length} 条售罄`;
     }
 
     function renderCatalog() {
@@ -719,13 +735,17 @@
         catalog = [...catalogData.products].sort((a,b) => salesValue(b.vagueSold365) - salesValue(a.vagueSold365));
         skuDetails = skuData.results || [];
         byId("metricProducts").textContent = catalog.length;
+        byId("metricDetails").textContent = `${skuData.detailCount || skuDetails.filter(item => !item.error).length}/${catalog.length}`;
+        byId("metricSkus").textContent = (skuData.skuCount || skuDetails.reduce((sum, item) => sum + (item.rows || []).length, 0)).toLocaleString("zh-CN");
+        byId("methodSkuCoverage").textContent = `详情覆盖：${skuData.detailCount || 0}/${catalog.length} 个商品，共 ${(skuData.skuCount || 0).toLocaleString("zh-CN")} 条 SKU 实价。`;
+        renderProfit();
         renderTopProducts();
         renderSkuFilters();
         renderSkus();
         renderCatalog();
       } catch (error) {
         byId("topProducts").innerHTML = `<div class="loading">数据载入失败：${error.message}</div>`;
-        byId("skuRows").innerHTML = `<tr><td colspan="5" class="loading">请通过 HTTP 服务打开本报告以载入 JSON 数据。</td></tr>`;
+        byId("skuRows").innerHTML = `<tr><td colspan="6" class="loading">请通过 HTTP 服务打开本报告以载入 JSON 数据。</td></tr>`;
         byId("catalogRows").innerHTML = `<tr><td colspan="7" class="loading">请通过 HTTP 服务打开本报告以载入 JSON 数据。</td></tr>`;
       }
     }
