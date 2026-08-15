@@ -1,1 +1,4 @@
 .runtime/
+topup-business-decision-report.html
+tests/business_decision_browser_check.mjs
+assets/heygen.ico
