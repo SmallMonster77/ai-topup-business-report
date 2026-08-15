@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="尼日利亚礼品卡收卡市场、参与者、实时费率、USDT结算、利润模型、风控与中国工作室进入方案。">
+  <title>尼日利亚礼品卡市场深度报告</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #16201d;
+      --ink-2: #48534f;
+      --ink-3: #74807b;
+      --paper: #f4f6f5;
+      --surface: #ffffff;
+      --line: #dce2df;
+      --line-strong: #c6d0cc;
+      --green: #13765a;
+      --green-dark: #0b5b45;
+      --green-soft: #e1f2eb;
+      --amber: #a96608;
+      --amber-soft: #fff2d8;
+      --red: #a44239;
+      --red-soft: #fbe9e7;
+      --blue: #2e6d8e;
+      --blue-soft: #e7f1f6;
+      --violet: #67558f;
+      --violet-soft: #eeeaf6;
+      --shadow: 0 11px 28px rgba(23, 44, 36, .08);
+      --sidebar: 234px;
+      --radius: 7px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 15px;
+      line-height: 1.62;
+      letter-spacing: 0;
+    }
+    button, input { font: inherit; letter-spacing: 0; }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    a:hover { color: var(--amber); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.22; letter-spacing: 0; }
+    h1 { margin-bottom: 16px; font-size: 40px; }
+    h2 { margin-bottom: 9px; font-size: 27px; }
+    h3 { margin-bottom: 8px; font-size: 17px; }
+    small { color: var(--ink-3); }
+    img { display: block; max-width: 100%; }
+
+    .skip-link { position: fixed; left: 12px; top: -60px; z-index: 100; padding: 8px 12px; color: white; background: var(--ink); }
+    .skip-link:focus { top: 12px; }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 20;
+      width: var(--sidebar);
+      padding: 24px 18px;
+      overflow-y: auto;
+      color: #e9f2ee;
+      background: #17241f;
+      border-right: 1px solid rgba(255,255,255,.08);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 25px; color: white; text-decoration: none; }
+    .brand-mark { display: grid; width: 38px; height: 38px; place-items: center; flex: 0 0 38px; color: #17241f; background: #e9b84c; border-radius: 7px; font-weight: 850; }
+    .brand-copy strong, .brand-copy span { display: block; }
+    .brand-copy span { color: #a9bab2; font-size: 11px; }
+    .nav-label { margin: 18px 10px 7px; color: #82968c; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .nav-list { display: grid; gap: 3px; }
+    .nav-list a { display: flex; gap: 9px; align-items: center; min-height: 37px; padding: 7px 10px; color: #c7d5ce; border-radius: 5px; text-decoration: none; font-size: 13px; }
+    .nav-list a:hover, .nav-list a.active { color: white; background: rgba(255,255,255,.09); }
+    .nav-list svg { width: 16px; height: 16px; flex: 0 0 16px; }
+    .report-links { margin-top: 22px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+
+    .page { margin-left: var(--sidebar); }
+    .topbar { display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 9px 34px; background: rgba(255,255,255,.94); border-bottom: 1px solid var(--line); }
+    .topbar strong { font-size: 14px; }
+    .topbar-meta { display: flex; align-items: center; gap: 9px; color: var(--ink-3); font-size: 12px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #3aa276; }
+
+    .hero { padding: 58px 34px 43px; color: white; background: #20382f; border-bottom: 5px solid #e9b84c; }
+    .hero-inner, .section-inner { width: min(1180px, 100%); margin: 0 auto; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(290px, .75fr); align-items: end; gap: 48px; }
+    .eyebrow { margin-bottom: 11px; color: var(--green); font-size: 11px; font-weight: 850; text-transform: uppercase; }
+    .hero .eyebrow { color: #e9c66c; }
+    .hero p { max-width: 780px; margin-bottom: 22px; color: #c6d7cf; font-size: 17px; }
+    .mobile-break { display: none; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 39px; padding: 8px 13px; color: var(--ink); background: white; border: 1px solid var(--line-strong); border-radius: 5px; font-weight: 720; text-decoration: none; cursor: pointer; }
+    .btn:hover { color: var(--ink); background: #f2f5f3; }
+    .btn-primary { background: #e9b84c; border-color: #e9b84c; }
+    .btn svg { width: 16px; height: 16px; }
+    .hero-side { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid rgba(255,255,255,.16); }
+    .hero-stat { min-height: 92px; padding: 14px; border-right: 1px solid rgba(255,255,255,.13); border-bottom: 1px solid rgba(255,255,255,.13); }
+    .hero-stat:nth-child(2n) { border-right: 0; }
+    .hero-stat:nth-last-child(-n+2) { border-bottom: 0; }
+    .hero-stat strong { display: block; color: white; font-size: 24px; line-height: 1.2; }
+    .hero-stat span { display: block; margin-top: 4px; color: #afc2b9; font-size: 11px; }
+
+    section { padding: 54px 34px; scroll-margin-top: 20px; }
+    section:nth-of-type(even) { background: var(--surface); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 24px; }
+    .section-head p { max-width: 740px; margin-bottom: 0; color: var(--ink-2); }
+    .method-chip { flex: 0 0 auto; padding: 5px 8px; color: var(--blue); background: var(--blue-soft); border: 1px solid #c9dce7; border-radius: 4px; font-size: 11px; font-weight: 800; }
+    .note { margin: 18px 0 0; padding: 13px 15px; color: var(--ink-2); background: var(--amber-soft); border-left: 4px solid var(--amber); font-size: 13px; }
+
+    .verdict { display: grid; grid-template-columns: minmax(0, 1.55fr) repeat(3, minmax(150px, .55fr)); background: white; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .verdict-main { padding: 24px; border-right: 1px solid var(--line); }
+    .signal { display: inline-block; margin-bottom: 10px; padding: 4px 8px; color: var(--green-dark); background: var(--green-soft); font-size: 11px; font-weight: 850; }
+    .verdict-main h3 { font-size: 22px; }
+    .verdict-main p { margin: 0; color: var(--ink-2); }
+    .metric { padding: 22px 17px; border-right: 1px solid var(--line); }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; margin-bottom: 4px; color: var(--green); font-size: 25px; }
+    .metric span { color: var(--ink-3); font-size: 12px; }
+    .decision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-top: 16px; }
+    .decision { padding: 17px; background: white; border: 1px solid var(--line); border-top: 4px solid var(--green); border-radius: var(--radius); }
+    .decision.warn { border-top-color: var(--amber); }
+    .decision.stop { border-top-color: var(--red); }
+    .decision p { margin: 0; color: var(--ink-2); font-size: 13px; }
+
+    .contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .contrast { padding: 20px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .contrast.foreign { border-top: 4px solid var(--green); }
+    .contrast.domestic { border-top: 4px solid var(--blue); }
+    .contrast h3 { display: flex; align-items: center; gap: 8px; font-size: 20px; }
+    .contrast h3 svg { width: 20px; height: 20px; }
+    .fact-list { display: grid; gap: 9px; margin-top: 17px; }
+    .fact { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding-top: 9px; border-top: 1px solid var(--line); }
+    .fact strong { font-size: 12px; }
+    .fact span { color: var(--ink-2); font-size: 13px; }
+
+    .flow-shell { padding: 21px; background: #17241f; color: white; border-radius: var(--radius); }
+    .flow-label { margin-bottom: 13px; color: #8fa49a; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 21px; }
+    .flow-step { position: relative; min-height: 150px; padding: 16px; background: #22352d; border: 1px solid rgba(255,255,255,.1); border-radius: 6px; }
+    .flow-step:not(:last-child)::after { content: ""; position: absolute; z-index: 2; top: 50%; right: -22px; width: 22px; height: 1px; background: #e9b84c; }
+    .flow-step:not(:last-child)::before { content: ""; position: absolute; z-index: 3; top: calc(50% - 3px); right: -22px; border: 4px solid transparent; border-left-color: #e9b84c; }
+    .flow-step i { display: grid; width: 30px; height: 30px; place-items: center; color: #17241f; background: #e9b84c; border-radius: 5px; font-style: normal; font-weight: 850; }
+    .flow-step strong { display: block; margin: 11px 0 5px; }
+    .flow-step span { color: #b7c8c0; font-size: 12px; }
+    .flow-lanes { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-top: 16px; }
+    .lane { padding: 12px 14px; color: #c7d7d0; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); font-size: 12px; }
+    .lane strong { color: #e9c66c; }
+
+    .table-wrap { overflow-x: auto; background: white; border: 1px solid var(--line); }
+    table { width: 100%; min-width: 850px; border-collapse: collapse; }
+    th, td { padding: 13px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+    th { color: var(--ink-3); background: #f7f9f8; font-size: 11px; text-transform: uppercase; }
+    td { color: var(--ink-2); font-size: 13px; }
+    tr:last-child td { border-bottom: 0; }
+    td strong { color: var(--ink); }
+    .role { display: flex; align-items: center; gap: 10px; min-width: 175px; }
+    .role i { display: grid; width: 31px; height: 31px; place-items: center; flex: 0 0 31px; color: var(--green); background: var(--green-soft); border-radius: 5px; }
+    .role svg { width: 16px; height: 16px; }
+    .score { display: inline-block; padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 800; }
+    .score.good { color: var(--green-dark); background: var(--green-soft); }
+    .score.warn { color: var(--amber); background: var(--amber-soft); }
+    .score.risk { color: var(--red); background: var(--red-soft); }
+
+    .quote-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 15px; }
+    .quote-card { padding: 16px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .quote-card span { display: block; color: var(--ink-3); font-size: 11px; }
+    .quote-card strong { display: block; margin: 3px 0; color: var(--green); font-size: 23px; }
+    .quote-card small { display: block; line-height: 1.45; }
+    .rate-table td:nth-child(2), .rate-table td:nth-child(3), .rate-table td:nth-child(4), .rate-table td:nth-child(5) { white-space: nowrap; }
+    .delta { color: var(--red); font-weight: 750; }
+
+    .class-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
+    .class-card { min-height: 205px; padding: 18px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .class-card i { display: grid; width: 34px; height: 34px; place-items: center; color: var(--blue); background: var(--blue-soft); border-radius: 6px; }
+    .class-card i svg { width: 18px; height: 18px; }
+    .class-card h3 { margin-top: 14px; }
+    .class-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
+    .formula-box { margin-top: 15px; padding: 16px; color: var(--ink-2); background: #eef2f0; border: 1px solid var(--line); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; }
+
+    .exit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .exit-card { display: flex; flex-direction: column; min-height: 275px; padding: 19px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .exit-no { color: var(--amber); font-size: 11px; font-weight: 850; }
+    .exit-card h3 { margin-top: 7px; font-size: 19px; }
+    .exit-card p { color: var(--ink-2); font-size: 13px; }
+    .exit-card ul { margin: auto 0 0; padding-left: 18px; color: var(--ink-2); font-size: 12px; }
+
+    .calculator { display: grid; grid-template-columns: minmax(330px, .8fr) minmax(0, 1.2fr); background: white; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .calc-controls { padding: 22px; border-right: 1px solid var(--line); }
+    .presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 18px; }
+    .preset { min-height: 35px; padding: 6px; color: var(--ink-2); background: #f3f6f4; border: 1px solid var(--line); border-radius: 4px; font-size: 11px; cursor: pointer; }
+    .preset.active { color: white; background: var(--green); border-color: var(--green); }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    label { display: grid; gap: 5px; color: var(--ink-2); font-size: 11px; font-weight: 700; }
+    .input-shell { display: flex; align-items: center; background: white; border: 1px solid var(--line-strong); border-radius: 4px; }
+    .input-shell input { width: 100%; min-width: 0; height: 36px; padding: 7px 9px; color: var(--ink); background: transparent; border: 0; outline: none; }
+    .input-shell span { padding-right: 9px; color: var(--ink-3); font-size: 11px; white-space: nowrap; }
+    .input-shell:focus-within { border-color: var(--green); box-shadow: 0 0 0 2px rgba(19,118,90,.12); }
+    .calc-note { margin: 14px 0 0; color: var(--ink-3); font-size: 11px; }
+    .results { min-width: 0; padding: 22px; }
+    .result-hero { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 17px; }
+    .result-box { min-height: 86px; padding: 13px; background: #f4f7f5; border: 1px solid var(--line); }
+    .result-box span { display: block; color: var(--ink-3); font-size: 11px; }
+    .result-box strong { display: block; margin-top: 5px; font-size: 22px; overflow-wrap: anywhere; }
+    .positive { color: var(--green); }
+    .negative { color: var(--red); }
+    .waterfall { display: grid; gap: 8px; }
+    .water-row { display: grid; grid-template-columns: 104px minmax(80px, 1fr) 75px; align-items: center; gap: 9px; font-size: 11px; }
+    .bar-track { height: 9px; overflow: hidden; background: #edf1ef; border-radius: 2px; }
+    .bar-fill { display: block; width: 0; height: 100%; background: var(--blue); transition: width .2s ease; }
+    .bar-fill.cost { background: var(--amber); }
+    .bar-fill.risk { background: var(--red); }
+    .water-row strong { text-align: right; font-size: 11px; }
+    .chart-wrap { margin-top: 18px; padding-top: 15px; border-top: 1px solid var(--line); }
+    .chart-wrap h3 { font-size: 13px; }
+    canvas { display: block; width: 100%; height: 215px; }
+    .calc-formula { margin: 12px 0 0; color: var(--ink-3); font-size: 11px; }
+
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .risk-panel { padding: 20px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .risk-panel h3 { display: flex; align-items: center; gap: 8px; }
+    .risk-panel h3 svg { width: 18px; height: 18px; }
+    .risk-list { display: grid; gap: 9px; margin-top: 14px; }
+    .risk-item { display: grid; grid-template-columns: 90px 1fr; gap: 12px; padding-top: 9px; border-top: 1px solid var(--line); }
+    .risk-item strong { color: var(--red); font-size: 12px; }
+    .risk-item span { color: var(--ink-2); font-size: 13px; }
+    .ledger { margin-top: 15px; padding: 16px; background: #17241f; color: white; }
+    .ledger-flow { display: grid; grid-template-columns: repeat(7, 1fr); gap: 7px; }
+    .ledger-step { position: relative; min-height: 72px; padding: 10px; color: #c6d5ce; background: #22352d; border: 1px solid rgba(255,255,255,.09); font-size: 11px; }
+    .ledger-step strong { display: block; margin-bottom: 3px; color: white; }
+
+    .entry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .entry-card { padding: 19px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .entry-card.best { border-top: 4px solid var(--green); }
+    .entry-card.later { border-top: 4px solid var(--amber); }
+    .entry-card.avoid { border-top: 4px solid var(--red); }
+    .entry-card p { margin-bottom: 12px; color: var(--ink-2); font-size: 13px; }
+    .entry-card ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 12px; }
+
+    .timeline { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); background: white; }
+    .week { min-height: 230px; padding: 19px; border-right: 1px solid var(--line); }
+    .week:last-child { border-right: 0; }
+    .week-no { color: var(--green); font-size: 11px; font-weight: 850; }
+    .week h3 { margin-top: 8px; }
+    .week ul { margin: 0; padding-left: 17px; color: var(--ink-2); font-size: 12px; }
+    .gate-grid { display: grid; grid-template-columns: repeat(5, 1fr); margin-top: 14px; border: 1px solid var(--line); background: white; }
+    .gate { min-height: 93px; padding: 14px; text-align: center; border-right: 1px solid var(--line); }
+    .gate:last-child { border-right: 0; }
+    .gate strong { display: block; color: var(--green); font-size: 23px; }
+    .gate span { color: var(--ink-3); font-size: 11px; }
+
+    .reg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .reg-card { padding: 17px; background: white; border: 1px solid var(--line); border-radius: var(--radius); }
+    .reg-card h3 { font-size: 15px; }
+    .reg-card p { margin: 0; color: var(--ink-2); font-size: 12px; }
+    .reg-tag { display: inline-block; margin-bottom: 9px; padding: 3px 6px; color: var(--violet); background: var(--violet-soft); border-radius: 3px; font-size: 10px; font-weight: 850; }
+
+    .source-list { background: white; border: 1px solid var(--line); }
+    .source-row { display: grid; grid-template-columns: 155px minmax(0, 1fr) 90px; gap: 15px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+    .source-row:last-child { border-bottom: 0; }
+    .source-row strong { font-size: 12px; }
+    .source-row p { margin: 0; color: var(--ink-2); font-size: 12px; overflow-wrap: anywhere; }
+    .source-row time { color: var(--ink-3); font-size: 11px; text-align: right; }
+    .disclaimer { margin: 15px 0 0; color: var(--ink-3); font-size: 11px; }
+    footer { padding: 22px 34px; color: #a8bab1; background: #17241f; }
+    footer .section-inner { display: flex; justify-content: space-between; gap: 20px; }
+
+    @media (max-width: 1080px) {
+      .sidebar { display: none; }
+      .page { margin-left: 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side { max-width: 560px; }
+      .verdict { grid-template-columns: 1.2fr repeat(3, .55fr); }
+      .flow { grid-template-columns: repeat(3, 1fr); }
+      .flow-step::before, .flow-step::after { display: none; }
+      .class-grid, .reg-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 31px; }
+      h2 { font-size: 23px; }
+      .topbar { padding: 9px 16px; }
+      .topbar-meta span:last-child { display: none; }
+      .hero { padding: 43px 18px 32px; }
+      .mobile-break { display: inline; }
+      section { padding: 42px 18px; }
+      .section-head { display: block; }
+      .method-chip { display: inline-block; margin-top: 11px; }
+      .verdict { grid-template-columns: 1fr 1fr; }
+      .verdict-main { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric:nth-child(3) { border-right: 0; }
+      .metric:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line); }
+      .decision-grid, .contrast-grid, .exit-grid, .risk-grid, .entry-grid { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-step { min-height: 112px; }
+      .flow-lanes { grid-template-columns: 1fr; }
+      .quote-grid { grid-template-columns: 1fr 1fr; }
+      .class-grid, .reg-grid { grid-template-columns: 1fr; }
+      .calculator { grid-template-columns: 1fr; }
+      .calc-controls { border-right: 0; border-bottom: 1px solid var(--line); }
+      .presets { grid-template-columns: 1fr 1fr; }
+      .result-hero { grid-template-columns: 1fr; }
+      .ledger-flow { grid-template-columns: 1fr 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .week { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .week:last-child { border-bottom: 0; }
+      .gate-grid { grid-template-columns: 1fr 1fr; }
+      .gate { border-bottom: 1px solid var(--line); }
+      .gate:nth-child(2n) { border-right: 0; }
+      .gate:last-child { grid-column: 1 / -1; border-bottom: 0; }
+      .source-row { grid-template-columns: 1fr; gap: 5px; }
+      .source-row time { text-align: left; }
+      footer .section-inner { display: grid; }
+    }
+
+    @media (max-width: 420px) {
+      .hero-side { grid-template-columns: 1fr; }
+      .hero-stat { min-height: 72px; border-right: 0; }
+      .hero-stat:nth-last-child(2) { border-bottom: 1px solid rgba(255,255,255,.13); }
+      .input-grid { grid-template-columns: 1fr; }
+      .quote-grid { grid-template-columns: 1fr; }
+      .water-row { grid-template-columns: 88px minmax(60px, 1fr) 68px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到正文</a>
+  <aside class="sidebar" aria-label="报告导航">
+    <a class="brand" href="#top"><span class="brand-mark">NG</span><span class="brand-copy"><strong>礼品卡市场地图</strong><span>Nigeria collection desk</span></span></a>
+    <div class="nav-label">研究章节</div>
+    <nav class="nav-list">
+      <a href="#verdict"><i data-lucide="badge-check"></i>结论</a>
+      <a href="#contrast"><i data-lucide="arrow-left-right"></i>国内 vs 国外</a>
+      <a href="#flow"><i data-lucide="route"></i>资金与卡密流</a>
+      <a href="#players"><i data-lucide="network"></i>五类参与者</a>
+      <a href="#rates"><i data-lucide="bar-chart-3"></i>实时报价</a>
+      <a href="#classification"><i data-lucide="scan-search"></i>卡种定价</a>
+      <a href="#economics"><i data-lucide="calculator"></i>利润计算器</a>
+      <a href="#risks"><i data-lucide="shield-alert"></i>风控账本</a>
+      <a href="#entry"><i data-lucide="waypoints"></i>中国工作室切入</a>
+      <a href="#pilot"><i data-lucide="test-tube-2"></i>50 单验证</a>
+      <a href="#regulation"><i data-lucide="landmark"></i>监管边界</a>
+      <a href="#sources"><i data-lucide="library"></i>来源</a>
+    </nav>
+    <div class="report-links nav-list">
+      <a href="gift-card-report.html"><i data-lucide="gift"></i>国内礼品卡报告</a>
+      <a href="index.html"><i data-lucide="cpu"></i>AI 代充报告</a>
+    </div>
+  </aside>
+
+  <div class="page" id="top">
+    <header class="topbar">
+      <strong>尼日利亚礼品卡市场深度报告</strong>
+      <div class="topbar-meta"><span class="status-dot"></span><span>报价与汇率快照：2026-08-15</span></div>
+    </header>
+
+    <main id="main">
+      <div class="hero">
+        <div class="hero-inner hero-grid">
+          <div>
+            <div class="eyebrow">International Gift Card Desk</div>
+            <h1>尼日利亚不是<span class="mobile-break"><br></span>“卖卡市场”，<br>核心是收卡、聚合与清算</h1>
+            <p>表面上是用奈拉或 USDT 买卖卡密，本质上是把非标数字资产快速定价、验真、聚合，再卖给已有退出渠道。利润不是固定“几折”，而是收卡价、退出价、汇率和欺诈损失之间的剩余。</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#economics"><i data-lucide="calculator"></i>测算一笔订单</a>
+              <a class="btn" href="#entry"><i data-lucide="compass"></i>看切入方式</a>
+            </div>
+          </div>
+          <div class="hero-side" aria-label="市场快照">
+            <div class="hero-stat"><strong>₦1,275</strong><span>Cardtonic 美国 Apple 热门档 / $1 面值</span></div>
+            <div class="hero-stat"><strong>₦1,405</strong><span>Prestmit USDT 结算换算汇率 / USD</span></div>
+            <div class="hero-stat"><strong>$22.79B</strong><span>尼日利亚 2025 个人汇款背景量，不是礼品卡规模</span></div>
+            <div class="hero-stat"><strong>41.2%</strong><span>2024 互联网使用率，世界银行口径</span></div>
+          </div>
+        </div>
+      </div>
+
+      <section id="verdict">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Executive Verdict</div><h2>有交易机会，但不是轻资产无风险套利</h2><p>真正的门槛是确定退出、控制坏卡损失和管理本地结算。没有退出价就先收卡，相当于用现金承接一个无法标准化的短期库存。</p></div>
+            <span class="method-chip">商业判断</span>
+          </div>
+          <div class="verdict">
+            <div class="verdict-main"><span class="signal">有条件值得验证</span><h3>最适合从 B2B 报价台开始，不从消费者钱包开始</h3><p>中国团队的优势是海外上游、自动报价、数据和技术；本地代理的优势是获客、奈拉付款和身份核验。把双方优势拼接，比在拉各斯从零做一套 C 端平台更现实。</p></div>
+            <div class="metric"><strong>≥ 12pt</strong><span>建议毛价差，才有空间覆盖尾部损失</span></div>
+            <div class="metric"><strong>≥ 8%</strong><span>30 天风险观察后的净贡献门槛</span></div>
+            <div class="metric"><strong>&lt; 24h</strong><span>卡密平均库存时间目标</span></div>
+          </div>
+          <div class="decision-grid">
+            <article class="decision"><h3>做什么</h3><p>对接已完成 KYC 的当地平台或代理，提供逐卡种 B2B 报价、确定性退出和批量结算。</p></article>
+            <article class="decision warn"><h3>先验证</h3><p>50 单、小面额、逐单采购；每笔都在收卡前拿到下游锁价，至少观察一次完整争议周期。</p></article>
+            <article class="decision stop"><h3>不要先做</h3><p>陌生个人匿名收卡、自建奈拉钱包、承诺秒结后再找买家，或把所有品牌统一按“几折”收。</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contrast">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Market Contrast</div><h2>国内和尼日利亚做的是两种生意</h2><p>国内常见工作室更靠近“销售与代付”；尼日利亚工作室更靠近“收购与清算”。同样叫礼品卡，库存方向、客户动机和风险承担者完全不同。</p></div>
+            <span class="method-chip">方向判断</span>
+          </div>
+          <div class="contrast-grid">
+            <article class="contrast domestic">
+              <h3><i data-lucide="shopping-cart"></i>国内工作室：向用户卖</h3>
+              <div class="fact-list">
+                <div class="fact"><strong>主要客户</strong><span>需要海外订阅、游戏充值、App Store 余额的中国用户</span></div>
+                <div class="fact"><strong>货物流向</strong><span>上游卡密或代付能力 → 工作室 → 国内消费者</span></div>
+                <div class="fact"><strong>利润来源</strong><span>采购折扣、服务费、汇率差和交付便利</span></div>
+                <div class="fact"><strong>主要风险</strong><span>地区不匹配、支付风控、售后、发卡方转售条款</span></div>
+              </div>
+            </article>
+            <article class="contrast foreign">
+              <h3><i data-lucide="inbox"></i>尼日利亚工作室：向用户收</h3>
+              <div class="fact-list">
+                <div class="fact"><strong>主要客户</strong><span>持有海外礼品卡、希望换成奈拉或数字资产的当地用户</span></div>
+                <div class="fact"><strong>货物流向</strong><span>持卡人 → 代理/平台 → 聚合商 → 国际退出方</span></div>
+                <div class="fact"><strong>利润来源</strong><span>本地收卡价与退出价、币种、凭证质量和时效的价差</span></div>
+                <div class="fact"><strong>主要风险</strong><span>已兑换、来源异常、后续撤销、错分卡种、NGN/USDT 汇率</span></div>
+              </div>
+            </article>
+          </div>
+          <p class="note"><strong>市场规模口径提醒：</strong>没有可信的一手统计能把“尼日利亚礼品卡二级交易额”单独量化。世界银行的 $22.79B 汇款和互联网普及率只能解释数字跨境价值转移的环境，不能直接当成礼品卡 TAM。</p>
+        </div>
+      </section>
+
+      <section id="flow">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Value Chain</div><h2>一笔交易有两条相反方向的流</h2><p>卡密和证据向上游退出方流动，奈拉或 USDT 向持卡人反向流动。谁先付款、谁承担等待期和谁能追回坏卡，决定了实际利润归属。</p></div>
+            <span class="method-chip">业务结构</span>
+          </div>
+          <div class="flow-shell">
+            <div class="flow-label">典型尼日利亚收卡链条</div>
+            <div class="flow">
+              <div class="flow-step"><i>1</i><strong>海外卡持有人</strong><span>提交品牌、地区、面额、卡图/代码和购买凭证，目标是换成流动资金。</span></div>
+              <div class="flow-step"><i>2</i><strong>本地代理</strong><span>获客、初筛、给价、收集证据并用奈拉快速付款，赚代理价差。</span></div>
+              <div class="flow-step"><i>3</i><strong>平台 / 报价台</strong><span>精细分类、二次验真、订单路由、钱包记账和争议处理。</span></div>
+              <div class="flow-step"><i>4</i><strong>B2B 聚合商</strong><span>把碎片化面额变成批量库存，对接多个国家和品牌的退出池。</span></div>
+              <div class="flow-step"><i>5</i><strong>国际退出方</strong><span>二级转售、B2B 分销或真实消费兑换，将卡面价值重新变现。</span></div>
+            </div>
+            <div class="flow-lanes">
+              <div class="lane"><strong>卡密 / 证据 →</strong> 代码、卡图、收据、序列号、面额、地区、提交时间和操作日志。</div>
+              <div class="lane"><strong>← 资金 / 风险</strong> NGN 或 USDT 付款；坏卡、撤销和冻结风险则按合同与观察期回传。</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="players">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Participants</div><h2>五类参与者，赚的是不同的钱</h2><p>“工作室”可能只是社交媒体代理，也可能是持有库存的聚合商。先确认自己处在哪一层，否则会把平台给卖家的报价误当成自己的采购成本。</p></div>
+            <span class="method-chip">角色拆解</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>角色</th><th>核心能力</th><th>收入来源</th><th>资金压力</th><th>最大风险</th><th>中国团队适配</th></tr></thead>
+              <tbody>
+                <tr><td><div class="role"><i><span data-lucide="user"></span></i><strong>散户持卡人</strong></div></td><td>提供卡和购买证明</td><td>把不可用余额换成现金</td><td>低</td><td>低价、争议或证据不足</td><td><span class="score risk">不直接做</span></td></tr>
+                <tr><td><div class="role"><i><span data-lucide="users"></span></i><strong>本地代理</strong></div></td><td>社群获客、奈拉付款、初筛</td><td>代理收卡价差与返佣</td><td>中</td><td>熟人信任替代正式 KYC</td><td><span class="score good">合作对象</span></td></tr>
+                <tr><td><div class="role"><i><span data-lucide="smartphone"></span></i><strong>本地平台</strong></div></td><td>实时报价、钱包、KYC、客服</td><td>平台买卖差价和金融服务交叉销售</td><td>高</td><td>欺诈池、监管、集中兑付</td><td><span class="score warn">渠道 / 标杆</span></td></tr>
+                <tr><td><div class="role"><i><span data-lucide="layers-3"></span></i><strong>B2B 聚合商</strong></div></td><td>批量路由、跨品牌库存、下游网络</td><td>规模价差与处理效率</td><td>高</td><td>库存与下游撤销</td><td><span class="score good">最佳切入层</span></td></tr>
+                <tr><td><div class="role"><i><span data-lucide="globe-2"></span></i><strong>国际退出方</strong></div></td><td>真实买家、分销或兑换能力</td><td>终端销售毛利或消费折扣</td><td>中至高</td><td>发卡方条款、账户和拒付</td><td><span class="score good">核心资源</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="rates">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Live Rate Snapshot</div><h2>平台报价很接近，但结算口径会改变真实折扣</h2><p>以下为公开实时接口在 2026-08-15 的快照。报价单位是“每 1 单位卡面币种可得多少 NGN”，只有先换算发行币种，才能跨卡比较。</p></div>
+            <span class="method-chip">Cardtonic + Prestmit</span>
+          </div>
+          <div class="quote-grid">
+            <div class="quote-card"><span>市场参考 USD/NGN</span><strong>1,358.64</strong><small>ExchangeRate-API；用于观察，不等于平台可成交汇率。</small></div>
+            <div class="quote-card"><span>Prestmit USDT 换算</span><strong>1,405</strong><small>平台公开 API；NGN 报价除以该数得到 USDT/USD 口径。</small></div>
+            <div class="quote-card"><span>Cardtonic USD 买 / 卖</span><strong>1,414 / 1,384</strong><small>公开 API 元数据；方向必须结合具体钱包交易确认。</small></div>
+            <div class="quote-card"><span>Cardtonic NGN 充值费</span><strong>1.5%</strong><small>每次充值，上限 ₦2,000；不是所有收卡交易的统一手续费。</small></div>
+          </div>
+          <div class="table-wrap rate-table">
+            <table>
+              <thead><tr><th>卡种样本</th><th>Cardtonic</th><th>Prestmit</th><th>折算后有效回收率</th><th>观察</th></tr></thead>
+              <tbody>
+                <tr><td><strong>美国 Apple 实体卡，大面额</strong><br><small>横版 / 指定 $300-$500 档</small></td><td>₦1,275 / $</td><td>₦1,265 / $</td><td>93.8% 市场汇率<br>90.0% Prestmit-USDT</td><td>高流动 SKU；面额和版式仍影响报价。</td></tr>
+                <tr><td><strong>美国 Apple 实体卡，$100-$450</strong><br><small>横版 / 指定面额</small></td><td>₦1,235 / $</td><td>₦1,235 / $</td><td>90.9% 市场汇率<br>87.9% Prestmit-USDT</td><td>两平台名义价一致，结算汇率决定最终到账。</td></tr>
+                <tr><td><strong>美国 Apple 电子码</strong><br><small>10-500、5 的倍数</small></td><td>₦975 / $</td><td>₦1,020 / $</td><td>71.8% / 72.6%</td><td>相对实体卡折价约 17%-23%，凭证质量溢价很明显。</td></tr>
+                <tr><td><strong>美国 Razer Gold</strong><br><small>代码规则不同会再分档</small></td><td>₦1,175 / $</td><td>₦1,165 / $</td><td>86.5% 市场汇率<br>82.9% Prestmit-USDT</td><td>代码位数本身就是定价字段。</td></tr>
+                <tr><td><strong>英国 Steam</strong><br><small>卡面币种是 GBP，不是 USD</small></td><td>₦1,265 / £</td><td>₦1,255 / £</td><td>约 68.8% / 66.0%<br><small>已按 GBP/USD 归一化</small></td><td><span class="delta">不能因 ₦1,265 看起来高就与美元卡并列。</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="note"><strong>报价含义：</strong>Cardtonic 和 Prestmit 在这里是“收卡平台”，页面数字是平台付给卖家的报价，不是中国工作室能无条件拿到的采购价，更不是平台自身的利润。平台的国际退出成本和真实坏账没有公开。</p>
+        </div>
+      </section>
+
+      <section id="classification">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Pricing Taxonomy</div><h2>同一品牌至少按四个维度拆 SKU</h2><p>工作室最常见的亏损不是算错加减法，而是把一张卡归进错误档位。平台条款甚至会区分卡片横竖版、收据付款方式和代码位数。</p></div>
+            <span class="method-chip">非标资产定价</span>
+          </div>
+          <div class="class-grid">
+            <article class="class-card"><i><span data-lucide="map-pin"></span></i><h3>国家与币种</h3><p>美国、英国、瑞士和欧元区不是同一个退出池。必须用发行币种折算美元价值，再比较回收率。</p></article>
+            <article class="class-card"><i><span data-lucide="image"></span></i><h3>实体卡与电子码</h3><p>实体卡图和原始收据提供更多证据，因此热门 Apple 档常明显高于单独电子码。</p></article>
+            <article class="class-card"><i><span data-lucide="receipt-text"></span></i><h3>凭证与版式</h3><p>现金/借记卡收据、卡号对应、横版/竖版、是否清晰刮开，都可能进入不同报价档。</p></article>
+            <article class="class-card"><i><span data-lucide="binary"></span></i><h3>面额与代码规则</h3><p>单张大面额、面额是否为 5 的倍数、代码位数和前缀会影响验证与退出速度。</p></article>
+          </div>
+          <div class="formula-box">归一化回收率 = (NGN 报价 ÷ 结算 NGN/USD) ÷ (1 单位发行币种对应的 USD)；<br>可成交采购价 = 已锁定退出价 − 付款费 − 汇兑滑点 − 验证人工 − 欺诈准备 − 目标利润。</div>
+        </div>
+      </section>
+
+      <section id="exits">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Exit Routes</div><h2>收卡前必须知道卖给谁</h2><p>退出路径决定可收品牌、报价上限和争议周期。没有可以书面确认的退出价，就没有“利润”，只有一张待处理的卡。</p></div>
+            <span class="method-chip">先卖后买</span>
+          </div>
+          <div class="exit-grid">
+            <article class="exit-card"><span class="exit-no">EXIT 01</span><h3>卖给尼日利亚平台</h3><p>本地代理从终端用户低价收卡，再提交 Cardtonic、Prestmit 等平台。好处是报价透明、奈拉结算快；缺点是平台可复核、拒绝或追回异常订单。</p><ul><li>适合：有本地获客和 KYC 能力</li><li>利润：终端收卡价与平台价差</li><li>关键：平台账户与代理合同</li></ul></article>
+            <article class="exit-card"><span class="exit-no">EXIT 02</span><h3>国际 B2B 批发</h3><p>把经过验证的卡按品牌和地区批量卖给国际聚合商或分销商。中国团队更可能在这一层提供退出，但必须已有真实买家和追索条款。</p><ul><li>适合：有海外渠道和自动路由</li><li>利润：批量处理与跨市场价差</li><li>关键：锁价、账期、撤销责任</li></ul></article>
+            <article class="exit-card"><span class="exit-no">EXIT 03</span><h3>真实消费 / 分销</h3><p>用于购买目标商品、数字服务或按发卡方允许的方式分销。名义回收率可能较高，但账户、地区、转售条款和退货会形成新的风险。</p><ul><li>适合：有明确、持续的真实需求</li><li>利润：消费折扣或终端零售毛利</li><li>关键：发卡条款与账户稳定性</li></ul></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="economics">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Interactive Economics</div><h2>把“高回收率”还原成单笔净贡献</h2><p>默认模型模拟中国 B2B 退出台：按 NGN 计价向当地代理采购，用 USDT 口径结算，再卖给国际下游。所有参数均可修改。</p></div>
+            <span class="method-chip">USD 口径</span>
+          </div>
+          <div class="calculator">
+            <div class="calc-controls">
+              <div class="presets">
+                <button class="preset active" type="button" data-preset="b2b">B2B 基准</button>
+                <button class="preset" type="button" data-preset="agent">本地代理</button>
+                <button class="preset" type="button" data-preset="thin">平台高价采购</button>
+                <button class="preset" type="button" data-preset="stress">压力情景</button>
+              </div>
+              <div class="input-grid">
+                <label>卡面金额<div class="input-shell"><input id="faceValue" type="number" min="1" step="1" value="100"><span>USD</span></div></label>
+                <label>本地收卡报价<div class="input-shell"><input id="localRate" type="number" min="1" step="1" value="1120"><span>NGN/$</span></div></label>
+                <label>结算汇率<div class="input-shell"><input id="settlementFx" type="number" min="1" step=".01" value="1405"><span>NGN/USD</span></div></label>
+                <label>国际退出率<div class="input-shell"><input id="exitRate" type="number" min="0" max="120" step=".1" value="92"><span>% 面值</span></div></label>
+                <label>付款 / 通道费<div class="input-shell"><input id="payoutFee" type="number" min="0" max="30" step=".1" value="1"><span>% 采购</span></div></label>
+                <label>汇兑滑点<div class="input-shell"><input id="fxSlippage" type="number" min="0" max="30" step=".1" value="1.5"><span>% 采购</span></div></label>
+                <label>欺诈准备<div class="input-shell"><input id="fraudReserve" type="number" min="0" max="50" step=".1" value="4"><span>% 面值</span></div></label>
+                <label>验卡与人工<div class="input-shell"><input id="opsCost" type="number" min="0" step=".1" value="2"><span>USD/单</span></div></label>
+                <label>月固定成本<div class="input-shell"><input id="monthlyFixed" type="number" min="0" step="10" value="500"><span>USD</span></div></label>
+                <label>月订单量<div class="input-shell"><input id="monthlyOrders" type="number" min="0" step="1" value="200"><span>单</span></div></label>
+              </div>
+              <p class="calc-note">欺诈准备应来自“无效概率 × 损失率 + 后续撤销 + 争议成本”，不是随意填一个好看的百分比。</p>
+            </div>
+            <div class="results">
+              <div class="result-hero">
+                <div class="result-box"><span>国际退出收入</span><strong id="exitRevenue">$0.00</strong></div>
+                <div class="result-box"><span>单笔净贡献</span><strong id="netContribution">$0.00</strong></div>
+                <div class="result-box"><span>月度经营结果</span><strong id="monthlyResult">$0</strong></div>
+              </div>
+              <div class="waterfall" aria-label="单笔成本拆解">
+                <div class="water-row"><span>本地采购</span><span class="bar-track"><span class="bar-fill cost" id="barAcquisition"></span></span><strong id="acquisitionCost">$0.00</strong></div>
+                <div class="water-row"><span>付款通道</span><span class="bar-track"><span class="bar-fill" id="barPayout"></span></span><strong id="payoutCost">$0.00</strong></div>
+                <div class="water-row"><span>汇兑滑点</span><span class="bar-track"><span class="bar-fill" id="barFx"></span></span><strong id="fxCost">$0.00</strong></div>
+                <div class="water-row"><span>欺诈准备</span><span class="bar-track"><span class="bar-fill risk" id="barFraud"></span></span><strong id="fraudCost">$0.00</strong></div>
+                <div class="water-row"><span>验卡人工</span><span class="bar-track"><span class="bar-fill" id="barOps"></span></span><strong id="opsCostOut">$0.00</strong></div>
+              </div>
+              <div class="chart-wrap"><h3>基准与三项压力测试</h3><canvas id="sensitivityChart" width="760" height="215" aria-label="收卡价上涨、退出率下降和欺诈准备上升对单笔利润的影响"></canvas></div>
+              <p class="calc-formula">净贡献 = 退出收入 − 本地采购 − 付款费 − 汇兑滑点 − 验卡人工 − 欺诈准备。当前贡献率 <strong id="netMargin">0%</strong>；固定成本盈亏平衡约 <strong id="breakEven">0 单/月</strong>。</p>
+            </div>
+          </div>
+          <p class="note"><strong>示例解读：</strong>在 ₦1,120 收卡、₦1,405 结算、92% 退出的基准下，表面毛价差约 12.3 个点；扣除付款、滑点、4% 风险准备和 $2 人工后，净贡献只有约 4%-5%。一旦按平台热门卡 ₦1,235 的高价采购，模型立即转负。</p>
+        </div>
+      </section>
+
+      <section id="risks">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Risk Ledger</div><h2>这个生意本质上是在承保坏卡风险</h2><p>卡密一旦暴露就可能被第三方抢兑；平台还可能在付款后发现来源异常并追回。利润表必须同时有交易毛利和风险账本。</p></div>
+            <span class="method-chip">尾部风险</span>
+          </div>
+          <div class="risk-grid">
+            <article class="risk-panel">
+              <h3><i data-lucide="triangle-alert"></i>订单级风险</h3>
+              <div class="risk-list">
+                <div class="risk-item"><strong>已兑换 / 余额不足</strong><span>提交前或验证期间被使用；损失可能接近 100% 卡面。</span></div>
+                <div class="risk-item"><strong>伪造证据</strong><span>卡图、收据与序列号不匹配，或重复使用同一凭证。</span></div>
+                <div class="risk-item"><strong>后续撤销</strong><span>Prestmit 公开交易条款样本明确保留付款后追回异常资产款项的权利。</span></div>
+                <div class="risk-item"><strong>错分 SKU</strong><span>国家、币种、横竖版、电子码或面额归类错误，实际报价被下调。</span></div>
+              </div>
+            </article>
+            <article class="risk-panel">
+              <h3><i data-lucide="landmark"></i>组合级风险</h3>
+              <div class="risk-list">
+                <div class="risk-item"><strong>汇率错配</strong><span>NGN 收卡、USDT 付款、USD 退出；三种价格并非同步变动。</span></div>
+                <div class="risk-item"><strong>代理集中</strong><span>单一代理带来的批量坏卡，会穿透看似分散的小订单。</span></div>
+                <div class="risk-item"><strong>退出中断</strong><span>下游账户、品牌规则或平台风控改变，库存会瞬间失去流动性。</span></div>
+                <div class="risk-item"><strong>结算合规</strong><span>代客户兑换、保管或转移 USDT 会明显提高 VASP/AML 监管暴露。</span></div>
+              </div>
+            </article>
+          </div>
+          <div class="ledger">
+            <div class="flow-label">建议的订单状态机</div>
+            <div class="ledger-flow">
+              <div class="ledger-step"><strong>01 接单</strong>生成唯一订单和代理编号</div>
+              <div class="ledger-step"><strong>02 证据齐全</strong>卡图、收据、面额、地区</div>
+              <div class="ledger-step"><strong>03 锁定退出</strong>记录买家、价格和有效期</div>
+              <div class="ledger-step"><strong>04 隔离卡密</strong>加密、遮罩、最小权限</div>
+              <div class="ledger-step"><strong>05 验证中</strong>禁止多渠道重复提交</div>
+              <div class="ledger-step"><strong>06 已结算</strong>记录 NGN/USDT TxID 与费用</div>
+              <div class="ledger-step"><strong>07 观察期</strong>7/30 天后释放风险准备</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="entry">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">China Entry Strategy</div><h2>中国工作室应卖“确定性退出”，不是卖一个尼日利亚 App</h2><p>一开始最有价值的不是开发钱包，而是把有限几个 SKU 做到报价可靠、验真可追踪、下游可锁价和争议可追索。</p></div>
+            <span class="method-chip">进入路线</span>
+          </div>
+          <div class="entry-grid">
+            <article class="entry-card best"><h3>现在适合：B2B 报价与路由台</h3><p>服务 2-3 个完成 KYC 的本地代理或平台，按 SKU 提供短时锁价，订单确认后才采购。</p><ul><li>先做美国 Apple / Razer 等 3 个 SKU</li><li>结算交给有资质的本地或 VASP 合作方</li><li>收入来自确定性退出价差和处理费</li></ul></article>
+            <article class="entry-card later"><h3>验证后：联合本地收卡 Desk</h3><p>与当地公司共同制定 KYC、证据标准、限额和争议规则，逐步把报价、验卡和结算 API 化。</p><ul><li>当地团队负责 NGN、客户和身份核验</li><li>中国团队负责国际买家和风控系统</li><li>需要正式合同、准备金和数据安排</li></ul></article>
+            <article class="entry-card avoid"><h3>不适合起步：匿名消费者平台</h3><p>直接通过 WhatsApp/Telegram 向陌生人收卡并秒付 USDT，看起来周转快，实质同时承接身份、支付、欺诈和虚拟资产风险。</p><ul><li>不持有消费者余额</li><li>不替客户兑换或混合资金</li><li>不在没有锁定买家时囤卡</li></ul></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pilot">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">30-Day Pilot</div><h2>用 50 单证明风险后利润，不用流水证明市场</h2><p>试单总面值控制在 $5,000 内，单卡 $50-$100，先跑完观察期。每一单都要能还原来源、报价、退出、付款和争议结果。</p></div>
+            <span class="method-chip">Go / No-Go</span>
+          </div>
+          <div class="timeline">
+            <article class="week"><span class="week-no">WEEK 01</span><h3>渠道与合同</h3><ul><li>锁定 2 个国际退出方</li><li>完成 3 个 SKU 的条款矩阵</li><li>选 2 个已 KYC 的本地代理</li><li>明确付款后追回与观察期</li></ul></article>
+            <article class="week"><span class="week-no">WEEK 02</span><h3>影子报价</h3><ul><li>连续 7 天每小时记录双平台价</li><li>模拟 NGN/USDT 实际成交汇率</li><li>只报价，不收卡，测锁价命中</li><li>建立订单证据模板</li></ul></article>
+            <article class="week"><span class="week-no">WEEK 03</span><h3>真实 50 单</h3><ul><li>每单先锁退出再确认采购</li><li>单卡不高于 $100</li><li>单代理不超过总面值 20%</li><li>异常一单即暂停同来源批次</li></ul></article>
+            <article class="week"><span class="week-no">WEEK 04</span><h3>观察与决策</h3><ul><li>按 7/30 天争议重算利润</li><li>按代理和 SKU 做 cohort</li><li>剔除人工重、撤销高的卡种</li><li>达标后再扩大限额和自动化</li></ul></article>
+          </div>
+          <div class="gate-grid">
+            <div class="gate"><strong>≥ 99%</strong><span>首次验证有效率</span></div>
+            <div class="gate"><strong>≥ 8%</strong><span>观察期后净贡献</span></div>
+            <div class="gate"><strong>≤ 1%</strong><span>无效 / 争议订单率</span></div>
+            <div class="gate"><strong>&lt; 24h</strong><span>平均库存时间</span></div>
+            <div class="gate"><strong>≥ 2 家</strong><span>独立可用退出方</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="regulation">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Regulatory Boundary</div><h2>礼品卡交易与 USDT 服务要分开判断</h2><p>仅撮合礼品卡，与代客户保管、兑换、转移 USDT 的监管属性不同。业务一旦同时控制客户资金和数字资产，要求会明显上升。</p></div>
+            <span class="method-chip">尼日利亚框架</span>
+          </div>
+          <div class="reg-grid">
+            <article class="reg-card"><span class="reg-tag">礼品卡</span><h3>买卖与经纪</h3><p>仍需公司、税务、消费者披露、合同和来源核验；礼品卡品牌条款可能限制转售或异常来源。</p></article>
+            <article class="reg-card"><span class="reg-tag">USDT</span><h3>兑换 / 托管 / 转移</h3><p>SEC 2022 数字资产规则覆盖 VASP，2025 ISA 强化数字资产监管基础；ARIP 要求本地实体、办公室和合规材料。</p></article>
+            <article class="reg-card"><span class="reg-tag">银行</span><h3>指定账户与 AML</h3><p>CBN 2023 指引允许金融机构为 SEC 许可 VASP 开设指定账户，同时要求增强尽调、监测和记录；银行自身不得自营虚拟资产。</p></article>
+            <article class="reg-card"><span class="reg-tag">数据</span><h3>KYC 与跨境传输</h3><p>收集护照、NIN、BVN、收据和交易轨迹会触及 Nigeria Data Protection Act 2023 及 NDPC 指引，应最小化、设期限并明确跨境处理。</p></article>
+          </div>
+          <p class="note"><strong>结构建议：</strong>中国主体先做 B2B 买卖合同和报价技术，本地客户 KYC、NGN 收付、客户钱包和 USDT 兑换分别由对应的当地实体或已登记服务商承担；不要只靠“合作方说合规”代替 SEC 名录、银行账户主体和合同核验。</p>
+        </div>
+      </section>
+
+      <section id="sources">
+        <div class="section-inner">
+          <div class="section-head">
+            <div><div class="eyebrow">Sources &amp; Method</div><h2>搜索用于发现，实时接口和监管原文用于定论</h2><p>动态费率可能分钟级变化；本页保留核验日期与换算口径。平台营销文案没有用于推导市场规模。</p></div>
+            <span class="method-chip">核验日 2026-08-15</span>
+          </div>
+          <div class="source-list">
+            <div class="source-row"><strong>Bing / Google 检索</strong><p><a href="https://www.bing.com/search?q=Nigeria+gift+card+trading+business+Cardtonic+Nosh" target="_blank" rel="noopener">Bing</a> · <a href="https://www.google.com/search?q=Nigeria+gift+card+trading+market+how+it+works" target="_blank" rel="noopener">Google</a>：发现平台、监管文件与本地业务术语；搜索摘要不直接作为费率。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Cardtonic 实时报价</strong><p><a href="https://api.cardtonic.com/v1/trades/pbc/cards/top" target="_blank" rel="noopener">热门卡 API</a> · <a href="https://cardtonic.com/rate-calculator" target="_blank" rel="noopener">Rate Calculator</a>：热门 SKU、NGN/GHS/ZAR/KES 报价、平台 FX、充值费和 KYC 类型。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Prestmit 实时报价</strong><p><a href="https://api.prestmit.io/v2/json/giftcards/rate-calculator-data" target="_blank" rel="noopener">Rate API</a> · <a href="https://prestmit.io/rates" target="_blank" rel="noopener">Rates</a>：140+ 卡种、NGN/CEDIS/USD/BTC/LTC/DOGE/USDT 结算、实时换算率和交易条款。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>Nosh 官方页面</strong><p><a href="https://usenosh.com/rates" target="_blank" rel="noopener">Rate Calculator</a> · <a href="https://support.usenosh.com/en/articles/7938295-how-to-check-gift-card-rates-on-nosh" target="_blank" rel="noopener">报价帮助</a>：尼日利亚/加纳市场、卡区、实体/电子码和钱包流程。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>NoOnes 业务说明</strong><p><a href="https://blog.noones.com/en/blog/start-gift-card-trading-business-nigeria/" target="_blank" rel="noopener">Start a gift card trading business in Nigeria</a>：本地代理获客、报价与平台交易流程的行业样本。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>SEC 数字资产规则</strong><p><a href="https://sec.gov.ng/our-mandate/regulation/rules-and-regulations/" target="_blank" rel="noopener">Rules and Regulations</a>：2022 年发行、平台、托管、VASP 和数字资产交易所规则入口。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>SEC ARIP</strong><p><a href="https://sec.gov.ng/fintech-and-innovation-hub-finport/finport-programs-ri-and-arip/" target="_blank" rel="noopener">RI and ARIP</a>：VASP 快速监管孵化、本地实体、办公室、人员、NFIU、资本与申请材料。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>SEC 运营商名录</strong><p><a href="https://sec.gov.ng/fintech-and-innovation-hub-finport/registered-fintech-operators/" target="_blank" rel="noopener">Registered FinTech Operators</a>：ARIP 下 VASP/DISP 目录，公开列示 Busha、Quidax 等数字资产交易所。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>ISA 2025</strong><p><a href="https://sec.gov.ng/our-mandate/regulation/acts/" target="_blank" rel="noopener">Investments and Securities Act, 2025</a>：SEC 官方法案入口与全文。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>CBN VASP 银行指引</strong><p><a href="https://www.cbn.gov.ng/Out/2023/FPRD/GUIDELINES%20ON%20OPERATIONS%20OF%20BANK%20ACCOUNTS%20FOR%20VIRTUAL%20ASSETS%20SERVICE%20PROVIDERS.pdf" target="_blank" rel="noopener">Guidelines on Operations of Bank Accounts for VASPs</a>：指定账户、金融机构尽调与交易监测。</p><time>2023-12</time></div>
+            <div class="source-row"><strong>NDPC 数据规则</strong><p><a href="https://ndpc.gov.ng/wp-content/uploads/2025/07/NDP-ACT-GAID-2025-MARCH-20TH.pdf" target="_blank" rel="noopener">NDP Act General Application and Implementation Directive</a>：数据控制者义务、数据主体权利与实施指引。</p><time>2025-03</time></div>
+            <div class="source-row"><strong>世界银行背景数据</strong><p><a href="https://api.worldbank.org/v2/country/NGA/indicator/BX.TRF.PWKR.CD.DT?format=json" target="_blank" rel="noopener">个人汇款</a> · <a href="https://api.worldbank.org/v2/country/NGA/indicator/IT.NET.USER.ZS?format=json" target="_blank" rel="noopener">互联网使用率</a>：仅用于宏观环境，不作为礼品卡交易额。</p><time>2026-08-15</time></div>
+            <div class="source-row"><strong>汇率快照</strong><p><a href="https://open.er-api.com/v6/latest/USD" target="_blank" rel="noopener">ExchangeRate-API</a>：USD/NGN 1,358.643574；USD/CNY 6.755647；GBP/USD 按 GBP 0.738821 / USD 归一化。</p><time>2026-08-15</time></div>
+          </div>
+          <p class="disclaimer">本报告是商业验证模型，不替代针对具体公司、牌照、税务、合同、虚拟资产服务、跨境数据或结算安排的专业意见。公开 API 可能变更；每批交易前应重新抓取费率并确认平台方向、币种和实际到账。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer><div class="section-inner"><span>Nigeria Gift Card Market Report</span><span>公开资料与实时报价快照 · 2026-08-15</span></div></footer>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const presets = {
+      b2b: { faceValue: 100, localRate: 1120, settlementFx: 1405, exitRate: 92, payoutFee: 1, fxSlippage: 1.5, fraudReserve: 4, opsCost: 2, monthlyFixed: 500, monthlyOrders: 200 },
+      agent: { faceValue: 100, localRate: 1100, settlementFx: 1358.64, exitRate: 90.9, payoutFee: .5, fxSlippage: .3, fraudReserve: 4, opsCost: 1.5, monthlyFixed: 350, monthlyOrders: 300 },
+      thin: { faceValue: 100, localRate: 1235, settlementFx: 1405, exitRate: 92, payoutFee: 1, fxSlippage: 1.5, fraudReserve: 4, opsCost: 2, monthlyFixed: 500, monthlyOrders: 200 },
+      stress: { faceValue: 100, localRate: 1120, settlementFx: 1358.64, exitRate: 88, payoutFee: 1.5, fxSlippage: 2.5, fraudReserve: 8, opsCost: 2.5, monthlyFixed: 500, monthlyOrders: 200 }
+    };
+
+    const inputIds = ["faceValue", "localRate", "settlementFx", "exitRate", "payoutFee", "fxSlippage", "fraudReserve", "opsCost", "monthlyFixed", "monthlyOrders"];
+    const inputs = Object.fromEntries(inputIds.map(id => [id, document.getElementById(id)]));
+    const dollars = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
+    const wholeDollars = value => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+    const inputValue = id => Number(inputs[id].value) || 0;
+
+    function compute(overrides = {}) {
+      const v = Object.fromEntries(inputIds.map(id => [id, overrides[id] ?? inputValue(id)]));
+      const revenue = v.faceValue * v.exitRate / 100;
+      const acquisition = v.faceValue * v.localRate / Math.max(v.settlementFx, .0001);
+      const payout = acquisition * v.payoutFee / 100;
+      const fx = acquisition * v.fxSlippage / 100;
+      const fraud = v.faceValue * v.fraudReserve / 100;
+      const contribution = revenue - acquisition - payout - fx - fraud - v.opsCost;
+      const margin = revenue ? contribution / revenue : 0;
+      const monthly = contribution * v.monthlyOrders - v.monthlyFixed;
+      const breakEven = contribution > 0 ? Math.ceil(v.monthlyFixed / contribution) : Infinity;
+      return { ...v, revenue, acquisition, payout, fx, fraud, contribution, margin, monthly, breakEven };
+    }
+
+    function setText(id, value) { document.getElementById(id).textContent = value; }
+    function setBar(id, value, revenue) {
+      document.getElementById(id).style.width = Math.min(100, Math.max(0, value / Math.max(revenue, 1) * 100)) + "%";
+    }
+
+    function updateCalculator() {
+      const r = compute();
+      setText("exitRevenue", dollars(r.revenue));
+      setText("netContribution", dollars(r.contribution));
+      setText("monthlyResult", wholeDollars(r.monthly));
+      setText("acquisitionCost", dollars(r.acquisition));
+      setText("payoutCost", dollars(r.payout));
+      setText("fxCost", dollars(r.fx));
+      setText("fraudCost", dollars(r.fraud));
+      setText("opsCostOut", dollars(r.opsCost));
+      setText("netMargin", (r.margin * 100).toFixed(1) + "%");
+      setText("breakEven", Number.isFinite(r.breakEven) ? r.breakEven.toLocaleString("zh-CN") + " 单/月" : "无正向贡献");
+      setBar("barAcquisition", r.acquisition, r.revenue);
+      setBar("barPayout", r.payout, r.revenue);
+      setBar("barFx", r.fx, r.revenue);
+      setBar("barFraud", r.fraud, r.revenue);
+      setBar("barOps", r.opsCost, r.revenue);
+      [["netContribution", r.contribution], ["monthlyResult", r.monthly]].forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        el.classList.toggle("positive", value >= 0);
+        el.classList.toggle("negative", value < 0);
+      });
+      drawSensitivity();
+    }
+
+    function applyPreset(name) {
+      Object.entries(presets[name]).forEach(([id, value]) => { inputs[id].value = value; });
+      document.querySelectorAll(".preset").forEach(button => button.classList.toggle("active", button.dataset.preset === name));
+      updateCalculator();
+    }
+
+    function drawSensitivity() {
+      const canvas = document.getElementById("sensitivityChart");
+      const ratio = Math.max(1, window.devicePixelRatio || 1);
+      const width = Math.max(310, canvas.clientWidth || 760);
+      const height = 215;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(ratio, ratio);
+      const base = compute();
+      const scenarios = [
+        ["当前参数", base.contribution, "#13765a"],
+        ["收卡价 +₦50", compute({ localRate: base.localRate + 50 }).contribution, "#a96608"],
+        ["退出率 -3pt", compute({ exitRate: Math.max(0, base.exitRate - 3) }).contribution, "#2e6d8e"],
+        ["欺诈准备 +4pt", compute({ fraudReserve: base.fraudReserve + 4 }).contribution, "#a44239"]
+      ];
+      const maxAbs = Math.max(...scenarios.map(item => Math.abs(item[1])), 1);
+      const left = 105, right = 62, row = 46, barHeight = 17, center = left + (width - left - right) / 2;
+      ctx.clearRect(0, 0, width, height);
+      ctx.font = "12px system-ui";
+      ctx.textBaseline = "middle";
+      ctx.strokeStyle = "#cdd6d2";
+      ctx.beginPath(); ctx.moveTo(center, 8); ctx.lineTo(center, 200); ctx.stroke();
+      scenarios.forEach((item, index) => {
+        const y = 14 + index * row;
+        const barWidth = Math.abs(item[1]) / maxAbs * Math.max(35, (width - left - right) / 2 - 7);
+        ctx.fillStyle = "#65716c";
+        ctx.fillText(item[0], 0, y + barHeight / 2);
+        ctx.fillStyle = item[2];
+        ctx.fillRect(item[1] >= 0 ? center : center - barWidth, y, Math.max(2, barWidth), barHeight);
+        ctx.fillStyle = item[1] >= 0 ? "#16201d" : "#a44239";
+        ctx.textAlign = "right";
+        ctx.fillText(dollars(item[1]), width - 1, y + barHeight / 2);
+        ctx.textAlign = "left";
+      });
+    }
+
+    inputIds.forEach(id => inputs[id].addEventListener("input", updateCalculator));
+    document.querySelectorAll(".preset").forEach(button => button.addEventListener("click", () => applyPreset(button.dataset.preset)));
+    window.addEventListener("resize", drawSensitivity);
+
+    const navLinks = [...document.querySelectorAll(".nav-list a[href^='#']")];
+    const sections = [...document.querySelectorAll("main section[id]")];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === "#" + visible.target.id));
+    }, { rootMargin: "-15% 0px -68% 0px", threshold: [0, .1, .25] });
+    sections.forEach(section => observer.observe(section));
+
+    window.__nigeriaReportErrors = [];
+    window.addEventListener("error", event => window.__nigeriaReportErrors.push(event.message));
+    if (window.lucide) lucide.createIcons();
+    updateCalculator();
+  </script>
+</body>
+</html>
