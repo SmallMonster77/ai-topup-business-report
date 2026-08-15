@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="互联蛙旗舰店 211 个商品、SKU 实价、官网成本与利润模型竞品调研。">
+  <title>互联蛙旗舰店竞品与利润分析</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17201d;
+      --ink-2: #46534f;
+      --ink-3: #72807b;
+      --line: #dfe6e3;
+      --line-strong: #c6d0cc;
+      --surface: #fff;
+      --surface-2: #f4f7f6;
+      --surface-3: #eaf2ef;
+      --green: #0f7b5d;
+      --green-dark: #075b45;
+      --green-soft: #dff2ea;
+      --cyan: #087c91;
+      --cyan-soft: #dff3f7;
+      --amber: #9a5c09;
+      --amber-soft: #fff0d2;
+      --red: #aa3d36;
+      --red-soft: #fbe7e4;
+      --blue: #315fa8;
+      --blue-soft: #e7eefb;
+      --sidebar: 236px;
+      --topbar: 58px;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--ink);
+      font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.58;
+      letter-spacing: 0;
+    }
+    a { color: var(--green-dark); text-underline-offset: 3px; }
+    img { display: block; max-width: 100%; }
+    button, input, select { font: inherit; letter-spacing: 0; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { line-height: 1.22; letter-spacing: 0; }
+    h1 { margin-bottom: 16px; font-size: 38px; }
+    h2 { margin-bottom: 8px; font-size: 26px; }
+    h3 { margin-bottom: 8px; font-size: 16px; }
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 50;
+      height: var(--topbar);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(12px);
+    }
+    .topbar-inner {
+      width: min(1500px, 100%);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .report-mark { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .mark-square {
+      width: 31px;
+      height: 31px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 5px;
+      background: var(--ink);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .report-mark strong, .report-mark span { display: block; }
+    .report-mark strong { font-size: 14px; line-height: 1.2; }
+    .report-mark span { color: var(--ink-3); font-size: 11px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .btn {
+      min-height: 36px;
+      padding: 7px 11px;
+      border: 1px solid var(--line-strong);
+      border-radius: 5px;
+      background: white;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 680;
+    }
+    .btn:hover { border-color: var(--green); color: var(--green-dark); }
+    .btn-primary { border-color: var(--ink); background: var(--ink); color: white; }
+    .btn-primary:hover { border-color: var(--green-dark); background: var(--green-dark); color: white; }
+    .btn svg { width: 15px; height: 15px; }
+
+    .layout {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+      padding-top: var(--topbar);
+      display: grid;
+      grid-template-columns: var(--sidebar) minmax(0, 1fr);
+    }
+    .sidebar {
+      position: sticky;
+      top: var(--topbar);
+      height: calc(100vh - var(--topbar));
+      padding: 28px 20px;
+      border-right: 1px solid var(--line);
+      background: var(--surface-2);
+      overflow: auto;
+    }
+    .side-label { margin: 0 10px 10px; color: var(--ink-3); font-size: 11px; font-weight: 780; }
+    .side-nav { display: grid; gap: 3px; }
+    .side-nav a {
+      min-height: 38px;
+      padding: 8px 10px;
+      border-left: 3px solid transparent;
+      color: var(--ink-2);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 640;
+    }
+    .side-nav a:hover, .side-nav a.active { border-left-color: var(--green); background: var(--green-soft); color: var(--green-dark); }
+    .side-note { margin-top: 26px; padding: 14px 10px 0; border-top: 1px solid var(--line-strong); color: var(--ink-3); font-size: 11px; }
+    .side-note strong { color: var(--ink); }
+
+    main { min-width: 0; }
+    .band { padding: 52px clamp(26px, 5vw, 72px); border-bottom: 1px solid var(--line); }
+    .band-alt { background: var(--surface-2); }
+    .band-dark { border-bottom: 0; background: #17231f; color: white; }
+    .content { max-width: 1180px; margin: 0 auto; }
+    .eyebrow { margin-bottom: 9px; color: var(--green); font-size: 11px; font-weight: 800; text-transform: uppercase; }
+    .lead { max-width: 880px; color: var(--ink-2); font-size: 17px; }
+    .band-dark .lead, .band-dark .section-head p { color: #bed0ca; }
+    .band-dark .eyebrow { color: #8dd5bd; }
+    .section-head { margin-bottom: 24px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+    .section-head p { max-width: 690px; margin: 0; color: var(--ink-2); }
+
+    .hero {
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      background:
+        linear-gradient(90deg, rgba(15,123,93,.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(rgba(15,123,93,.07) 1px, transparent 1px) 0 0 / 32px 32px,
+        white;
+    }
+    .hero-grid { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(330px,.7fr); gap: 52px; align-items: center; }
+    .decision {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 17px;
+      padding: 6px 9px;
+      border: 1px solid #e6bf75;
+      border-radius: 4px;
+      background: var(--amber-soft);
+      color: #754609;
+      font-size: 12px;
+      font-weight: 740;
+    }
+    .decision-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
+    .hero-actions { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 9px; }
+    .snapshot { border: 1px solid var(--line-strong); border-radius: var(--radius); background: rgba(255,255,255,.94); overflow: hidden; }
+    .snapshot-head { padding: 13px 15px; border-bottom: 1px solid var(--line); color: var(--ink-2); font-size: 12px; font-weight: 720; }
+    .snapshot-grid { display: grid; grid-template-columns: 1fr 1fr; }
+    .metric { min-height: 104px; padding: 16px; border-bottom: 1px solid var(--line); }
+    .metric:nth-child(odd) { border-right: 1px solid var(--line); }
+    .metric:nth-last-child(-n+2) { border-bottom: 0; }
+    .metric span, .metric small { display: block; color: var(--ink-3); }
+    .metric span { font-size: 11px; }
+    .metric strong { display: block; margin: 3px 0; font-size: 24px; }
+    .metric small { font-size: 10px; }
+
+    .callout-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .callout { min-height: 162px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: white; }
+    .callout .iconbox { width: 31px; height: 31px; margin-bottom: 14px; display: grid; place-items: center; border-radius: 5px; }
+    .callout .iconbox svg { width: 17px; height: 17px; }
+    .icon-green { background: var(--green-soft); color: var(--green-dark); }
+    .icon-amber { background: var(--amber-soft); color: var(--amber); }
+    .icon-red { background: var(--red-soft); color: var(--red); }
+    .callout p { margin: 0; color: var(--ink-2); font-size: 13px; }
+
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .product-card { border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: hidden; }
+    .product-image { aspect-ratio: 16 / 9; background: var(--surface-3); overflow: hidden; }
+    .product-image img { width: 100%; height: 100%; object-fit: cover; }
+    .product-body { min-height: 148px; padding: 15px; display: flex; flex-direction: column; }
+    .product-title { margin-bottom: 12px; display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-weight: 700; }
+    .product-meta { margin-top: auto; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+    .product-meta span { display: block; color: var(--ink-3); font-size: 11px; }
+    .product-meta strong { display: block; color: var(--red); font-size: 18px; }
+    .rank { color: var(--ink-3); font-size: 11px; font-weight: 760; }
+
+    .table-wrap { border: 1px solid var(--line); border-radius: var(--radius); background: white; overflow: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 12px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--surface-2); color: var(--ink-2); font-size: 11px; font-weight: 780; white-space: nowrap; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover td { background: #fbfdfc; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .muted { color: var(--ink-3); }
+    .source-link { white-space: nowrap; font-size: 12px; }
+    .tag { display: inline-flex; align-items: center; min-height: 23px; padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+    .tag-green { background: var(--green-soft); color: var(--green-dark); }
+    .tag-amber { background: var(--amber-soft); color: var(--amber); }
+    .tag-red { background: var(--red-soft); color: var(--red); }
+    .tag-blue { background: var(--blue-soft); color: var(--blue); }
+    .tag-gray { background: #edf0ef; color: #52605b; }
+
+    .controls { margin-bottom: 16px; display: grid; grid-template-columns: repeat(5, minmax(120px,1fr)); gap: 10px; }
+    .field label { display: block; margin-bottom: 5px; color: var(--ink-3); font-size: 11px; font-weight: 700; }
+    .input-wrap { position: relative; }
+    .field input, .field select, .filterbar input, .filterbar select {
+      width: 100%;
+      min-height: 39px;
+      padding: 8px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 5px;
+      background: white;
+      color: var(--ink);
+      outline: 0;
+    }
+    .field input:focus, .field select:focus, .filterbar input:focus, .filterbar select:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(15,123,93,.1); }
+    .field .suffix { position: absolute; top: 9px; right: 10px; color: var(--ink-3); pointer-events: none; }
+    .model-note { margin: 13px 0 0; color: var(--ink-3); font-size: 12px; }
+    .profit-positive { color: var(--green-dark); font-weight: 760; }
+    .profit-negative { color: var(--red); font-weight: 760; }
+
+    .filterbar { margin-bottom: 14px; display: grid; grid-template-columns: minmax(240px,1.5fr) repeat(2,minmax(150px,.5fr)); gap: 10px; }
+    .table-title { max-width: 420px; min-width: 260px; }
+    .sku-label { min-width: 310px; max-width: 520px; }
+    .catalog-title { min-width: 330px; max-width: 520px; }
+    .pager { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--ink-3); font-size: 12px; }
+
+    .mode-grid { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .mode { min-height: 235px; padding: 18px; background: white; border-right: 1px solid var(--line); }
+    .mode:last-child { border-right: 0; }
+    .mode h3 { margin-top: 14px; }
+    .mode p { color: var(--ink-2); font-size: 13px; }
+    .mode dl { margin: 14px 0 0; font-size: 12px; }
+    .mode dt { color: var(--ink-3); }
+    .mode dd { margin: 1px 0 8px; font-weight: 700; }
+
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+    .method-grid h3 { color: white; }
+    .method-grid p, .method-grid li { color: #bed0ca; }
+    .method-grid ul { margin: 0; padding-left: 18px; }
+    .source-list { display: grid; gap: 8px; }
+    .source-list a { color: #9fe0c9; }
+    .footer-line { margin-top: 34px; padding-top: 18px; border-top: 1px solid #33443e; color: #8ca39b; font-size: 11px; }
+    .loading { padding: 30px; color: var(--ink-3); text-align: center; }
+
+    @media (max-width: 1080px) {
+      :root { --sidebar: 210px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .snapshot { max-width: 620px; }
+      .product-grid { grid-template-columns: repeat(2,1fr); }
+      .controls { grid-template-columns: repeat(3,1fr); }
+      .mode-grid { grid-template-columns: repeat(2,1fr); }
+      .mode:nth-child(2) { border-right: 0; }
+      .mode:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+    }
+    @media (max-width: 760px) {
+      :root { --topbar: 56px; }
+      .topbar-inner { padding: 0 14px; }
+      .report-mark span, .top-actions .btn span { display: none; }
+      .layout { display: block; }
+      .sidebar { display: none; }
+      .band { padding: 40px 18px; }
+      .hero { min-height: auto; padding-top: 46px; }
+      h1 { font-size: 31px; }
+      h2 { font-size: 23px; }
+      .lead { font-size: 16px; }
+      .section-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .callout-grid, .product-grid, .method-grid { grid-template-columns: 1fr; }
+      .controls { grid-template-columns: 1fr 1fr; }
+      .filterbar { grid-template-columns: 1fr; }
+      .mode-grid { display: block; }
+      .mode { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .mode:last-child { border-bottom: 0; }
+      .table-wrap { margin-right: -18px; border-right: 0; border-radius: 5px 0 0 5px; }
+      .pager { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      .topbar, .sidebar, .hero-actions, .filterbar, .pager, .controls { display: none !important; }
+      .layout { display: block; padding: 0; }
+      .band { padding: 28px 0; break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      body { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="report-mark">
+        <div class="mark-square">TM</div>
+        <div>
+          <strong>互联蛙旗舰店竞品分析</strong>
+          <span>211 个商品 · 官网成本 · 动态利润</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="btn" href="index.html" title="返回海外 AI 代充商业报告"><i data-lucide="arrow-left"></i><span>主报告</span></a>
+        <button class="btn" id="resetModel" type="button" title="恢复利润模型默认参数"><i data-lucide="rotate-ccw"></i><span>恢复</span></button>
+        <button class="btn btn-primary" id="printReport" type="button" title="打印或导出 PDF"><i data-lucide="printer"></i><span>打印 / PDF</span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="报告目录">
+      <p class="side-label">报告目录</p>
+      <nav class="side-nav">
+        <a href="#overview" class="active">结论摘要</a>
+        <a href="#bestsellers">销量结构</a>
+        <a href="#official">官网定价</a>
+        <a href="#profit">利润模型</a>
+        <a href="#skus">SKU 实价</a>
+        <a href="#catalog">211 商品目录</a>
+        <a href="#modes">交付模式</a>
+        <a href="#method">口径与来源</a>
+      </nav>
+      <div class="side-note">
+        <strong>数据时间</strong><br>
+        店铺 2026-08-15；汇率 2026-08-15。销量为页面“近 365 天模糊销量”，不是订单明细。
+      </div>
+    </aside>
+
+    <main>
+      <section class="band hero" id="overview">
+        <div class="content">
+          <div class="hero-grid">
+            <div>
+              <div class="decision"><span class="decision-dot"></span>结论：市场真实，但不能照抄低价账号模式</div>
+              <p class="eyebrow">Competitive intelligence / 2026 Q3</p>
+              <h1>互联蛙旗舰店<br>商品、官网价与利润拆解</h1>
+              <p class="lead">头部需求集中在 Cursor、Suno、Perplexity，前三个商品的近 365 天模糊销量下限已达 1.6 万。按官网采购的代充 SKU 通常只有约 8%–18% 单笔经营利润；明显低于官网成本的“成品号、共享、短租、额度拆分”属于另一套供给逻辑，售后与封控风险更高。</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#profit"><i data-lucide="calculator"></i>核算利润</a>
+                <a class="btn" href="#catalog"><i data-lucide="list-filter"></i>查看全部商品</a>
+              </div>
+            </div>
+            <div class="snapshot">
+              <div class="snapshot-head">店铺公开数据快照</div>
+              <div class="snapshot-grid">
+                <div class="metric"><span>在售商品</span><strong id="metricProducts">211</strong><small>完整目录已归档</small></div>
+                <div class="metric"><span>粉丝</span><strong>3,972</strong><small>店铺首页公开值</small></div>
+                <div class="metric"><span>综合体验</span><strong>4.9</strong><small>宝贝 4.8 · 服务 4.9</small></div>
+                <div class="metric"><span>前三销量下限</span><strong>16,000+</strong><small>近 365 天模糊口径</small></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-alt">
+        <div class="content">
+          <div class="callout-grid">
+            <article class="callout">
+              <div class="iconbox icon-green"><i data-lucide="trending-up"></i></div>
+              <h3>需求已经被验证</h3>
+              <p>Cursor 单链接 1 万+，Suno 4,000+，Perplexity 2,000+。编程、音乐生成和 AI 搜索是最清晰的三条需求线。</p>
+            </article>
+            <article class="callout">
+              <div class="iconbox icon-amber"><i data-lucide="split"></i></div>
+              <h3>同一商品混合四类生意</h3>
+              <p>官方代充、独享成品号、共享短租和额度拆分共用一个链接。列表“起售价”不代表主流成交价，也不能直接推算利润。</p>
+            </article>
+            <article class="callout">
+              <div class="iconbox icon-red"><i data-lucide="shield-alert"></i></div>
+              <h3>最低价并非官网套利</h3>
+              <p>Cursor Pro 官网约 ¥135，店内成品号 ¥111、30 天短租 ¥66。若按官网采购会亏损，低价依赖不同来源与风险结构。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="bestsellers">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Sales structure</p><h2>高销量商品</h2></div>
+            <p>按店铺页近 365 天模糊销量排序。卡片价格取已采详情页的最低 SKU；未采详情价时不使用误导性的估算值。</p>
+          </div>
+          <div class="product-grid" id="topProducts"><div class="loading">正在载入商品目录…</div></div>
+        </div>
+      </section>
+
+      <section class="band band-alt" id="official">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Official pricing</p><h2>官网公开定价</h2></div>
+            <p>美元计划按当前 USD/CNY 换算；Colab 展示当前访问区域返回的港币价。税费、地区价和结账页汇率可能使实际扣款变化。</p>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>平台 / 计划</th><th>周期</th><th class="num">官网价</th><th class="num">人民币参考</th><th>核验状态</th><th>来源</th></tr></thead>
+              <tbody id="officialRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="band" id="profit">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Unit economics</p><h2>同规格利润模型</h2></div>
+            <p>只把能与官网公开计划一一对应的 SKU 纳入。低价账号也展示“若按官网成本采购”的结果，用来识别其供给差异。</p>
+          </div>
+          <div class="controls" aria-label="利润模型参数">
+            <div class="field"><label for="fx">USD/CNY</label><div class="input-wrap"><input id="fx" type="number" min="1" step="0.01" value="6.76"></div></div>
+            <div class="field"><label for="paymentFee">海外支付通道</label><div class="input-wrap"><input id="paymentFee" type="number" min="0" step="0.1" value="3"><span class="suffix">%</span></div></div>
+            <div class="field"><label for="platformFee">平台综合扣点</label><div class="input-wrap"><input id="platformFee" type="number" min="0" step="0.1" value="5"><span class="suffix">%</span></div></div>
+            <div class="field"><label for="reserveFee">退款售后准备金</label><div class="input-wrap"><input id="reserveFee" type="number" min="0" step="0.1" value="3"><span class="suffix">%</span></div></div>
+            <div class="field"><label for="labor">单笔人工</label><div class="input-wrap"><input id="labor" type="number" min="0" step="1" value="5"><span class="suffix">元</span></div></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>商品 / SKU</th><th>交付</th><th class="num">店铺售价</th><th class="num">官网含通道成本</th><th class="num">经营利润</th><th class="num">利润率</th><th>判断</th></tr></thead>
+              <tbody id="profitRows"></tbody>
+            </table>
+          </div>
+          <p class="model-note">公式：经营利润 = 店铺售价 × (1 − 平台扣点 − 售后准备金) − 官网价 × 汇率 × (1 + 海外支付费) − 单笔人工。未计企业所得税、固定工资、投流和资金占用。</p>
+        </div>
+      </section>
+
+      <section class="band band-alt" id="skus">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Observed SKU prices</p><h2>店铺 SKU 实价</h2></div>
+            <p>价格来自已登录的天猫商品详情页逐项点击采集，保留具体规格名称。数据会随着采集批次持续增加。</p>
+          </div>
+          <div class="filterbar">
+            <input id="skuSearch" type="search" placeholder="搜索平台、商品或 SKU">
+            <select id="skuProduct"><option value="">全部已采商品</option></select>
+            <select id="skuMode"><option value="">全部交付方式</option><option>官方代充</option><option>独享成品号</option><option>共享/短租</option><option>额度包</option><option>其他</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>商品</th><th>SKU 规格</th><th>交付分类</th><th class="num">售价</th><th>商品页</th></tr></thead>
+              <tbody id="skuRows"><tr><td colspan="5" class="loading">正在载入 SKU 数据…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pager"><span id="skuCount">0 条</span><span>详情价为采集时快照，结账促销与会员券未计。</span></div>
+        </div>
+      </section>
+
+      <section class="band" id="catalog">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Full catalog</p><h2>211 个商品完整目录</h2></div>
+            <p>支持关键词、分类与销量筛选。每条记录保留商品 ID、标题、图片、近 365 天模糊销量和天猫详情链接。</p>
+          </div>
+          <div class="filterbar">
+            <input id="catalogSearch" type="search" placeholder="搜索标题或商品 ID">
+            <select id="catalogCategory"><option value="">全部分类</option><option>编程开发</option><option>音视频与设计</option><option>研究与效率</option><option>社交与娱乐</option><option>其他工具</option></select>
+            <select id="catalogSales"><option value="0">全部销量</option><option value="1000">1,000+</option><option value="500">500+</option><option value="100">100+</option></select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>排名</th><th>商品 ID</th><th>标题</th><th>分类</th><th class="num">近 365 天销量</th><th class="num">公开 SKU 数</th><th>链接</th></tr></thead>
+              <tbody id="catalogRows"><tr><td colspan="7" class="loading">正在载入完整目录…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="pager"><span id="catalogCount">0 / 0</span><button class="btn" id="loadMore" type="button"><i data-lucide="chevrons-down"></i>加载更多</button></div>
+        </div>
+      </section>
+
+      <section class="band band-alt" id="modes">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Fulfilment model</p><h2>四类交付模式不能混算</h2></div>
+            <p>同一个商品链接实际承载不同的供货、现金流与售后逻辑。复制竞品前应先选择自己要经营的那一类。</p>
+          </div>
+          <div class="mode-grid">
+            <article class="mode"><span class="tag tag-green">可标准化</span><h3>官方代充</h3><p>客户提供账号，在官网结账升级。价格可验证，解释成本低，但账户安全和支付风控仍需流程化。</p><dl><dt>典型加价</dt><dd>约 15%–30%</dd><dt>主要成本</dt><dd>官网价、汇率、卡费</dd><dt>主要风险</dt><dd>支付拒付、地区税、账号验证</dd></dl></article>
+            <article class="mode"><span class="tag tag-amber">来源敏感</span><h3>独享成品号</h3><p>交付已经开好会员的新账号。售价可能低于官网成本，意味着供货并非普通官网零售采购。</p><dl><dt>典型价格</dt><dd>低于代充 20%–50%</dd><dt>主要成本</dt><dd>账号来源、替换率、库存</dd><dt>主要风险</dt><dd>找回、封号、来源不可持续</dd></dl></article>
+            <article class="mode"><span class="tag tag-red">售后密集</span><h3>共享 / 短租</h3><p>多人共用或按天拆租一个会员。前端价格低、理论周转率高，但使用冲突和密码管理会吞噬人工。</p><dl><dt>毛利来源</dt><dd>席位复用、时间拆分</dd><dt>主要成本</dt><dd>客服、换号、并发损耗</dd><dt>主要风险</dt><dd>隐私、冲突、条款限制</dd></dl></article>
+            <article class="mode"><span class="tag tag-blue">计量运营</span><h3>额度包拆分</h3><p>把积分、生成次数或 API 额度按小包出售。适合轻量用户，但必须掌握消耗计量和余额回收。</p><dl><dt>毛利来源</dt><dd>批量采购、沉淀余额</dd><dt>主要成本</dt><dd>计量系统、损耗、过期</dd><dt>主要风险</dt><dd>超用、额度规则突变</dd></dl></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-dark" id="method">
+        <div class="content">
+          <div class="section-head">
+            <div><p class="eyebrow">Methodology</p><h2>口径、限制与来源</h2></div>
+            <p>本报告用于竞品定价和单笔经济性判断，不把模糊销量当作精确订单，也不把明显低于官网价的账号商品当作可复制成本。</p>
+          </div>
+          <div class="method-grid">
+            <div>
+              <h3>采集与计算口径</h3>
+              <ul>
+                <li>店铺目录：React 页面公开数据，2026-08-15，共 211 个商品。</li>
+                <li>SKU 价：天猫详情页逐项选择规格后的显示价，不含券、88VIP 与结账优惠。</li>
+                <li>销量：“近 365 天模糊销量”，如 1 万+、4,000+，只作为排序与需求信号。</li>
+                <li>汇率：1 USD = 6.76 CNY；1 USD = 7.85 HKD，2026-08-15 快照。</li>
+                <li>利润：贡献利润口径，不等于会计净利润；所有经营费率均可在页面调整。</li>
+              </ul>
+            </div>
+            <div>
+              <h3>主要官方来源</h3>
+              <div class="source-list">
+                <a href="https://cursor.com/pricing" target="_blank" rel="noopener">Cursor Pricing</a>
+                <a href="https://suno.com/pricing" target="_blank" rel="noopener">Suno Pricing</a>
+                <a href="https://www.perplexity.ai/pro" target="_blank" rel="noopener">Perplexity Pro</a>
+                <a href="https://elevenlabs.io/pricing" target="_blank" rel="noopener">ElevenLabs Pricing</a>
+                <a href="https://www.heygen.com/pricing" target="_blank" rel="noopener">HeyGen Pricing</a>
+                <a href="https://www.overleaf.com/user/subscription/plans" target="_blank" rel="noopener">Overleaf Plans</a>
+                <a href="https://leetcode.com/subscribe/" target="_blank" rel="noopener">LeetCode Premium</a>
+                <a href="https://colab.research.google.com/signup" target="_blank" rel="noopener">Google Colab Plans</a>
+                <a href="https://gamma.app/pricing" target="_blank" rel="noopener">Gamma Pricing</a>
+                <a href="https://manus.im/pricing" target="_blank" rel="noopener">Manus Pricing</a>
+                <a href="https://lovart.ai/pricing" target="_blank" rel="noopener">Lovart Pricing</a>
+                <a href="https://windsurf.com/pricing" target="_blank" rel="noopener">Windsurf / Devin Pricing</a>
+                <a href="https://www.genspark.ai/pricing" target="_blank" rel="noopener">Genspark Pricing</a>
+                <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener">ExchangeRate-API</a>
+              </div>
+            </div>
+          </div>
+          <div class="footer-line">互联蛙旗舰店竞品分析 · 数据快照 2026-08-15 · 页面价格会变化，实际采购前应再次核验结账页。</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>
+    const officialPlans = [
+      { platform: "Cursor", plan: "Pro", cycle: "月", currency: "USD", amount: 20, source: "https://cursor.com/pricing", status: "官网公开" },
+      { platform: "Cursor", plan: "Pro+", cycle: "月", currency: "USD", amount: 60, source: "https://cursor.com/pricing", status: "官网公开" },
+      { platform: "Cursor", plan: "Ultra", cycle: "月", currency: "USD", amount: 200, source: "https://cursor.com/pricing", status: "官网公开" },
+      { platform: "Suno", plan: "Pro", cycle: "月", currency: "USD", amount: 10, source: "https://suno.com/pricing", status: "官网公开" },
+      { platform: "Suno", plan: "Premier", cycle: "月", currency: "USD", amount: 30, source: "https://suno.com/pricing", status: "官网公开" },
+      { platform: "Suno", plan: "Pro 年付", cycle: "年", currency: "USD", amount: 96, source: "https://suno.com/pricing", status: "$8/月折算" },
+      { platform: "Suno", plan: "Premier 年付", cycle: "年", currency: "USD", amount: 288, source: "https://suno.com/pricing", status: "$24/月折算" },
+      { platform: "Perplexity", plan: "Pro", cycle: "月", currency: "USD", amount: 20, source: "https://www.perplexity.ai/pro", status: "官网公开" },
+      { platform: "Perplexity", plan: "Pro", cycle: "年", currency: "USD", amount: 200, source: "https://www.perplexity.ai/pro", status: "官网公开" },
+      { platform: "Perplexity", plan: "Max", cycle: "月", currency: "USD", amount: 200, source: "https://www.perplexity.ai/pro", status: "官网公开" },
+      { platform: "Perplexity", plan: "Max", cycle: "年", currency: "USD", amount: 2000, source: "https://www.perplexity.ai/pro", status: "官网公开" },
+      { platform: "ElevenLabs", plan: "Starter", cycle: "月", currency: "USD", amount: 6, source: "https://elevenlabs.io/pricing", status: "官网公开" },
+      { platform: "ElevenLabs", plan: "Creator", cycle: "月", currency: "USD", amount: 22, source: "https://elevenlabs.io/pricing", status: "官网公开" },
+      { platform: "ElevenLabs", plan: "Pro", cycle: "月", currency: "USD", amount: 99, source: "https://elevenlabs.io/pricing", status: "官网公开" },
+      { platform: "HeyGen", plan: "Creator", cycle: "月", currency: "USD", amount: 29, source: "https://www.heygen.com/pricing", status: "官网公开" },
+      { platform: "HeyGen", plan: "Pro", cycle: "月", currency: "USD", amount: 49, source: "https://www.heygen.com/pricing", status: "官网公开" },
+      { platform: "HeyGen", plan: "Business", cycle: "月", currency: "USD", amount: 149, source: "https://www.heygen.com/pricing", status: "官网公开" },
+      { platform: "Overleaf", plan: "Student", cycle: "月", currency: "USD", amount: 13, source: "https://www.overleaf.com/user/subscription/plans", status: "官网公开" },
+      { platform: "Overleaf", plan: "Standard", cycle: "月", currency: "USD", amount: 25, source: "https://www.overleaf.com/user/subscription/plans", status: "官网公开" },
+      { platform: "Overleaf", plan: "Professional", cycle: "月", currency: "USD", amount: 45, source: "https://www.overleaf.com/user/subscription/plans", status: "官网公开" },
+      { platform: "LeetCode", plan: "Premium", cycle: "月", currency: "USD", amount: 39, source: "https://leetcode.com/subscribe/", status: "美国站公开价" },
+      { platform: "LeetCode", plan: "Premium", cycle: "年", currency: "USD", amount: 159, source: "https://leetcode.com/subscribe/", status: "美国站公开价" },
+      { platform: "Colab", plan: "Pro", cycle: "月", currency: "HKD", amount: 77.8, source: "https://colab.research.google.com/signup", status: "当前区域返回" },
+      { platform: "Colab", plan: "Pro+", cycle: "月", currency: "HKD", amount: 489.5, source: "https://colab.research.google.com/signup", status: "当前区域返回" },
+      { platform: "Gamma", plan: "Plus", cycle: "月", currency: "USD", amount: 12, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Gamma", plan: "Pro", cycle: "月", currency: "USD", amount: 25, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Gamma", plan: "Ultra", cycle: "月", currency: "USD", amount: 100, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Gamma", plan: "Plus", cycle: "年", currency: "USD", amount: 108, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Gamma", plan: "Pro", cycle: "年", currency: "USD", amount: 216, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Gamma", plan: "Ultra", cycle: "年", currency: "USD", amount: 1080, source: "https://gamma.app/pricing", status: "官网公开" },
+      { platform: "Manus", plan: "4,000 积分", cycle: "月", currency: "USD", amount: 20, source: "https://manus.im/pricing", status: "页面可见价" },
+      { platform: "Manus", plan: "8,000 积分", cycle: "月", currency: "USD", amount: 40, source: "https://manus.im/pricing", status: "页面可见价" },
+      { platform: "Manus", plan: "40,000 积分", cycle: "月", currency: "USD", amount: 200, source: "https://manus.im/pricing", status: "页面可见价" },
+      { platform: "Lovart", plan: "Starter", cycle: "月", currency: "USD", amount: 19, source: "https://lovart.ai/pricing", status: "官网公开" },
+      { platform: "Lovart", plan: "Basic", cycle: "月", currency: "USD", amount: 32, source: "https://lovart.ai/pricing", status: "官网公开" },
+      { platform: "Lovart", plan: "Pro", cycle: "月", currency: "USD", amount: 90, source: "https://lovart.ai/pricing", status: "官网公开" },
+      { platform: "Lovart", plan: "Ultimate", cycle: "月", currency: "USD", amount: 199, source: "https://lovart.ai/pricing", status: "官网公开" },
+      { platform: "Lovart", plan: "Starter 促销", cycle: "年", currency: "USD", amount: 192, source: "https://lovart.ai/pricing", status: "当前促销" },
+      { platform: "Lovart", plan: "Basic 促销", cycle: "年", currency: "USD", amount: 324, source: "https://lovart.ai/pricing", status: "当前促销" },
+      { platform: "Lovart", plan: "Pro 首年", cycle: "年", currency: "USD", amount: 540, source: "https://lovart.ai/pricing", status: "当前促销" },
+      { platform: "Lovart", plan: "Ultimate 首年", cycle: "年", currency: "USD", amount: 1308, source: "https://lovart.ai/pricing", status: "当前促销" },
+      { platform: "Windsurf / Devin", plan: "Pro", cycle: "月", currency: "USD", amount: 20, source: "https://windsurf.com/pricing", status: "官网重定向" },
+      { platform: "Windsurf / Devin", plan: "Max", cycle: "月", currency: "USD", amount: 200, source: "https://windsurf.com/pricing", status: "官网重定向" },
+      { platform: "Genspark", plan: "个人计划", cycle: "月", currency: "USD", amount: null, source: "https://www.genspark.ai/pricing", status: "登录后动态价" }
+    ];
+
+    const profitScenarios = [
+      { item: "Cursor Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 179, usd: 20 },
+      { item: "Cursor Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 115, usd: 20 },
+      { item: "Cursor Pro+ 60 美元", sku: "月卡代充", mode: "官方代充", sale: 520, usd: 60 },
+      { item: "Cursor Ultra 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1720, usd: 200 },
+      { item: "Suno Pro 10 美元", sku: "月卡代充", mode: "官方代充", sale: 94, usd: 10 },
+      { item: "Suno Pro 10 美元", sku: "独享成品号", mode: "独享成品号", sale: 80, usd: 10 },
+      { item: "Suno Premier 30 美元", sku: "月卡代充", mode: "官方代充", sale: 260, usd: 30 },
+      { item: "Suno Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 750, usd: 96 },
+      { item: "Perplexity Pro 20 美元", sku: "月卡代充", mode: "官方代充", sale: 180, usd: 20 },
+      { item: "Perplexity Pro 20 美元", sku: "独享成品号", mode: "独享成品号", sale: 84, usd: 20 },
+      { item: "Perplexity Max 200 美元", sku: "月卡代充", mode: "官方代充", sale: 1890, usd: 200 },
+      { item: "Perplexity Pro 年付", sku: "一次性订阅", mode: "官方代充", sale: 1800, usd: 200 }
+    ];
+
+    let catalog = [];
+    let skuDetails = [];
+    let catalogLimit = 40;
+    const byId = id => document.getElementById(id);
+    const money = value => `¥${Number(value).toLocaleString("zh-CN", { minimumFractionDigits: value % 1 ? 1 : 0, maximumFractionDigits: 1 })}`;
+    const salesValue = value => {
+      const raw = String(value || "0");
+      const number = Number.parseFloat(raw.replace(/[^\d.]/g, "")) || 0;
+      return raw.includes("万") ? number * 10000 : number;
+    };
+    const categoryOf = title => {
+      const value = title.toLowerCase();
+      if (/(cursor|colab|leetcode|windsurf|lovable|augment|bolt|replit|github|code|kiro|trae|serper|api)/i.test(value)) return "编程开发";
+      if (/(suno|eleven|heygen|lovart|gamma|minimax|海螺|hailuo|tripo|ideogram|hitem3d|video|image|music|设计|声音|语音|数字人)/i.test(value)) return "音视频与设计";
+      if (/(perplexity|manus|genspark|overleaf|monica|bloomberg|paper|notion|research|翻译|写作|学习|office|ppt)/i.test(value)) return "研究与效率";
+      if (/(tinder|bumble|grindr|dramabox|vigloo|f1|tv|netflix|spotify|youtube|交友|短剧|影视)/i.test(value)) return "社交与娱乐";
+      return "其他工具";
+    };
+    const modeOf = label => {
+      if (/代充|代充值|直充|续费/.test(label)) return "官方代充";
+      if (/成品|独享号|独享会员号/.test(label)) return "独享成品号";
+      if (/共享|短租|\d+天|一天|七天|月卡.*不保证/.test(label)) return "共享/短租";
+      if (/积分包|额度|credits|字数|次数/.test(label)) return "额度包";
+      return "其他";
+    };
+    const tagClass = mode => ({ "官方代充": "tag-green", "独享成品号": "tag-amber", "共享/短租": "tag-red", "额度包": "tag-blue" }[mode] || "tag-gray");
+
+    function renderOfficial() {
+      const fx = Number(byId("fx").value) || 6.76;
+      const usdHkd = 7.85;
+      byId("officialRows").innerHTML = officialPlans.map(plan => {
+        const cny = plan.amount == null ? null : plan.currency === "USD" ? plan.amount * fx : plan.amount / usdHkd * fx;
+        const displayPrice = plan.amount == null ? "动态" : `${plan.currency === "USD" ? "$" : "HK$"}${plan.amount}`;
+        const statusTone = plan.status.includes("公开") || plan.status.includes("可见") ? "tag-green" : plan.status.includes("动态") ? "tag-red" : "tag-amber";
+        return `<tr><td><strong>${plan.platform}</strong> · ${plan.plan}</td><td>${plan.cycle}</td><td class="num">${displayPrice}</td><td class="num">${cny == null ? "—" : money(cny)}</td><td><span class="tag ${statusTone}">${plan.status}</span></td><td><a class="source-link" href="${plan.source}" target="_blank" rel="noopener">官网 ↗</a></td></tr>`;
+      }).join("");
+    }
+
+    function renderProfit() {
+      const fx = Number(byId("fx").value) || 6.76;
+      const payment = (Number(byId("paymentFee").value) || 0) / 100;
+      const platform = (Number(byId("platformFee").value) || 0) / 100;
+      const reserve = (Number(byId("reserveFee").value) || 0) / 100;
+      const labor = Number(byId("labor").value) || 0;
+      byId("profitRows").innerHTML = profitScenarios.map(row => {
+        const cost = row.usd * fx * (1 + payment);
+        const profit = row.sale * (1 - platform - reserve) - cost - labor;
+        const margin = profit / row.sale * 100;
+        const judgment = profit < 0 ? "官网采购不成立" : margin < 8 ? "利润过薄" : margin < 16 ? "可做但需控售后" : "利润空间较好";
+        const tone = profit < 0 ? "tag-red" : margin < 8 ? "tag-amber" : "tag-green";
+        return `<tr><td class="table-title"><strong>${row.item}</strong><br><span class="muted">${row.sku}</span></td><td><span class="tag ${tagClass(row.mode)}">${row.mode}</span></td><td class="num">${money(row.sale)}</td><td class="num">${money(cost)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${profit >= 0 ? "+" : ""}${money(profit)}</td><td class="num ${profit >= 0 ? "profit-positive" : "profit-negative"}">${margin.toFixed(1)}%</td><td><span class="tag ${tone}">${judgment}</span></td></tr>`;
+      }).join("");
+      renderOfficial();
+    }
+
+    function renderTopProducts() {
+      const details = new Map(skuDetails.map(item => [String(item.itemId), item]));
+      byId("topProducts").innerHTML = catalog.slice(0, 12).map((product, index) => {
+        const detail = details.get(String(product.itemId));
+        return `<article class="product-card"><div class="product-image"><img src="${product.image}" alt="${product.title}" loading="lazy"></div><div class="product-body"><span class="rank">销量排名 #${index + 1}</span><div class="product-title">${product.title}</div><div class="product-meta"><div><span>近 365 天</span><strong>${product.vagueSold365}</strong></div><div><span>详情最低价</span><strong>${detail && !detail.error ? money(detail.minPrice) : "待采"}</strong></div></div></div></article>`;
+      }).join("");
+    }
+
+    function renderSkuFilters() {
+      const current = byId("skuProduct").value;
+      byId("skuProduct").innerHTML = `<option value="">全部已采商品</option>` + skuDetails.filter(item => !item.error).map(item => `<option value="${item.itemId}">${item.catalogTitle.replace(/</g, "&lt;")}</option>`).join("");
+      byId("skuProduct").value = current;
+    }
+
+    function renderSkus() {
+      const query = byId("skuSearch").value.trim().toLowerCase();
+      const productId = byId("skuProduct").value;
+      const selectedMode = byId("skuMode").value;
+      const rows = skuDetails.flatMap(item => (item.rows || []).map(row => ({ ...row, item }))).filter(entry => {
+        const mode = modeOf(entry.label);
+        const haystack = `${entry.item.catalogTitle} ${entry.label} ${entry.item.itemId}`.toLowerCase();
+        return (!query || haystack.includes(query)) && (!productId || String(entry.item.itemId) === productId) && (!selectedMode || mode === selectedMode);
+      });
+      byId("skuRows").innerHTML = rows.length ? rows.map(entry => {
+        const mode = modeOf(entry.label);
+        return `<tr><td class="table-title"><strong>${entry.item.catalogTitle}</strong><br><span class="muted">${entry.item.vagueSold365}</span></td><td class="sku-label">${entry.label}</td><td><span class="tag ${tagClass(mode)}">${mode}</span></td><td class="num"><strong>${money(entry.price)}</strong></td><td><a class="source-link" href="${entry.item.catalogUrl}" target="_blank" rel="noopener">天猫 ↗</a></td></tr>`;
+      }).join("") : `<tr><td colspan="5" class="loading">没有符合条件的 SKU</td></tr>`;
+      byId("skuCount").textContent = `${rows.length} 条 SKU · ${skuDetails.filter(item => !item.error).length} 个商品`;
+    }
+
+    function renderCatalog() {
+      const query = byId("catalogSearch").value.trim().toLowerCase();
+      const category = byId("catalogCategory").value;
+      const threshold = Number(byId("catalogSales").value) || 0;
+      const filtered = catalog.filter(product => {
+        const productCategory = categoryOf(product.title);
+        return (!query || `${product.itemId} ${product.title}`.toLowerCase().includes(query)) && (!category || productCategory === category) && salesValue(product.vagueSold365) >= threshold;
+      });
+      const shown = filtered.slice(0, catalogLimit);
+      byId("catalogRows").innerHTML = shown.length ? shown.map(product => {
+        const categoryName = categoryOf(product.title);
+        const rank = catalog.indexOf(product) + 1;
+        return `<tr><td class="num">#${rank}</td><td>${product.itemId}</td><td class="catalog-title"><strong>${product.title}</strong></td><td><span class="tag tag-gray">${categoryName}</span></td><td class="num"><strong>${product.vagueSold365}</strong></td><td class="num">${(product.skuInfoList || []).length}</td><td><a class="source-link" href="${product.itemUrl}" target="_blank" rel="noopener">详情 ↗</a></td></tr>`;
+      }).join("") : `<tr><td colspan="7" class="loading">没有符合条件的商品</td></tr>`;
+      byId("catalogCount").textContent = `已显示 ${shown.length} / ${filtered.length} · 全店 ${catalog.length}`;
+      byId("loadMore").style.visibility = shown.length < filtered.length ? "visible" : "hidden";
+    }
+
+    async function loadData() {
+      try {
+        const [catalogResponse, skuResponse] = await Promise.all([
+          fetch("data/hulianwa-products.json"),
+          fetch("data/hulianwa-sku-details.json")
+        ]);
+        const catalogData = await catalogResponse.json();
+        const skuData = skuResponse.ok ? await skuResponse.json() : { results: [] };
+        catalog = [...catalogData.products].sort((a,b) => salesValue(b.vagueSold365) - salesValue(a.vagueSold365));
+        skuDetails = skuData.results || [];
+        byId("metricProducts").textContent = catalog.length;
+        renderTopProducts();
+        renderSkuFilters();
+        renderSkus();
+        renderCatalog();
+      } catch (error) {
+        byId("topProducts").innerHTML = `<div class="loading">数据载入失败：${error.message}</div>`;
+        byId("skuRows").innerHTML = `<tr><td colspan="5" class="loading">请通过 HTTP 服务打开本报告以载入 JSON 数据。</td></tr>`;
+        byId("catalogRows").innerHTML = `<tr><td colspan="7" class="loading">请通过 HTTP 服务打开本报告以载入 JSON 数据。</td></tr>`;
+      }
+    }
+
+    ["fx", "paymentFee", "platformFee", "reserveFee", "labor"].forEach(id => byId(id).addEventListener("input", renderProfit));
+    ["skuSearch", "skuProduct", "skuMode"].forEach(id => byId(id).addEventListener(id === "skuSearch" ? "input" : "change", renderSkus));
+    ["catalogSearch", "catalogCategory", "catalogSales"].forEach(id => byId(id).addEventListener(id === "catalogSearch" ? "input" : "change", () => { catalogLimit = 40; renderCatalog(); }));
+    byId("loadMore").addEventListener("click", () => { catalogLimit += 40; renderCatalog(); });
+    byId("resetModel").addEventListener("click", () => {
+      byId("fx").value = "6.76";
+      byId("paymentFee").value = "3";
+      byId("platformFee").value = "5";
+      byId("reserveFee").value = "3";
+      byId("labor").value = "5";
+      renderProfit();
+    });
+    byId("printReport").addEventListener("click", () => window.print());
+    document.querySelectorAll(".side-nav a").forEach(link => link.addEventListener("click", () => {
+      document.querySelectorAll(".side-nav a").forEach(item => item.classList.remove("active"));
+      link.classList.add("active");
+    }));
+    window.addEventListener("error", event => (window.__hulianwaErrors ||= []).push(event.message));
+    renderProfit();
+    loadData();
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
